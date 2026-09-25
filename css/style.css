@@ -225,6 +225,18 @@ h1 br {
   }
 }
 
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  /* Keep the navbar on one line next to the longer brand name. */
+  .navbar-brand {
+    font-size: 16px;
+  }
+
+  .navbar-nav > li > a {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
 @media screen and (min-width: 992px) {
   .panel-stick,
   .panel-stick .panel-heading,
