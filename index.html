@@ -56,9 +56,10 @@
             <!--<li><a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-users"></i> About</a></li>-->
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="https://github.com/particle-clicker/particle-clicker/" target="_blank"><i class="fa fa-github"></i> GitHub</a></li>
+            <li ng-controller="UpdatesController"><a href="#" data-toggle="modal" data-target="#updates-modal" title="What's new"><i class="fa fa-bullhorn"></i><span class="hidden-sm"> Updates</span> <span class="label label-danger" ng-show="isNew()" ng-cloak>New</span></a></li>
+            <li><a href="https://github.com/particle-clicker/particle-clicker/" target="_blank" title="GitHub"><i class="fa fa-github"></i><span class="hidden-sm"> GitHub</span></a></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-share-alt"></i> Social<span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Social"><i class="fa fa-share-alt"></i><span class="hidden-sm"> Social</span><span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="https://facebook.com/particleclicker"><i class="fa fa-facebook-square"></i> Facebook</a></li>
                 <li><a href="https://twitter.com/particleclicker"><i class="fa fa-twitter"></i> Twitter</a></li>
@@ -80,6 +81,12 @@
           </div>
           <div class="panel-body scrollable large" id="researchLarge" ng-controller="ResearchController as rc">
             <div id="researchContent" ng-controller="ResearchController as rc">
+              <div class="bulk-toggle" ng-cloak>
+                <span class="small">Research</span>
+                <div class="btn-group btn-group-xs" role="group" aria-label="Number of levels to research at once">
+                  <button type="button" class="btn btn-default" ng-repeat="a in rc.bulk.amounts" ng-class="{active: rc.bulk.amount === a}" ng-click="rc.bulk.setAmount(a)">{{ a === 'max' ? 'Max' : '×' + a }}</button>
+                </div>
+              </div>
               <ul class="media-list" ng-cloak>
                 <li class="media" ng-repeat="r in rc.research" ng-show="rc.isVisible(r)">
                   <img ng-show="r.state.level > 0" class="research-icon media-object" ng-src="{{ r.image }}" alt="">
@@ -89,7 +96,7 @@
                     <p ng-show="r.state.level > 0">{{ r.description }}</p>
                     <p ng-show="r.state.level > 0" class="small">Research yields <strong>{{ r.state.reputation | niceNumber }}</strong> reputation.</p>
                     <div class="btn-group">
-                      <button class="btn btn-primary" ng-disabled="!rc.isAvailable(r)" ng-click="rc.doResearch(r)"><i class="fa fa-cogs"></i> <small>{{ r.state.cost | niceNumber }} data</small></button>
+                      <button class="btn btn-primary" ng-disabled="!rc.isAvailable(r)" ng-click="rc.doResearch(r)"><i class="fa fa-cogs"></i> <small><span ng-show="rc.bulk.count(r) > 1">&times;{{ rc.bulk.count(r) }} &middot; </span>{{ rc.bulk.cost(r) | niceNumber }} data</small></button>
                     <button class="btn btn-info {{ r.state.interesting ? 'blink' : '' }}" ng-show="r.state.level > 0" ng-click="rc.showInfo(r)"><i class="fa {{ r.state.interesting ? 'fa-exclamation' : 'fa-info' }}"></i></button>
                   </div>
                   </div>
@@ -111,6 +118,9 @@
             <canvas ng-click="dc.click()" id="detector-events" width="400" height="400" class="prevent-select">
               Your detector. Click on it to generate events.
             </canvas>
+            <div ng-controller="AnomalyController">
+              <button type="button" class="anomaly" ng-if="anomaly" ng-style="{left: anomaly.x + 'px', top: anomaly.y + 'px'}" ng-click="catchAnomaly()" title="An anomaly! Click it before it fades." aria-label="Catch the anomaly"><i class="fa fa-certificate"></i></button>
+            </div>
           </div>
         </div>
         <button id="detector-info" class="btn btn-info" ng-click="lc.showDetectorInfo()"><i class="fa fa-info"></i></button>
@@ -118,7 +128,7 @@
           <div class="col-xs-4 text-center col-no-padding-xs">
             <strong>Data</strong><br>
             {{ lc.lab.state.data | niceNumber }}
-            <div class="rate" title="Data produced per second by your staff">+{{ lc.dataRate() | niceNumber }}/s</div>
+            <div class="rate" title="Data produced per second by your staff">+{{ lc.dataRate() | niceNumber }}/s <span class="label label-warning boost" ng-show="lc.boostLeft() > 0" title="Beam boost: all data doubled">&times;2<span class="hidden-xs"> {{ lc.boostLeft() }}s</span></span></div>
             <div class="update-value" id="update-data"></div>
           </div>
           <div class="col-xs-4 text-center col-no-padding-xs">
@@ -147,7 +157,7 @@
               <div class="bulk-toggle" ng-cloak>
                 <span class="small">Hire</span>
                 <div class="btn-group btn-group-xs" role="group" aria-label="Number of people to hire at once">
-                  <button type="button" class="btn btn-default" ng-repeat="a in hrc.amounts" ng-class="{active: hrc.amount === a}" ng-click="hrc.setAmount(a)">{{ a === 'max' ? 'Max' : '×' + a }}</button>
+                  <button type="button" class="btn btn-default" ng-repeat="a in hrc.bulk.amounts" ng-class="{active: hrc.bulk.amount === a}" ng-click="hrc.bulk.setAmount(a)">{{ a === 'max' ? 'Max' : '×' + a }}</button>
                 </div>
               </div>
               <ul class="media-list" ng-cloak>
@@ -156,7 +166,7 @@
                     <h4 class="media-heading">{{ w.name }} <span ng-show="w.state.hired > 0" class="badge">{{ w.state.hired | niceNumber }}</span></h4>
                     <p ng-show="w.state.hired > 0">{{ w.description }}</p>
                     <p ng-show="w.state.hired > 0" class="small">Produce <strong>{{ w.state.rate | niceNumber }}</strong> data per second.</p>
-                    <button class="btn btn-primary" ng-disabled="!hrc.isAvailable(w)" ng-click="hrc.hire(w)"><i class="fa" ng-class="hrc.count(w) > 1 ? 'fa-users' : 'fa-user'"></i> <small><span ng-show="hrc.count(w) > 1">&times;{{ hrc.count(w) }} &middot; </span>{{ hrc.cost(w) | currency }}</small></button>
+                    <button class="btn btn-primary" ng-disabled="!hrc.isAvailable(w)" ng-click="hrc.hire(w)"><i class="fa" ng-class="hrc.bulk.count(w) > 1 ? 'fa-users' : 'fa-user'"></i> <small><span ng-show="hrc.bulk.count(w) > 1">&times;{{ hrc.bulk.count(w) }} &middot; </span>{{ hrc.bulk.cost(w) | currency }}</small></button>
                   </div>
                 </li>
               </ul>
@@ -260,8 +270,28 @@
               <li class="list-group-item"><i class="fa fa-money fa-fw"></i> Funding <span class="pull-right"><strong>{{ lab.state.moneySpent | currency }}</strong> spent / <strong>{{ lab.state.moneyCollected | currency }}</strong> gathered</span></li>
               <li class="list-group-item"><i class="fa fa-users fa-fw"></i> Staff hired <strong class="pull-right">{{ staff() | niceNumber }}</strong></li>
               <li class="list-group-item"><i class="fa fa-cogs fa-fw"></i> Research levels <strong class="pull-right">{{ researchLevels() | niceNumber }}</strong></li>
+              <li class="list-group-item"><i class="fa fa-certificate fa-fw"></i> Anomalies caught <strong class="pull-right">{{ lab.state.anomalies | niceNumber }}</strong></li>
               <li class="list-group-item"><i class="fa fa-trophy fa-fw"></i> Achievements <strong class="pull-right">{{ achieved() }} / {{ achievementCount }}</strong></li>
             </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="updates-modal" tabindex="-1" role="dialog" aria-labelledby="updates-label" aria-hidden="true" ng-controller="UpdatesController">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="updates-label"><i class="fa fa-bullhorn"></i> What's new</h4>
+          </div>
+          <div class="modal-body update-log">
+            <div ng-repeat="u in updates">
+              <h5><span class="label label-primary">{{ u.version }}</span> {{ u.title }} <small class="pull-right">{{ u.date }}</small></h5>
+              <ul>
+                <li ng-repeat="c in u.changes">{{ c }}</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -307,7 +337,7 @@
           </div>
           <div class="modal-body">
             <h4>About</h4>
-            <p class="small">Version: 0.9</p>
+            <p class="small" ng-controller="UpdatesController">Version: {{ version }} &middot; <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#updates-modal">What's new</a></p>
             <p class="small bg-warning">This is a pre-release. If you encounter any bugs please report them using <a href="https://github.com/particle-clicker/particle-clicker/issues"><i class="fa fa-github"></i> GitHub issues</a>. This game runs best in landscape mode. Performance of the event display may rely heavily on your hardware.</p>
             <p>The Particle Simulation is a game that was made during the <a href="https://webfest.web.cern.ch">CERN Webfest 2014</a>. The idea is borrowed from <a href="http://orteil.dashnet.org/cookieclicker/">Cookie Clicker</a>, an amazing and addictive cookie-themed game.</p>
             <h5>Libraries</h5>

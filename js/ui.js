@@ -142,8 +142,9 @@ var UI = (function () {
     window.setTimeout(remove(alert), 2000);
   }
 
-  /** Show a dismissible message in the bottom right corner. */
-  var showMessage = function(icon, html) {
+  /** Show a dismissible message in the bottom right corner. If timeout (ms)
+   * is given, the message also disappears by itself. */
+  var showMessage = function(icon, html, timeout) {
     var alert = '<div class="alert alert-info" role="alert">';
     alert += '<button type="button" class="btn btn-primary">OK</button>';
     alert += '<i class="fa ' + icon + ' alert-glyph"></i> <span class="alert-text">' + html + '</span>';
@@ -153,6 +154,11 @@ var UI = (function () {
       alert.slideUp(300, function() { alert.remove(); });
     });
     $('#messages-container').append(alert);
+    if (timeout) {
+      window.setTimeout(function() {
+        alert.slideUp(300, function() { alert.remove(); });
+      }, timeout);
+    }
     return alert;
   };
 

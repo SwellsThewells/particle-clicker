@@ -13,7 +13,57 @@
   var allObjects = game.allObjects;
   var lastSaved = new Date().getTime();
   var savingEnabled = true;
-  var MAX_BULK_HIRE = 1000;
+  var MAX_BULK_BUY = 1000;
+  var BOOST_FACTOR = 2;
+  var boostUntil = 0;
+  var updates = Helpers.loadFile('json/updates.json');
+  var updatesSeen = ObjectStorage.load('updatesSeen');
+
+  /** Factor applied to all data while a beam boost is active. */
+  var dataMultiplier = function() {
+    return new Date().getTime() < boostUntil ? BOOST_FACTOR : 1;
+  };
+
+  /** Shared state for the x1 / x10 / Max toggles. getBudget returns what the
+   * items are paid with; items implement getCost(n) and getAffordable(). */
+  var BulkBuyer = function(getBudget) {
+    this.amounts = [1, 10, 'max'];
+    this.amount = 1;
+    this.getBudget = getBudget;
+  };
+  BulkBuyer.prototype.setAmount = function(amount) {
+    this.amount = amount;
+  };
+  /** Number of items the buy button will buy. With 'max' this is as many as
+   * can be afforded, but at least one so the next price is still shown. */
+  BulkBuyer.prototype.count = function(item) {
+    if (this.amount === 'max') {
+      return Math.max(1, item.getAffordable(this.getBudget(), MAX_BULK_BUY));
+    }
+    return this.amount;
+  };
+  BulkBuyer.prototype.cost = function(item) {
+    return item.getCost(this.count(item));
+  };
+  BulkBuyer.prototype.canAfford = function(item) {
+    return this.getBudget() >= this.cost(item);
+  };
+  /** Buy count(item) items with buyOne, which returns the price paid or a
+   * negative number if the purchase failed. Returns the total paid. */
+  BulkBuyer.prototype.buy = function(item, buyOne) {
+    if (!this.canAfford(item)) {
+      return 0;
+    }
+    var n = this.count(item), total = 0;
+    for (var i = 0; i < n; i++) {
+      var cost = buyOne();
+      if (cost < 0) {
+        break;
+      }
+      total += cost;
+    }
+    return total;
+  };
 
   /** Save the game, keeping track of play time and when it was last open. */
   var saveGame = function() {
@@ -59,9 +109,9 @@
 
   app.controller('DetectorController', function() {
     this.click = function() {
-      lab.clickDetector();
+      var amount = lab.clickDetector(dataMultiplier());
       detector.addEvent();
-      UI.showUpdateValue("#update-data", lab.state.detector);
+      UI.showUpdateValue("#update-data", amount);
       return false;
     };
   });
@@ -74,7 +124,10 @@
   app.controller('LabController', ['$interval', function($interval) {
     this.lab = lab;
     this.dataRate = function() {
-      return game.getDataRate();
+      return game.getDataRate() * dataMultiplier();
+    };
+    this.boostLeft = function() {
+      return Math.max(0, Math.ceil((boostUntil - new Date().getTime()) / 1000));
     };
     this.showDetectorInfo = function() {
       if (!this._detectorInfo) {
@@ -85,7 +138,7 @@
     $interval(function() {  // one tick
       var grant = lab.getGrant();
       UI.showUpdateValue("#update-funding", grant);
-      var sum = game.getDataRate();
+      var sum = game.getDataRate() * dataMultiplier();
       if (sum > 0) {
         lab.acquireData(sum);
         UI.showUpdateValue("#update-data", sum);
@@ -98,17 +151,22 @@
 
   app.controller('ResearchController', ['$compile', function($compile) {
     this.research = research;
+    this.bulk = new BulkBuyer(function() { return lab.state.data; });
     this.isVisible = function(item) {
       return item.isVisible(lab);
     };
     this.isAvailable = function(item) {
-      return item.isAvailable(lab);
+      return this.bulk.canAfford(item);
     };
     this.doResearch = function(item) {
-      var cost = item.research(lab);
+      var reputation = 0;
+      var cost = this.bulk.buy(item, function() {
+        reputation += item.state.reputation;
+        return item.research(lab);
+      });
       if (cost > 0) {
         UI.showUpdateValue("#update-data", -cost);
-        UI.showUpdateValue("#update-reputation", item.state.reputation);
+        UI.showUpdateValue("#update-reputation", reputation);
       }
     };
     this.showInfo = function(r) {
@@ -119,41 +177,15 @@
 
   app.controller('HRController', function() {
     this.workers = workers;
-    this.amounts = [1, 10, 'max'];
-    this.amount = 1;
-    this.setAmount = function(amount) {
-      this.amount = amount;
-    };
-    /** Number of workers the hire button will hire. With 'max' this is as
-     * many as the lab can afford, but at least one so the price of the next
-     * hire is still shown. */
-    this.count = function(worker) {
-      if (this.amount === 'max') {
-        return Math.max(1, worker.getAffordable(lab.state.money, MAX_BULK_HIRE));
-      }
-      return this.amount;
-    };
-    this.cost = function(worker) {
-      return worker.getCost(this.count(worker));
-    };
+    this.bulk = new BulkBuyer(function() { return lab.state.money; });
     this.isVisible = function(worker) {
       return worker.isVisible(lab);
     };
     this.isAvailable = function(worker) {
-      return lab.state.money >= this.cost(worker);
+      return this.bulk.canAfford(worker);
     };
     this.hire = function(worker) {
-      if (!this.isAvailable(worker)) {
-        return;
-      }
-      var n = this.count(worker), total = 0;
-      for (var i = 0; i < n; i++) {
-        var cost = worker.hire(lab);
-        if (cost < 0) {
-          break;
-        }
-        total += cost;
-      }
+      var total = this.bulk.buy(worker, function() { return worker.hire(lab); });
       if (total > 0) {
         UI.showUpdateValue("#update-funding", -total);
       }
@@ -195,6 +227,8 @@
       )) {
         savingEnabled = false;
         ObjectStorage.clear();
+        ObjectStorage.save('saveVersion', Helpers.saveVersion);
+        ObjectStorage.save('updatesSeen', updatesSeen);
         window.location.reload(true);
       }
     };
@@ -251,6 +285,89 @@
       savingEnabled = false;
       window.location.reload();
     };
+  }]);
+
+  app.controller('AnomalyController',
+      ['$scope', '$timeout', function($scope, $timeout) {
+    var FIRST_DELAY = [45, 90];   // seconds until the first anomaly
+    var DELAY = [120, 300];       // seconds between anomalies
+    var LIFETIME = 12;            // seconds an anomaly stays on the detector
+    var BOOST_DURATION = 30;      // seconds
+    var fadeTimer;
+    var format = Helpers.formatNumberPostfix;
+    var rewards = [
+      function() {
+        var amount = Math.max(game.getDataRate() * 120, lab.state.detector * 50);
+        lab.acquireData(amount);
+        UI.showUpdateValue('#update-data', amount);
+        return 'Rare decay! Your detector recorded <strong>' +
+            format(amount) + ' data</strong>.';
+      },
+      function() {
+        var amount = Math.max(lab.getGrantRate() * 120, 250);
+        lab.receiveMoney(amount);
+        UI.showUpdateValue('#update-funding', amount);
+        return 'Press coverage! Sponsors sent <strong>JTN ' + format(amount) +
+            '</strong> in extra funding.';
+      },
+      function() {
+        boostUntil = new Date().getTime() + BOOST_DURATION * 1000;
+        return 'Beam boost! All data is doubled for <strong>' +
+            BOOST_DURATION + ' seconds</strong>.';
+      }
+    ];
+
+    var schedule = function(range) {
+      var seconds = range[0] + Math.random() * (range[1] - range[0]);
+      $timeout(spawn, seconds * 1000);
+    };
+    var spawn = function() {
+      if (!detector.visible) {  // don't waste anomalies on a hidden tab
+        schedule([5, 10]);
+        return;
+      }
+      var size = $('#detector').width() || 300;
+      var button = 50;
+      $scope.anomaly = {
+        x: Math.round(size * 0.1 + Math.random() * (size * 0.8 - button)),
+        y: Math.round(size * 0.1 + Math.random() * (size * 0.8 - button))
+      };
+      fadeTimer = $timeout(function() {
+        $scope.anomaly = null;
+        schedule(DELAY);
+      }, LIFETIME * 1000);
+    };
+    $scope.anomaly = null;
+    $scope.catchAnomaly = function() {
+      if (!$scope.anomaly) {
+        return;
+      }
+      $timeout.cancel(fadeTimer);
+      $scope.anomaly = null;
+      lab.state.anomalies += 1;
+      var reward = rewards[Math.floor(Math.random() * rewards.length)];
+      UI.showMessage('fa-certificate', reward(), 6000).addClass('anomaly-message');
+      schedule(DELAY);
+    };
+    schedule(FIRST_DELAY);
+  }]);
+
+  app.controller('UpdatesController',
+      ['$scope', '$element', function($scope, $element) {
+    $scope.updates = updates;
+    $scope.version = updates[0].version;
+    $scope.isNew = function() {
+      return updatesSeen !== updates[0].version;
+    };
+    // Opening the update log marks the latest update as read.
+    if ($element.is('#updates-modal')) {
+      $element.on('show.bs.modal', function() {
+        $scope.$apply(function() {
+          updatesSeen = updates[0].version;
+          ObjectStorage.save('updatesSeen', updatesSeen);
+        });
+      });
+    }
   }]);
 
   app.controller('StatsController', function($scope) {

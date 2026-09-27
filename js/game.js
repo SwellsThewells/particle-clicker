@@ -154,8 +154,10 @@ var Game = (function() {
     }
     // Offline progress restarts from the moment the save is loaded.
     delete clean.lab.lastSeen;
+    var updatesSeen = ObjectStorage.load('updatesSeen');
     ObjectStorage.clear();
     ObjectStorage.save('saveVersion', Helpers.saveVersion);
+    ObjectStorage.save('updatesSeen', updatesSeen);
     for (var k in clean) {
       ObjectStorage.save(k, clean[k]);
     }

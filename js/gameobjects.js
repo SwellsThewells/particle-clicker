@@ -2,6 +2,28 @@ var GameObjects = (function() {
   'use strict';
   var GLOBAL_VISIBILITY_THRESHOLD = 0.5;
 
+  /** Total cost of buying n items whose price starts at cost and is
+   * multiplied by increase (and rounded down) after every purchase. */
+  var bulkCost = function(cost, increase, n) {
+    var total = 0;
+    for (var i = 0; i < n; i++) {
+      total += cost;
+      cost = Math.floor(cost * increase);
+    }
+    return total;
+  };
+
+  /** How many such items the budget buys, but at most limit. */
+  var bulkAffordable = function(cost, increase, budget, limit) {
+    var n = 0;
+    while (n < limit && budget >= cost) {
+      budget -= cost;
+      cost = Math.floor(cost * increase);
+      n++;
+    }
+    return n;
+  };
+
   /** @class GameObject
    * Base class for all objects in the game. This works together with the
    * saving mechanism.
@@ -34,7 +56,8 @@ var GameObjects = (function() {
                                dataCollected : 0,
                                dataSpent : 0,
                                time: 0,
-                               lastSeen: 0
+                               lastSeen: 0,
+                               anomalies: 0
                              }
                            }]);
   };
@@ -63,9 +86,11 @@ var GameObjects = (function() {
     this.state.dataCollected += amount;
   };
 
-  Lab.prototype.clickDetector = function() {
+  Lab.prototype.clickDetector = function(multiplier) {
+    var amount = this.state.detector * (multiplier || 1);
     this.state.clicks += 1;
-    this.acquireData(this.state.detector);
+    this.acquireData(amount);
+    return amount;
   };
 
   Lab.prototype.research = function(cost, reputation) {
@@ -129,6 +154,14 @@ var GameObjects = (function() {
     return -1;
   };
 
+  Research.prototype.getCost = function(n) {
+    return bulkCost(this.state.cost, this.cost_increase, n);
+  };
+
+  Research.prototype.getAffordable = function(data, limit) {
+    return bulkAffordable(this.state.cost, this.cost_increase, data, limit);
+  };
+
   Research.prototype.getInfo = function() {
     if (!this._info) {
       this._info = Helpers.loadFile(this.info);
@@ -174,25 +207,12 @@ var GameObjects = (function() {
     return -1;  // not enough money
   };
 
-  /** Total cost of hiring the next n workers. */
   Worker.prototype.getCost = function(n) {
-    var cost = this.state.cost, total = 0;
-    for (var i = 0; i < n; i++) {
-      total += cost;
-      cost = Math.floor(cost * this.cost_increase);
-    }
-    return total;
+    return bulkCost(this.state.cost, this.cost_increase, n);
   };
 
-  /** How many workers can be hired with the given money (at most limit). */
   Worker.prototype.getAffordable = function(money, limit) {
-    var cost = this.state.cost, n = 0;
-    while (n < limit && money >= cost) {
-      money -= cost;
-      cost = Math.floor(cost * this.cost_increase);
-      n++;
-    }
-    return n;
+    return bulkAffordable(this.state.cost, this.cost_increase, money, limit);
   };
 
   Worker.prototype.getTotal =

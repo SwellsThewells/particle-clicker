@@ -966,5 +966,29 @@
     "targetProperty": "moneySpent",
     "targetKey": "lab",
     "threshold": 10000000000
+  },
+  {
+    "description": "First anomaly caught!",
+    "icon": "fa-certificate",
+    "key": "achievement-anomalies-1",
+    "targetProperty": "anomalies",
+    "targetKey": "lab",
+    "threshold": 1
+  },
+  {
+    "description": "10 anomalies caught!",
+    "icon": "fa-certificate",
+    "key": "achievement-anomalies-10",
+    "targetProperty": "anomalies",
+    "targetKey": "lab",
+    "threshold": 10
+  },
+  {
+    "description": "50 anomalies caught!",
+    "icon": "fa-certificate",
+    "key": "achievement-anomalies-50",
+    "targetProperty": "anomalies",
+    "targetKey": "lab",
+    "threshold": 50
   }
 ]

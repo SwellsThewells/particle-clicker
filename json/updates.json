@@ -1,0 +1,33 @@
+[
+  {
+    "version": "1.3",
+    "date": "2026-09-27",
+    "title": "Anomalies",
+    "changes": [
+      "Rare anomalies now appear on the detector every few minutes. Click one before it fades for a data burst, a funding windfall or a 30 second data boost.",
+      "Three new achievements for catching anomalies.",
+      "Research can now be done ×1, ×10 or as many levels as you can afford at once.",
+      "This update log, so you can see what has changed."
+    ]
+  },
+  {
+    "version": "1.2",
+    "date": "2026-09-27",
+    "title": "Quality of life",
+    "changes": [
+      "Your lab keeps earning while the game is closed, for up to 24 hours.",
+      "Data and funding per second are shown under the counters.",
+      "The Statistics window shows time played, rates, staff, research levels and achievements.",
+      "Hire staff ×1, ×10 or as many as you can afford at once.",
+      "Export your save as a code and import it again, for backups or to move to another device."
+    ]
+  },
+  {
+    "version": "1.1",
+    "date": "2026-09-25",
+    "title": "The Particle Simulation",
+    "changes": [
+      "The game is now called The Particle Simulation."
+    ]
+  }
+]
