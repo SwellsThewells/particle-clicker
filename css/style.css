@@ -109,6 +109,40 @@ h1 br {
   color: #666;
 }
 
+.status .rate {
+  color: #767676;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.bulk-toggle {
+  margin-bottom: 10px;
+  text-align: right;
+}
+
+.bulk-toggle .small {
+  color: #777;
+  margin-right: 5px;
+}
+
+.stats-list .pull-right {
+  margin-left: 10px;
+}
+
+.save-code {
+  font-family: monospace;
+  font-size: 11px;
+  margin-bottom: 10px;
+  resize: vertical;
+  word-break: break-all;
+}
+
+#messages-container .offline-progress .alert-text {
+  display: block;
+  overflow: hidden;
+  padding-right: 10px;
+}
+
 .update-value {
   position: absolute;
   right: 1em;

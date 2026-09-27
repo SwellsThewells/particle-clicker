@@ -33,7 +33,8 @@ var GameObjects = (function() {
                                moneySpent : 0,
                                dataCollected : 0,
                                dataSpent : 0,
-                               time: 0
+                               time: 0,
+                               lastSeen: 0
                              }
                            }]);
   };
@@ -42,11 +43,19 @@ var GameObjects = (function() {
 
   Lab.prototype.constructor = Lab;
 
+  Lab.prototype.getGrantRate = function() {
+    return this.state.reputation * this.state.factor;
+  };
+
   Lab.prototype.getGrant = function() {
-    var addition = this.state.reputation * this.state.factor;
-    this.state.money += addition;
-    this.state.moneyCollected += addition;
+    var addition = this.getGrantRate();
+    this.receiveMoney(addition);
     return addition;
+  };
+
+  Lab.prototype.receiveMoney = function(amount) {
+    this.state.money += amount;
+    this.state.moneyCollected += amount;
   };
 
   Lab.prototype.acquireData = function(amount) {
@@ -163,6 +172,27 @@ var GameObjects = (function() {
       return cost;
     }
     return -1;  // not enough money
+  };
+
+  /** Total cost of hiring the next n workers. */
+  Worker.prototype.getCost = function(n) {
+    var cost = this.state.cost, total = 0;
+    for (var i = 0; i < n; i++) {
+      total += cost;
+      cost = Math.floor(cost * this.cost_increase);
+    }
+    return total;
+  };
+
+  /** How many workers can be hired with the given money (at most limit). */
+  Worker.prototype.getAffordable = function(money, limit) {
+    var cost = this.state.cost, n = 0;
+    while (n < limit && money >= cost) {
+      money -= cost;
+      cost = Math.floor(cost * this.cost_increase);
+      n++;
+    }
+    return n;
   };
 
   Worker.prototype.getTotal =

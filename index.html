@@ -48,6 +48,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-floppy-o"></i> Saved: <span ng-cloak>{{ lastSaved | date : 'H:mm' }}</span> <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="#" ng-click="saveNow()"><i class="fa fa-save"></i> Save now</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#transfer-modal"><i class="fa fa-exchange"></i> Export / import save</a></li>
                 <li class="divider"></li>
                 <li><a href="#" ng-click="restart()"><i class="fa fa-refresh"></i> Restart</a></li>
               </ul>
@@ -117,6 +118,7 @@
           <div class="col-xs-4 text-center col-no-padding-xs">
             <strong>Data</strong><br>
             {{ lc.lab.state.data | niceNumber }}
+            <div class="rate" title="Data produced per second by your staff">+{{ lc.dataRate() | niceNumber }}/s</div>
             <div class="update-value" id="update-data"></div>
           </div>
           <div class="col-xs-4 text-center col-no-padding-xs">
@@ -127,6 +129,7 @@
           <div class="col-xs-4 text-center col-no-padding-xs">
             <strong>Funding</strong><br>
             {{ lc.lab.state.money | currency }}
+            <div class="rate" title="Funding granted per second, based on your reputation">+{{ lc.lab.getGrantRate() | niceNumber }}/s</div>
             <div class="update-value" id="update-funding"></div>
           </div>
         </div>
@@ -141,13 +144,19 @@
           </div>
           <div class="panel-body scrollable large" id="hrLarge">
             <div id="hrContent" ng-controller="HRController as hrc">
+              <div class="bulk-toggle" ng-cloak>
+                <span class="small">Hire</span>
+                <div class="btn-group btn-group-xs" role="group" aria-label="Number of people to hire at once">
+                  <button type="button" class="btn btn-default" ng-repeat="a in hrc.amounts" ng-class="{active: hrc.amount === a}" ng-click="hrc.setAmount(a)">{{ a === 'max' ? 'Max' : '×' + a }}</button>
+                </div>
+              </div>
               <ul class="media-list" ng-cloak>
                 <li class="media" ng-repeat="w in hrc.workers" ng-show="hrc.isVisible(w)">
                   <div class="media-body">
                     <h4 class="media-heading">{{ w.name }} <span ng-show="w.state.hired > 0" class="badge">{{ w.state.hired | niceNumber }}</span></h4>
                     <p ng-show="w.state.hired > 0">{{ w.description }}</p>
                     <p ng-show="w.state.hired > 0" class="small">Produce <strong>{{ w.state.rate | niceNumber }}</strong> data per second.</p>
-                    <button class="btn btn-primary" ng-disabled="!hrc.isAvailable(w)" ng-click="hrc.hire(w)"><i class="fa fa-user"></i> <small>{{ w.state.cost | currency }}</small></button>
+                    <button class="btn btn-primary" ng-disabled="!hrc.isAvailable(w)" ng-click="hrc.hire(w)"><i class="fa" ng-class="hrc.count(w) > 1 ? 'fa-users' : 'fa-user'"></i> <small><span ng-show="hrc.count(w) > 1">&times;{{ hrc.count(w) }} &middot; </span>{{ hrc.cost(w) | currency }}</small></button>
                   </div>
                 </li>
               </ul>
@@ -242,11 +251,39 @@
             <h4 class="modal-title" id="stats-label"><i class="fa fa-bar-chart"></i> Statistics</h4>
           </div>
           <div class="modal-body">
-            <ul class="list-group">
-              <li class="list-group-item"><i class="fa fa-location-arrow"></i> : <strong>{{ lab.state.clicks | niceNumber }}</strong></li>
-              <li class="list-group-item"><i class="fa fa-database"></i> : <strong>{{ lab.state.dataSpent | niceNumber }}</strong> used / <strong>{{ lab.state.dataCollected | niceNumber }}</strong> collected</li>
-              <li class="list-group-item"><i class="fa fa-money"></i> : <strong>{{ lab.state.moneySpent | niceNumber }}</strong> spent / <strong>{{ lab.state.moneyCollected | niceNumber }}</strong> gathered</li>
+            <ul class="list-group stats-list">
+              <li class="list-group-item"><i class="fa fa-clock-o fa-fw"></i> Time played <strong class="pull-right">{{ playTime() | niceTime }}</strong></li>
+              <li class="list-group-item"><i class="fa fa-location-arrow fa-fw"></i> Detector clicks <strong class="pull-right">{{ lab.state.clicks | niceNumber }}</strong></li>
+              <li class="list-group-item"><i class="fa fa-tachometer fa-fw"></i> Data per second <strong class="pull-right">{{ dataRate() | niceNumber }}</strong></li>
+              <li class="list-group-item"><i class="fa fa-line-chart fa-fw"></i> Funding per second <strong class="pull-right">{{ lab.getGrantRate() | currency }}</strong></li>
+              <li class="list-group-item"><i class="fa fa-database fa-fw"></i> Data <span class="pull-right"><strong>{{ lab.state.dataSpent | niceNumber }}</strong> used / <strong>{{ lab.state.dataCollected | niceNumber }}</strong> collected</span></li>
+              <li class="list-group-item"><i class="fa fa-money fa-fw"></i> Funding <span class="pull-right"><strong>{{ lab.state.moneySpent | currency }}</strong> spent / <strong>{{ lab.state.moneyCollected | currency }}</strong> gathered</span></li>
+              <li class="list-group-item"><i class="fa fa-users fa-fw"></i> Staff hired <strong class="pull-right">{{ staff() | niceNumber }}</strong></li>
+              <li class="list-group-item"><i class="fa fa-cogs fa-fw"></i> Research levels <strong class="pull-right">{{ researchLevels() | niceNumber }}</strong></li>
+              <li class="list-group-item"><i class="fa fa-trophy fa-fw"></i> Achievements <strong class="pull-right">{{ achieved() }} / {{ achievementCount }}</strong></li>
             </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="transfer-modal" tabindex="-1" role="dialog" aria-labelledby="transfer-label" aria-hidden="true" ng-controller="TransferController">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="transfer-label"><i class="fa fa-exchange"></i> Export / import save</h4>
+          </div>
+          <div class="modal-body">
+            <h5>Export</h5>
+            <p class="small">Keep this code somewhere safe, or paste it into the game on another device to continue there.</p>
+            <textarea id="export-code" class="form-control save-code" rows="3" readonly ng-model="exportCode" onclick="this.select()"></textarea>
+            <button type="button" class="btn btn-primary btn-sm" ng-click="copy()"><i class="fa" ng-class="copied ? 'fa-check' : 'fa-clipboard'"></i> {{ copied ? 'Copied' : 'Copy code' }}</button>
+            <h5>Import</h5>
+            <p class="small">Paste a save code to continue from it. This replaces your current progress.</p>
+            <textarea id="import-code" class="form-control save-code" rows="3" ng-model="importCode" placeholder="Paste a save code here"></textarea>
+            <p class="text-danger small" ng-show="error" ng-cloak><i class="fa fa-exclamation-triangle"></i> {{ error }}</p>
+            <button type="button" class="btn btn-warning btn-sm" ng-click="load()"><i class="fa fa-upload"></i> Load save</button>
           </div>
         </div>
       </div>

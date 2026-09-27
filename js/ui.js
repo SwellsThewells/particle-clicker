@@ -10,6 +10,7 @@ var UI = (function () {
   $(function() {
     FastClick.attach(document.body);    
     
+    var rateHeight = 17;  // height of the per-second rate line under the status
     var resize = function() {
       var h = $(window).height();
       var offset = 111;
@@ -48,8 +49,9 @@ var UI = (function () {
           $('#detector').width(500).height(500);
           detector.init(500);
         }
-      } else if ($(window).width() < 768 && $(window).height() - 90 < 300) {
-        var newWidth = $(window).width() - Math.max($(window).width() - ($(window).height() - 90 + 10), 300) - 10;
+      } else if ($(window).width() < 768 && $(window).height() - 90 - rateHeight < 300) {
+        // Leave room below the detector for the status bar and its rates.
+        var newWidth = $(window).width() - Math.max($(window).width() - ($(window).height() - 90 + 10), 300) - 10 - rateHeight;
         if (detector.width != newWidth) {
           $('#detector').width(newWidth).height(newWidth);
           detector.init(newWidth);
@@ -140,6 +142,38 @@ var UI = (function () {
     window.setTimeout(remove(alert), 2000);
   }
 
+  /** Show a dismissible message in the bottom right corner. */
+  var showMessage = function(icon, html) {
+    var alert = '<div class="alert alert-info" role="alert">';
+    alert += '<button type="button" class="btn btn-primary">OK</button>';
+    alert += '<i class="fa ' + icon + ' alert-glyph"></i> <span class="alert-text">' + html + '</span>';
+    alert += '</div>';
+    alert = $(alert);
+    alert.find('button').click(function() {
+      alert.slideUp(300, function() { alert.remove(); });
+    });
+    $('#messages-container').append(alert);
+    return alert;
+  };
+
+  /** Tell the player what their lab earned while the game was closed. */
+  var showOfflineProgress = function(offline) {
+    var earned = [];
+    if (offline.data > 0) {
+      earned.push('<strong>' + Helpers.formatNumberPostfix(offline.data) + ' data</strong>');
+    }
+    if (offline.money > 0) {
+      earned.push('<strong>JTN ' + Helpers.formatNumberPostfix(offline.money) + '</strong> in funding');
+    }
+    var text = 'Welcome back! While you were away for ' +
+        Helpers.formatTime(offline.time) + ', your lab collected ' +
+        earned.join(' and ') + '.';
+    if (offline.capped) {
+      text += ' <small>(Progress while away is capped at 24 hours.)</small>';
+    }
+    showMessage('fa-clock-o', text).addClass('offline-progress');
+  };
+
   if (typeof $.cookie('cookielaw') === 'undefined') {
     var alert = '<div id="cookielaw" class="alert alert-info" role="alert">';
     alert += '<button type="button" class="btn btn-primary">OK</button>';
@@ -172,6 +206,8 @@ var UI = (function () {
 
   return {
     showAchievement: showAchievement,
+    showMessage: showMessage,
+    showOfflineProgress: showOfflineProgress,
     showModal: showModal,
     showLevels: showLevels,
     showUpdateValue: showUpdateValue

@@ -83,6 +83,7 @@ var Helpers = (function () {
     formatNumberPostfix: formatNumberPostfix,
     formatTime: formatTime,
     validateSaveVersion: validateSaveVersion,
+    saveVersion: saveVersion,
     analytics: ''
   };
 })();
