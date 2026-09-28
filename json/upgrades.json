@@ -649,7 +649,7 @@
     "key": "upgrade-sps",
     "name": "Super Proton Synchrotron",
     "description": "A larger particle smasher.",
-    "effect": "Ten times the amount of data per click.",
+    "effect": "Ten times the amount of data per click. Photons appear in the event display.",
     "icon": "fa-circle-o-notch",
     "cost": 5e5,
     "targets": [{ "key": "lab", "property": "detector" }],
@@ -663,7 +663,7 @@
     "key": "upgrade-tevatron",
     "name": "Tevatron",
     "description": "A larger particle smasher.",
-    "effect": "Ten times the amount of data per click.",
+    "effect": "Ten times the amount of data per click. Jets appear in the event display.",
     "icon": "fa-circle-o-notch",
     "cost": 5e7,
     "targets": [{ "key": "lab", "property": "detector" }],
@@ -677,7 +677,7 @@
     "key": "upgrade-lhc",
     "name": "Large Hadron Collider",
     "description": "A larger particle smasher.",
-    "effect": "Ten times the amount of data per click.",
+    "effect": "Ten times the amount of data per click. Golden Higgs and Z events appear in the event display.",
     "icon": "fa-circle-o-notch",
     "cost": 5e10,
     "targets": [{ "key": "lab", "property": "detector" }],
@@ -1127,7 +1127,7 @@
     "key": "upgrade-hllhc",
     "name": "High-Luminosity LHC",
     "description": "The LHC, upgraded to collide five to seven times more often.",
-    "effect": "Ten times the amount of data per click.",
+    "effect": "Ten times the amount of data per click. Pile-up appears in the event display.",
     "icon": "fa-circle-o-notch",
     "cost": 5e14,
     "targets": [{ "key": "lab", "property": "detector" }],
@@ -1141,11 +1141,156 @@
     "key": "upgrade-fcc",
     "name": "Future Circular Collider",
     "description": "A 91 km ring for the next generation of discoveries.",
-    "effect": "Ten times the amount of data per click.",
+    "effect": "Ten times the amount of data per click. Shockwaves appear in the event display.",
     "icon": "fa-circle-o-notch",
     "cost": 5e17,
     "targets": [{ "key": "lab", "property": "detector" }],
     "requirements": [{ "key": "upgrade-hllhc", "property": "used", "threshold": 1 }],
     "factor": 10
+  },
+  {
+    "key": "upgrade-darksearch",
+    "name": "Dark Matter Search",
+    "description": "Look for what most of the universe is made of.",
+    "effect": "Triple the amount of data per click.",
+    "icon": "fa-search",
+    "cost": 1e3,
+    "targets": [{ "key": "lab", "property": "detector" }],
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 1 }],
+    "factor": 3
+  },
+  {
+    "key": "upgrade-axion",
+    "name": "Axion Haloscope",
+    "description": "A very quiet radio, listening for dark matter.",
+    "effect": "Master Students and PhD Students produce three times as much data per second.",
+    "icon": "fa-rss",
+    "cost": 5e3,
+    "targets": [
+      { "key": "workers-masterstudents", "property": "rate" },
+      { "key": "workers-phdstudents", "property": "rate" }
+    ],
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 1 }],
+    "factor": 3
+  },
+  {
+    "key": "upgrade-darktrigger",
+    "name": "Dark Matter Trigger",
+    "description": "Some anomalies might be dark matter. Look closer.",
+    "effect": "Anomalies stay on the detector 6 seconds longer.",
+    "icon": "fa-crosshairs",
+    "cost": 2e5,
+    "targets": [{ "key": "lab", "property": "anomalyLifetime" }],
+    "requirements": [
+      { "key": "prestige", "property": "expansions", "threshold": 1 },
+      { "key": "lab", "property": "anomalies", "threshold": 10 }
+    ],
+    "constant": 6
+  },
+  {
+    "key": "upgrade-xenon",
+    "name": "Xenon Detector",
+    "description": "Tonnes of liquid xenon, waiting for a dark matter particle.",
+    "effect": "Postdocs, Research Fellows and Permanent Staff produce three times as much data per second.",
+    "icon": "fa-tint",
+    "cost": 1e6,
+    "targets": [
+      { "key": "workers-postdocs", "property": "rate" },
+      { "key": "workers-fellows", "property": "rate" },
+      { "key": "workers-permanent", "property": "rate" }
+    ],
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 2 }],
+    "factor": 3
+  },
+  {
+    "key": "upgrade-lensingmap",
+    "name": "Dark Matter Map",
+    "description": "Weak gravitational lensing shows where dark matter hides.",
+    "effect": "Double the reputation for all future research.",
+    "icon": "fa-map-marker",
+    "cost": 1e8,
+    "targets": [
+      { "key": "research-cpv", "property": "reputation" },
+      { "key": "research-jpsi", "property": "reputation" },
+      { "key": "research-tau", "property": "reputation" },
+      { "key": "research-beauty", "property": "reputation" },
+      { "key": "research-gluons", "property": "reputation" },
+      { "key": "research-weak", "property": "reputation" },
+      { "key": "research-top", "property": "reputation" },
+      { "key": "research-boscillations", "property": "reputation" },
+      { "key": "research-higgs", "property": "reputation" },
+      { "key": "research-dstars", "property": "reputation" },
+      { "key": "research-xib", "property": "reputation" },
+      { "key": "research-neutrino", "property": "reputation" },
+      { "key": "research-qgp", "property": "reputation" },
+      { "key": "research-antihydrogen", "property": "reputation" },
+      { "key": "research-tetraquark", "property": "reputation" },
+      { "key": "research-pentaquark", "property": "reputation" }
+    ],
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 2 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-bullet",
+    "name": "Bullet Cluster",
+    "description": "Two colliding galaxy clusters, and the dark matter that passed right through.",
+    "effect": "Tenured Professors, Nobel Laureates and Summer Students produce three times as much data per second.",
+    "icon": "fa-dot-circle-o",
+    "cost": 1e9,
+    "targets": [
+      { "key": "workers-profs", "property": "rate" },
+      { "key": "workers-nobel", "property": "rate" },
+      { "key": "workers-summies", "property": "rate" }
+    ],
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 3 }],
+    "factor": 3
+  },
+  {
+    "key": "upgrade-cmb",
+    "name": "Cosmic Microwave Background",
+    "description": "The afterglow of the Big Bang, mapped in exquisite detail.",
+    "effect": "Reputation brings in 50% more funding.",
+    "icon": "fa-globe",
+    "cost": 1e10,
+    "targets": [{ "key": "lab", "property": "factor" }],
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 3 }],
+    "factor": 1.5e0
+  },
+  {
+    "key": "upgrade-muoncollider",
+    "name": "Muon Collider",
+    "description": "Collide muons before they decay.",
+    "effect": "Ten times the amount of data per click.",
+    "icon": "fa-circle-o-notch",
+    "cost": 1e12,
+    "targets": [{ "key": "lab", "property": "detector" }],
+    "requirements": [
+      { "key": "prestige", "property": "expansions", "threshold": 5 },
+      { "key": "upgrade-lhc", "property": "used", "threshold": 1 }
+    ],
+    "factor": 10
+  },
+  {
+    "key": "upgrade-darksector",
+    "name": "Dark Sector Factory",
+    "description": "A whole laboratory dedicated to the hidden side of the universe.",
+    "effect": "All staff produce twice as much data per second.",
+    "icon": "fa-building",
+    "cost": 1e14,
+    "targets": [
+      { "key": "workers-masterstudents", "property": "rate" },
+      { "key": "workers-phdstudents", "property": "rate" },
+      { "key": "workers-postdocs", "property": "rate" },
+      { "key": "workers-fellows", "property": "rate" },
+      { "key": "workers-permanent", "property": "rate" },
+      { "key": "workers-profs", "property": "rate" },
+      { "key": "workers-nobel", "property": "rate" },
+      { "key": "workers-summies", "property": "rate" },
+      { "key": "workers-citizens", "property": "rate" },
+      { "key": "workers-spokespersons", "property": "rate" },
+      { "key": "workers-directors", "property": "rate" }
+    ],
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 5 }],
+    "factor": 2
   }
 ]

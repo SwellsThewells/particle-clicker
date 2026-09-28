@@ -4,6 +4,17 @@
     <title>The Particle Simulation</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+    // Apply the saved theme before the page is drawn, so dark mode never flashes white.
+    (function() {
+      try {
+        var s = JSON.parse(localStorage.getItem('settings')) || {};
+        var dark = s.theme === 'dark' || (s.theme === 'system' && window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) { document.documentElement.className += ' theme-dark'; }
+      } catch (e) {}
+    })();
+    </script>
 
     <meta property="og:title" content="The Particle Simulation">
     <meta property="og:type" content="game">
@@ -57,10 +68,11 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li ng-controller="UpdatesController"><a href="#" data-toggle="modal" data-target="#updates-modal" title="What's new"><i class="fa fa-bullhorn"></i><span class="hidden-sm"> Updates</span> <span class="label label-danger" ng-show="isNew()" ng-cloak>New</span></a></li>
-            <li><a href="https://github.com/particle-clicker/particle-clicker/" target="_blank" title="GitHub"><i class="fa fa-github"></i><span class="hidden-sm"> GitHub</span></a></li>
+            <li><a href="#" data-toggle="modal" data-target="#settings-modal" title="Settings"><i class="fa fa-cog"></i><span class="hidden-sm"> Settings</span></a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Social"><i class="fa fa-share-alt"></i><span class="hidden-sm"> Social</span><span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
+                <li><a href="https://github.com/particle-clicker/particle-clicker/" target="_blank"><i class="fa fa-github"></i> GitHub</a></li>
                 <li><a href="https://facebook.com/particleclicker"><i class="fa fa-facebook-square"></i> Facebook</a></li>
                 <li><a href="https://twitter.com/particleclicker"><i class="fa fa-twitter"></i> Twitter</a></li>
                 <li><a href="https://plus.google.com/share?url=http%3A%2F%2Fcern.ch%2Fparticle-clicker" target="_blank" title="Share on Google+"><i class="fa fa-google-plus-square"></i> Google+</a></li>
@@ -94,7 +106,7 @@
                   <div class="media-body">
                     <h4 class="media-heading">{{ r.state.level > 0 ? r.name : '?????' }} <span ng-show="r.state.level > 0" class="badge">Level {{ r.state.level }}</span></h4>
                     <p ng-show="r.state.level > 0">{{ r.description }}</p>
-                    <p ng-show="r.state.level > 0" class="small">Research yields <strong>{{ r.state.reputation | niceNumber }}</strong> reputation.</p>
+                    <p ng-show="r.state.level > 0" class="small">Research yields <strong>{{ r.state.reputation * rc.reputationBonus() | niceNumber }}</strong> reputation.</p>
                     <div class="btn-group">
                       <button class="btn btn-primary" ng-disabled="!rc.isAvailable(r)" ng-click="rc.doResearch(r)"><i class="fa fa-cogs"></i> <small><span ng-show="rc.bulk.count(r) > 1">&times;{{ rc.bulk.count(r) }} &middot; </span>{{ rc.bulk.cost(r) | niceNumber }} data</small></button>
                     <button class="btn btn-info {{ r.state.interesting ? 'blink' : '' }}" ng-show="r.state.level > 0" ng-click="rc.showInfo(r)"><i class="fa {{ r.state.interesting ? 'fa-exclamation' : 'fa-info' }}"></i></button>
@@ -165,7 +177,7 @@
                   <div class="media-body">
                     <h4 class="media-heading">{{ w.name }} <span ng-show="w.state.hired > 0" class="badge">{{ w.state.hired | niceNumber }}</span></h4>
                     <p ng-show="w.state.hired > 0">{{ w.description }}</p>
-                    <p ng-show="w.state.hired > 0" class="small">Produce <strong>{{ w.state.rate | niceNumber }}</strong> data per second.</p>
+                    <p ng-show="w.state.hired > 0" class="small">Produce <strong>{{ w.state.rate * hrc.dataBonus() | niceNumber }}</strong> data per second.</p>
                     <button class="btn btn-primary" ng-disabled="!hrc.isAvailable(w)" ng-click="hrc.hire(w)"><i class="fa" ng-class="hrc.bulk.count(w) > 1 ? 'fa-users' : 'fa-user'"></i> <small><span ng-show="hrc.bulk.count(w) > 1">&times;{{ hrc.bulk.count(w) }} &middot; </span>{{ hrc.bulk.cost(w) | currency }}</small></button>
                   </div>
                 </li>
@@ -241,10 +253,12 @@
           </div>
           <div class="modal-body">
             <p class="text-center"><strong>Progress</strong> <span class="label label-info">{{ progress() }} / {{ achievements.length }}</span></p>
+            <p class="text-center small text-muted"><i class="fa fa-eye-slash"></i> Secret achievements found: {{ secretsFound() }} / {{ secretCount }}</p>
             <ul class="list-group">
               <li class="list-group-item" ng-repeat="a in achievements | orderBy:'state.timeAchieved' | reverse" ng-show="a.isAchieved()">
                 <i class="fa {{ a.icon }}"></i>
                 {{ a.description }}
+                <span class="label label-warning" ng-show="a.secret">Secret</span>
                 <span class="badge">{{ a.state.timeAchieved | niceTime }}</span>
               </li>
             </ul>
@@ -263,6 +277,9 @@
           <div class="modal-body">
             <ul class="list-group stats-list">
               <li class="list-group-item"><i class="fa fa-clock-o fa-fw"></i> Time played <strong class="pull-right">{{ playTime() | niceTime }}</strong></li>
+              <li class="list-group-item"><i class="fa fa-level-up fa-fw"></i> Level <strong class="pull-right">{{ player.level }} ({{ player.totalXp | niceNumber }} XP in total)</strong></li>
+              <li class="list-group-item"><i class="fa fa-expand fa-fw"></i> Universes expanded <strong class="pull-right">{{ prestige.expansions }}</strong></li>
+              <li class="list-group-item"><i class="fa fa-adjust fa-fw"></i> Dark matter <strong class="pull-right">{{ prestige.darkMatterTotal | niceNumber }}</strong></li>
               <li class="list-group-item"><i class="fa fa-location-arrow fa-fw"></i> Detector clicks <strong class="pull-right">{{ lab.state.clicks | niceNumber }}</strong></li>
               <li class="list-group-item"><i class="fa fa-tachometer fa-fw"></i> Data per second <strong class="pull-right">{{ dataRate() | niceNumber }}</strong></li>
               <li class="list-group-item"><i class="fa fa-line-chart fa-fw"></i> Funding per second <strong class="pull-right">{{ lab.getGrantRate() | currency }}</strong></li>
@@ -314,6 +331,121 @@
             <textarea id="import-code" class="form-control save-code" rows="3" ng-model="importCode" placeholder="Paste a save code here"></textarea>
             <p class="text-danger small" ng-show="error" ng-cloak><i class="fa fa-exclamation-triangle"></i> {{ error }}</p>
             <button type="button" class="btn btn-warning btn-sm" ng-click="load()"><i class="fa fa-upload"></i> Load save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="level-hud" ng-controller="LevelController" ng-cloak>
+      <span class="level-badge" title="Your level">Lv {{ player.level }}</span>
+      <div class="xp-bar" role="progressbar" aria-label="XP to the next level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ floor(percent()) }}" title="{{ floor(player.xp) | niceNumber }} / {{ needed() | niceNumber }} XP to level {{ player.level + 1 }}">
+        <div class="xp-fill" ng-style="{width: percent() + '%'}"></div>
+        <span class="xp-text">{{ floor(player.xp) | niceNumber }} / {{ needed() | niceNumber }} XP</span>
+      </div>
+      <button type="button" class="btn btn-warning btn-xs hud-boost" ng-show="player.points > 0" data-toggle="modal" data-target="#boost-modal" title="Choose a boost"><i class="fa fa-star"></i><span class="hud-label"> Boost</span> <span class="badge">{{ player.points }}</span></button>
+      <button type="button" class="btn btn-xs hud-expand" ng-class="canExpand() ? 'btn-primary' : 'btn-default'" ng-show="showExpansion()" data-toggle="modal" data-target="#expansion-modal" title="Particle Expansion"><i class="fa fa-expand"></i><span class="hud-label"> Expand</span></button>
+    </div>
+
+    <div class="modal fade" id="boost-modal" tabindex="-1" role="dialog" aria-labelledby="boost-label" aria-hidden="true" ng-controller="LevelController">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="boost-label"><i class="fa fa-star"></i> Level {{ player.level }}: choose a boost</h4>
+          </div>
+          <div class="modal-body">
+            <p ng-show="player.points > 1">You have {{ player.points }} boosts to choose. Each one lasts forever, even when the universe expands.</p>
+            <p ng-show="player.points == 1">Pick one. It lasts forever, even when the universe expands.</p>
+            <p ng-hide="player.points > 0">No boosts to choose right now. Level up to earn more.</p>
+            <div class="row boost-cards">
+              <div class="col-sm-4" ng-repeat="b in offer()">
+                <button type="button" class="boost-card" ng-click="choose(b)">
+                  <i class="fa {{ b.icon }} fa-2x"></i>
+                  <strong>{{ b.name }}</strong>
+                  <span class="small">{{ b.description }}</span>
+                  <span class="label label-default" ng-show="player[b.key] > 0">You have {{ total(b) }}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="expansion-modal" tabindex="-1" role="dialog" aria-labelledby="expansion-label" aria-hidden="true" ng-controller="ExpansionController">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="expansion-label"><i class="fa fa-expand"></i> Particle Expansion</h4>
+          </div>
+          <div class="modal-body">
+            <p>Expand the universe to turn your reputation into <strong>dark matter</strong>. Your data, funding, reputation, staff, research and upgrades start over. You keep your achievements, your level and boosts, and all of your dark matter. Each dark matter makes you produce {{ percent(1) }}% more, forever, and expanding unlocks new upgrades.</p>
+            <ul class="list-group stats-list">
+              <li class="list-group-item"><i class="fa fa-adjust fa-fw"></i> Dark matter <strong class="pull-right">{{ prestige.darkMatter | niceNumber }} to spend, {{ prestige.darkMatterTotal | niceNumber }} in total</strong></li>
+              <li class="list-group-item"><i class="fa fa-line-chart fa-fw"></i> Production bonus <strong class="pull-right">+{{ percent(prestige.darkMatterTotal) | niceNumber }}%</strong></li>
+              <li class="list-group-item"><i class="fa fa-expand fa-fw"></i> Universes expanded <strong class="pull-right">{{ prestige.expansions }}</strong></li>
+            </ul>
+            <div class="expand-now text-center">
+              <p ng-show="gain() >= 1">Expanding now gives <strong>+{{ gain() | niceNumber }} dark matter</strong>, for +{{ percent(prestige.darkMatterTotal + gain()) | niceNumber }}% production in total. <span class="text-muted">The next one comes at {{ nextAt() | niceNumber }} reputation.</span></p>
+              <p ng-show="gain() < 1" class="text-muted">Reach {{ nextAt() | niceNumber }} reputation in this universe to earn your next dark matter.</p>
+              <button type="button" class="btn btn-primary btn-lg" ng-disabled="gain() < 1 || expanding" ng-click="expand()"><i class="fa fa-expand"></i> Expand the universe</button>
+            </div>
+            <h5>Dark matter upgrades</h5>
+            <p class="small text-muted">Bought with dark matter. They last forever.</p>
+            <div class="row dm-upgrades">
+              <div class="col-sm-6" ng-repeat="u in upgrades">
+                <div class="dm-upgrade" ng-class="{bought: bought(u)}">
+                  <h4><i class="fa {{ u.icon }} fa-fw"></i> {{ u.name }}</h4>
+                  <p class="small">{{ u.description }}</p>
+                  <button type="button" class="btn btn-sm" ng-class="bought(u) ? 'btn-success' : 'btn-primary'" ng-disabled="!canBuy(u)" ng-click="buy(u)">
+                    <span ng-show="bought(u)"><i class="fa fa-check"></i> Bought</span>
+                    <span ng-hide="bought(u)"><i class="fa fa-adjust"></i> {{ u.cost }} dark matter</span>
+                  </button>
+                  <span class="small text-muted" ng-show="locked(u) && !bought(u)">Needs {{ requiredName(u) }} first.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="settings-modal" tabindex="-1" role="dialog" aria-labelledby="settings-label" aria-hidden="true" ng-controller="SettingsController">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="settings-label"><i class="fa fa-cog"></i> Settings</h4>
+          </div>
+          <div class="modal-body settings">
+            <div class="setting">
+              <span class="setting-name" id="setting-theme">Theme</span>
+              <div class="btn-group btn-group-sm" role="group" aria-labelledby="setting-theme">
+                <button type="button" class="btn btn-default" ng-class="{active: s.theme === 'light'}" ng-click="set('theme', 'light')"><i class="fa fa-sun-o"></i> Light</button>
+                <button type="button" class="btn btn-default" ng-class="{active: s.theme === 'dark'}" ng-click="set('theme', 'dark')"><i class="fa fa-moon-o"></i> Dark</button>
+                <button type="button" class="btn btn-default" ng-class="{active: s.theme === 'system'}" ng-click="set('theme', 'system')"><i class="fa fa-desktop"></i> Match system</button>
+              </div>
+            </div>
+            <div class="setting">
+              <span class="setting-name" id="setting-numbers">Numbers</span>
+              <div class="btn-group btn-group-sm" role="group" aria-labelledby="setting-numbers">
+                <button type="button" class="btn btn-default" ng-class="{active: s.numbers === 'short'}" ng-click="set('numbers', 'short')">Short (1.2M)</button>
+                <button type="button" class="btn btn-default" ng-class="{active: s.numbers === 'scientific'}" ng-click="set('numbers', 'scientific')">Scientific (1.2e6)</button>
+              </div>
+            </div>
+            <div class="setting">
+              <span class="setting-name" id="setting-effects">Detector effects</span>
+              <div class="btn-group btn-group-sm" role="group" aria-labelledby="setting-effects">
+                <button type="button" class="btn btn-default" ng-class="{active: s.effects === 'full'}" ng-click="set('effects', 'full')">Full</button>
+                <button type="button" class="btn btn-default" ng-class="{active: s.effects === 'reduced'}" ng-click="set('effects', 'reduced')">Reduced</button>
+                <button type="button" class="btn btn-default" ng-class="{active: s.effects === 'minimal'}" ng-click="set('effects', 'minimal')">Minimal</button>
+              </div>
+            </div>
+            <div class="checkbox"><label><input type="checkbox" ng-model="s.floatingNumbers" ng-change="set('floatingNumbers', s.floatingNumbers)"> Show floating numbers when you earn or spend</label></div>
+            <div class="checkbox"><label><input type="checkbox" ng-model="s.popups" ng-change="set('popups', s.popups)"> Show achievement pop-ups</label></div>
+            <div class="checkbox"><label><input type="checkbox" ng-model="s.reduceMotion" ng-change="set('reduceMotion', s.reduceMotion)"> Reduce motion: shorter animations and no pulsing</label></div>
+            <p class="small text-muted">Settings are saved in this browser. Restarting, importing a save or expanding the universe keeps them.</p>
           </div>
         </div>
       </div>
@@ -374,6 +506,7 @@
     <script src="js/external/fastclick.js"></script>
 
     <script src="js/storage.js"></script>
+    <script src="js/settings.js"></script>
     <script src="js/helpers.js"></script>
     <script src="js/analytics.js"></script>
     <script src="js/gameobjects.js"></script>

@@ -1470,5 +1470,181 @@
     "targetProperty": "moneySpent",
     "targetKey": "lab",
     "threshold": 1000000000000.0
+  },
+  {
+    "description": "Level 5!",
+    "icon": "fa-level-up",
+    "key": "achievement-level-5",
+    "targetProperty": "level",
+    "targetKey": "player",
+    "threshold": 5
+  },
+  {
+    "description": "Level 10!",
+    "icon": "fa-level-up",
+    "key": "achievement-level-10",
+    "targetProperty": "level",
+    "targetKey": "player",
+    "threshold": 10
+  },
+  {
+    "description": "Level 20!",
+    "icon": "fa-level-up",
+    "key": "achievement-level-20",
+    "targetProperty": "level",
+    "targetKey": "player",
+    "threshold": 20
+  },
+  {
+    "description": "Level 30!",
+    "icon": "fa-level-up",
+    "key": "achievement-level-30",
+    "targetProperty": "level",
+    "targetKey": "player",
+    "threshold": 30
+  },
+  {
+    "description": "Level 50!",
+    "icon": "fa-level-up",
+    "key": "achievement-level-50",
+    "targetProperty": "level",
+    "targetKey": "player",
+    "threshold": 50
+  },
+  {
+    "description": "The universe expands!",
+    "icon": "fa-expand",
+    "key": "achievement-expansions-1",
+    "targetProperty": "expansions",
+    "targetKey": "prestige",
+    "threshold": 1
+  },
+  {
+    "description": "3 universes expanded!",
+    "icon": "fa-expand",
+    "key": "achievement-expansions-3",
+    "targetProperty": "expansions",
+    "targetKey": "prestige",
+    "threshold": 3
+  },
+  {
+    "description": "10 universes expanded!",
+    "icon": "fa-expand",
+    "key": "achievement-expansions-10",
+    "targetProperty": "expansions",
+    "targetKey": "prestige",
+    "threshold": 10
+  },
+  {
+    "description": "25 universes expanded!",
+    "icon": "fa-expand",
+    "key": "achievement-expansions-25",
+    "targetProperty": "expansions",
+    "targetKey": "prestige",
+    "threshold": 25
+  },
+  {
+    "description": "10 dark matter collected!",
+    "icon": "fa-adjust",
+    "key": "achievement-darkmatter-10",
+    "targetProperty": "darkMatterTotal",
+    "targetKey": "prestige",
+    "threshold": 10
+  },
+  {
+    "description": "100 dark matter collected!",
+    "icon": "fa-adjust",
+    "key": "achievement-darkmatter-100",
+    "targetProperty": "darkMatterTotal",
+    "targetKey": "prestige",
+    "threshold": 100
+  },
+  {
+    "description": "1k dark matter collected!",
+    "icon": "fa-adjust",
+    "key": "achievement-darkmatter-1000",
+    "targetProperty": "darkMatterTotal",
+    "targetKey": "prestige",
+    "threshold": 1000
+  },
+  {
+    "description": "Every dark matter upgrade bought!",
+    "icon": "fa-magic",
+    "key": "achievement-darkmatter-upgrades",
+    "targetProperty": "upgradesBought",
+    "targetKey": "prestige",
+    "threshold": 12
+  },
+  {
+    "description": "Up, up, down, down... you know the rest.",
+    "icon": "fa-gamepad",
+    "key": "achievement-secret-konami",
+    "targetProperty": "konami",
+    "targetKey": "secrets",
+    "threshold": 1,
+    "secret": true
+  },
+  {
+    "description": "Night owl: doing physics between midnight and 5 a.m.",
+    "icon": "fa-moon-o",
+    "key": "achievement-secret-nightowl",
+    "targetProperty": "nightOwl",
+    "targetKey": "secrets",
+    "threshold": 1,
+    "secret": true
+  },
+  {
+    "description": "Home sweet home: you named your lab CERN.",
+    "icon": "fa-home",
+    "key": "achievement-secret-home",
+    "targetProperty": "homeSweetHome",
+    "targetKey": "secrets",
+    "threshold": 1,
+    "secret": true
+  },
+  {
+    "description": "Reflexes: caught an anomaly within a second.",
+    "icon": "fa-bolt",
+    "key": "achievement-secret-reflexes",
+    "targetProperty": "reflexes",
+    "targetKey": "secrets",
+    "threshold": 1,
+    "secret": true
+  },
+  {
+    "description": "Missed opportunities: 10 anomalies faded away.",
+    "icon": "fa-frown-o",
+    "key": "achievement-secret-missed",
+    "targetProperty": "missed",
+    "targetKey": "secrets",
+    "threshold": 10,
+    "secret": true
+  },
+  {
+    "description": "Come to the dark side: you switched on dark mode.",
+    "icon": "fa-adjust",
+    "key": "achievement-secret-darkside",
+    "targetProperty": "darkSide",
+    "targetKey": "secrets",
+    "threshold": 1,
+    "secret": true
+  },
+  {
+    "description": "Speed of light: 15 clicks in 2 seconds.",
+    "icon": "fa-tachometer",
+    "key": "achievement-secret-speed",
+    "targetProperty": "speedOfLight",
+    "targetKey": "secrets",
+    "threshold": 1,
+    "secret": true
+  },
+  {
+    "description": "Curious mind: read the info page of every research topic.",
+    "icon": "fa-book",
+    "key": "achievement-secret-curious",
+    "targetProperty": "curious",
+    "targetKey": "secrets",
+    "threshold": 1,
+    "secret": true
   }
 ]

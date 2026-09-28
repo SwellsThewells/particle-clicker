@@ -1,5 +1,20 @@
 [
   {
+    "version": "1.5",
+    "date": "2026-09-28",
+    "title": "Levels, Particle Expansion and dark mode",
+    "changes": [
+      "Levels: earn XP from clicking, research, hiring, upgrades, anomalies and achievements. The level bar sits under the detector, and every level-up lets you choose one of three boosts.",
+      "Particle Expansion: reset your lab to turn reputation into dark matter. Each dark matter makes you produce 10% more, forever, and buys 12 dark matter upgrades such as an automatic trigger.",
+      "9 new upgrades that only appear after you have expanded the universe.",
+      "New effects in the event display as you upgrade your colliders and make discoveries: photons, jets, golden Higgs events, pile-up, displaced vertices, missing energy, annihilations, heavy-ion collisions and more. The detector's info page lists them all.",
+      "21 new achievements for levels, expansions and dark matter, including 8 secret ones. Can you find them?",
+      "Settings, with a dark mode, scientific number format, detector effect quality and options to hide pop-ups or reduce motion.",
+      "On short windows the detector now shrinks so the counters stay in view.",
+      "Fixed the price of an upgrade showing as a gain, and the event display speeding up after resizing the window."
+    ]
+  },
+  {
     "version": "1.4",
     "date": "2026-09-28",
     "title": "100 new things",

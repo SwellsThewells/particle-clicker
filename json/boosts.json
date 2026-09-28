@@ -1,0 +1,66 @@
+[
+  {
+    "key": "boost-staff",
+    "name": "Efficient Staff",
+    "description": "Your staff produce 5% more data.",
+    "icon": "fa-users",
+    "type": "data",
+    "amount": 0.05
+  },
+  {
+    "key": "boost-click",
+    "name": "Steady Hands",
+    "description": "Clicking the detector gives 10% more data.",
+    "icon": "fa-hand-o-up",
+    "type": "click",
+    "amount": 0.1
+  },
+  {
+    "key": "boost-funding",
+    "name": "Grant Writer",
+    "description": "Reputation brings in 5% more funding.",
+    "icon": "fa-money",
+    "type": "funding",
+    "amount": 0.05
+  },
+  {
+    "key": "boost-reputation",
+    "name": "Peer Review",
+    "description": "Research gives 5% more reputation.",
+    "icon": "fa-graduation-cap",
+    "type": "reputation",
+    "amount": 0.05
+  },
+  {
+    "key": "boost-eye",
+    "name": "Keen Eye",
+    "description": "Anomalies stay on the detector 1 second longer.",
+    "icon": "fa-eye",
+    "type": "anomalyLifetime",
+    "amount": 1
+  },
+  {
+    "key": "boost-luck",
+    "name": "Lucky Streak",
+    "description": "Anomalies appear 5% more often.",
+    "icon": "fa-certificate",
+    "type": "anomalyRate",
+    "amount": 0.05
+  },
+  {
+    "key": "boost-xp",
+    "name": "Quick Learner",
+    "description": "Earn 10% more XP.",
+    "icon": "fa-lightbulb-o",
+    "type": "xp",
+    "amount": 0.1
+  },
+  {
+    "key": "boost-offline",
+    "name": "Night Shift",
+    "description": "Your lab keeps earning 2 hours longer while you are away.",
+    "icon": "fa-moon-o",
+    "type": "offlineHours",
+    "amount": 2
+  }
+]

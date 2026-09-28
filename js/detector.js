@@ -14,6 +14,30 @@ var detector =
     },
 
     visible: true,
+    running: false,
+
+    // Colours of the event display. The core is redrawn when the theme changes.
+    palettes:
+    {
+        light: {space: '#FFFFFF', electron: '#0016EA', jet: '#0B7700', muon: '#775400',
+                pion: '#8A8A8A', dark: '#7B1FA2', photon: '#C99700', met: '#D50000',
+                deposit: '#FF6D00', glow: '#FFB300', flash: '#FFD54F'},
+        dark: {space: '#1B1C1F', electron: '#7C95FF', jet: '#4CD964', muon: '#E5A445',
+               pion: '#9AA0A6', dark: '#C792EA', photon: '#FFD54F', met: '#FF5C5C',
+               deposit: '#FF8A3D', glow: '#FFC400', flash: '#FFE082'}
+    },
+    palette: null,
+
+    // Which extra kinds of events the lab has unlocked (set by the app from
+    // upgrades, research and dark matter), and how many to draw.
+    effects:
+    {
+        energy: 0, lumi: 0, photons: false, jets: false, golden: false,
+        pileup: false, shockwave: false, displaced: false, met: false,
+        annihilation: false, heavyIon: false, darkTracks: false, boost: false
+    },
+    quality: 'full',
+    maxEvents: 600,
 
     width: 400,
     height: 400,
@@ -137,7 +161,19 @@ var detector =
         }
 
         detector.coreDraw();
-        detector.animate();
+        // init runs again on every resize; only ever start one drawing loop.
+        if (!detector.running) {
+            detector.running = true;
+            detector.animate();
+        }
+    },
+
+    setTheme: function(dark)
+    {
+        detector.palette = dark ? detector.palettes.dark : detector.palettes.light;
+        if (detector.core.ctx) {
+            detector.coreDraw();
+        }
     },
 
     coreDraw: function()
@@ -178,7 +214,7 @@ var detector =
             ctx.lineTo(cx + detector.radius.mucal * Math.cos(Math.PI * i * muSplit) * detector.ratio, cy + detector.radius.mucal * Math.sin(Math.PI * i * muSplit) * detector.ratio);
         }
         ctx.stroke();
-        ctx.fillStyle = '#FFFFFF';
+        ctx.fillStyle = detector.palette.space;
         ctx.fill();
 
 
@@ -190,7 +226,7 @@ var detector =
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.fillStyle = '#FFFFFF';
+        ctx.fillStyle = detector.palette.space;
         ctx.arc(cx, cy, detector.radius.lightRingSpace * detector.ratio, 0, Math.PI * 2, true);
         ctx.fill();
 
@@ -202,7 +238,7 @@ var detector =
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.fillStyle = '#FFFFFF';
+        ctx.fillStyle = detector.palette.space;
         ctx.arc(cx, cy, detector.radius.darkRing1Space * detector.ratio, 0, Math.PI * 2, true);
         ctx.fill();
 
@@ -214,7 +250,7 @@ var detector =
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.fillStyle = '#FFFFFF';
+        ctx.fillStyle = detector.palette.space;
         ctx.arc(cx, cy, detector.radius.ecal * detector.ratio, 0, Math.PI * 2, true);
         ctx.fill();
 
@@ -263,15 +299,115 @@ var detector =
         ctx.stroke();
     },
 
+    randomTrack: function()
+    {
+        return detector.tracks[Math.floor(Math.random() * detector.tracks.length)];
+    },
+
+    push: function(type, count, external, opts)
+    {
+        detector.events.list.push(new ParticleEvent(type, count, external, opts));
+    },
+
+    /** An event from clicking the detector. What it contains depends on the
+     * upgrades, research and dark matter the lab has. */
     addEvent: function()
     {
-        var num = Math.max(3, Math.ceil(15 * Math.random()));
-
-        for (var i = 0; i < num; i++) {
-            var index = Math.round(Math.random() * (detector.tracks.length - 1));
-            var event = new ParticleEvent(detector.tracks[index], num);
-            detector.events.list.push(event);
+        var fx = detector.effects, full = detector.quality === 'full';
+        var minimal = detector.quality === 'minimal';
+        var num = Math.max(3, Math.ceil(15 * Math.random() * (1 + fx.lumi / 12)));
+        if (minimal) {
+            num = Math.ceil(num / 2);
         }
+        for (var i = 0; i < num; i++) {
+            detector.push(detector.randomTrack(), num);
+        }
+        if (minimal) {
+            detector.trim();
+            return;
+        }
+        var chance = function(p) { return Math.random() < p; };
+        var direction = function() { return Math.random() * Math.PI * 2; };
+        var r = detector.radius;
+
+        if (fx.photons && chance(0.3)) {
+            // Photons leave no track, only a hit in the ECAL.
+            for (var p = 0, n = chance(0.5) ? 2 : 1; p < n; p++) {
+                var d = direction();
+                detector.push({name: 'photon'}, 1, false, {direction: d});
+                detector.push({name: 'deposit'}, 1, false, {kind: 'deposit', direction: d, fade: 0.02});
+            }
+        }
+        if (fx.jets && chance(0.3)) {
+            // A spray of hadrons in a narrow cone, stopped in the HCAL.
+            var axis = direction();
+            for (var j = 0, m = 4 + Math.floor(5 * Math.random()); j < m; j++) {
+                detector.push(detector.tracks[1], m, false,
+                              {direction: axis + (Math.random() - 0.5) * 0.5});
+            }
+            detector.push({name: 'deposit'}, 1, false,
+                          {kind: 'deposit', direction: axis, inner: r.ecal, outer: r.hcal,
+                           spread: Math.PI / 12, fade: 0.02});
+        }
+        if (fx.golden && chance(0.08)) {
+            // A textbook event: H -> two photons or Z -> two muons, back to back.
+            var g = direction(), higgs = chance(0.5);
+            for (var k = 0; k < 2; k++) {
+                var dir = g + k * Math.PI;
+                if (higgs) {
+                    detector.push({name: 'photon'}, 2, false, {direction: dir, glow: true, width: 3, fade: 0.012});
+                    detector.push({name: 'deposit'}, 1, false, {kind: 'deposit', direction: dir, fade: 0.012});
+                } else {
+                    detector.push(detector.tracks[2], 2, false, {direction: dir, glow: true, width: 3,
+                                                                  radius: 900, fade: 0.012});
+                }
+            }
+            detector.push({name: 'flash'}, 1, false, {kind: 'flash', size: 16, fade: 0.02});
+        }
+        if (fx.pileup && full) {
+            // Many soft collisions in the same bunch crossing.
+            for (var q = 0, pile = 6 + Math.floor(10 * Math.random()); q < pile; q++) {
+                detector.push({name: 'pion'}, pile, false,
+                              {origin: {x: (Math.random() - 0.5) * 6, y: (Math.random() - 0.5) * 6}});
+            }
+        }
+        if (fx.shockwave && full) {
+            detector.push({name: 'ring'}, 1, false, {kind: 'ring', fade: 0.025});
+        }
+        if (fx.displaced && chance(0.2)) {
+            // A B meson flies a few millimetres before it decays.
+            var v = direction(), dist = (6 + 14 * Math.random()) * detector.ratio;
+            var origin = {x: Math.cos(v) * dist, y: Math.sin(v) * dist};
+            for (var t = 0, tracks = 2 + Math.floor(2 * Math.random()); t < tracks; t++) {
+                detector.push(detector.tracks[0], tracks, false,
+                              {origin: origin, direction: v + (Math.random() - 0.5) * 1.2});
+            }
+        }
+        if (fx.met && chance(0.15)) {
+            // Missing energy: something invisible, like a neutrino, got away.
+            detector.push({name: 'met'}, 1, false, {fade: 0.02});
+        }
+        if (fx.annihilation && chance(0.1)) {
+            // Antimatter meets matter: a star of pions from one point.
+            var a = direction(), rad = (r.siliconSpace + 5 * Math.random()) * detector.ratio;
+            var star = {x: Math.cos(a) * rad, y: Math.sin(a) * rad};
+            for (var s = 0; s < 5; s++) {
+                detector.push({name: 'pion'}, 5, false,
+                              {origin: star, direction: a + s * Math.PI * 2 / 5 + Math.random() * 0.4,
+                               alpha: 1, width: 2, radius: 400, length: (r.ecal - 10) * detector.ratio});
+            }
+            detector.push({name: 'flash'}, 1, false, {kind: 'flash', origin: star, size: 10});
+        }
+        if (fx.heavyIon && chance(0.05)) {
+            // Two lead nuclei collide: hundreds of particles at once.
+            for (var h = 0, many = full ? 60 + Math.floor(40 * Math.random()) : 25; h < many; h++) {
+                detector.push({name: 'pion'}, many, false, {fade: 0.02});
+            }
+        }
+        if (fx.darkTracks && chance(0.2)) {
+            detector.push({name: 'dark'}, 1);
+        }
+        detector.trim();
     },
 
     addEventExternal: function(numWorkers)
@@ -281,11 +417,27 @@ var detector =
         }
 
         var num = Math.min(20 * numWorkers / 10, 20);
+        if (detector.quality === 'minimal') {
+            num = Math.ceil(num / 3);
+        }
 
         for (var i = 0; i < num; i++) {
-            var index = Math.round(Math.random() * (detector.tracks.length - 1));
-            var event = new ParticleEvent(detector.tracks[index], num, true);
-            detector.events.list.push(event);
+            detector.push(detector.randomTrack(), num, true);
+        }
+        if (detector.quality === 'full' && detector.effects.pileup) {
+            for (var p = 0; p < 5; p++) {
+                detector.push({name: 'pion'}, 5, true);
+            }
+        }
+        detector.trim();
+    },
+
+    /** Drop the oldest events if the display gets too busy. */
+    trim: function()
+    {
+        var list = detector.events.list;
+        if (list.length > detector.maxEvents) {
+            list.splice(0, list.length - detector.maxEvents);
         }
     },
 
@@ -293,18 +445,17 @@ var detector =
     {
         detector.events.ctx.clearRect(0, 0, detector.width, detector.height);
 
-        var del = -1;
-        for (var e in detector.events.list) {
-            if (detector.events.list[e].alpha > 0) {
-                detector.events.list[e].draw(duration);
-            } else {
-                del = e;
+        var alive = [];
+        var list = detector.events.list;
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].alpha > 0) {
+                list[i].draw(duration);
+                if (list[i].alpha > 0) {
+                    alive.push(list[i]);
+                }
             }
         }
-
-        if (del > 0) {
-            detector.events.list.splice(0, del);
-        }
+        detector.events.list = alive;
     }
 };
 
@@ -319,4 +470,8 @@ window.requestAnimFrame = (function(){
            };
 })();
 
-(function() { detector.init(400); $('#detector').width(400).height(400); })();
+(function() {
+    detector.palette = detector.palettes.light;
+    detector.init(400);
+    $('#detector').width(400).height(400);
+})();

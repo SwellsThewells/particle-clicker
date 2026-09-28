@@ -73,8 +73,11 @@ var GameObjects = (function() {
 
   Lab.prototype.constructor = Lab;
 
+  /** Multipliers from levels and dark matter; the game replaces this. */
+  Lab.prototype.bonus = {click: 1, funding: 1, reputation: 1};
+
   Lab.prototype.getGrantRate = function() {
-    return this.state.reputation * this.state.factor;
+    return this.state.reputation * this.state.factor * this.bonus.funding;
   };
 
   Lab.prototype.getGrant = function() {
@@ -94,7 +97,7 @@ var GameObjects = (function() {
   };
 
   Lab.prototype.clickDetector = function(multiplier) {
-    var amount = this.state.detector * (multiplier || 1);
+    var amount = this.state.detector * this.bonus.click * (multiplier || 1);
     this.state.clicks += 1;
     this.acquireData(amount);
     return amount;
@@ -104,7 +107,7 @@ var GameObjects = (function() {
     if (this.state.data >= cost) {
       this.state.data -= cost;
       this.state.dataSpent += cost;
-      this.state.reputation += reputation;
+      this.state.reputation += reputation * this.bonus.reputation;
       return true;
     }
     return false;
@@ -305,6 +308,9 @@ var GameObjects = (function() {
         allObjects[this.targetKey].state[this.targetProperty] >= this.threshold) {
       this.state.timeAchieved = lab.state.time + new Date().getTime() - saveTime;
       UI.showAchievement(this);
+      if (Achievement.onUnlock) {
+        Achievement.onUnlock(this);
+      }
       return true;
     }
     return false;
@@ -319,8 +325,21 @@ var GameObjects = (function() {
   };
 
 
+  /** @class Record
+   * Plain saved state that is not one of the game's items, such as the
+   * player's level or the dark matter.
+   */
+  var Record = function(key, state) {
+    GameObject.apply(this, [{key: key, state: state}]);
+  };
+
+  Record.prototype = Object.create(GameObject.prototype);
+
+  Record.prototype.constructor = Record;
+
   // Expose classes in module.
   return {
+    Record: Record,
     Lab: Lab,
     Research: Research,
     Worker: Worker,

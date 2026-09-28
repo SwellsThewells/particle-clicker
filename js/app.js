@@ -84,10 +84,93 @@
     UI.showOfflineProgress(offline);
   }
 
+  var player = game.player.state;
+  var prestige = game.prestige.state;
+  var secrets = game.secrets.state;
+
+  // After the reload that follows an expansion, welcome the new universe.
+  var expansionInfo = null;
+  try {
+    expansionInfo = JSON.parse(window.sessionStorage.getItem('expansion'));
+    window.sessionStorage.removeItem('expansion');
+  } catch (e) {}
+  if (expansionInfo) {
+    $(function() { UI.showUniverseIntro(expansionInfo); });
+  }
+
+  /** XP for each kind of progress, before bonuses. */
+  var XP = {click: 1, hire: 5, research: 10, upgrade: 25, anomaly: 30, achievement: 50};
+  var gainXp = function(amount) {
+    if (game.addXp(amount) > 0) {
+      UI.showLevelUp(player.level);
+    }
+  };
+  GameObjects.Achievement.onUnlock = function() {
+    gainXp(XP.achievement);
+  };
+
+  /** Tell the event display what the lab has unlocked. */
+  var updateEffects = function() {
+    var used = function(key) { return !!allObjects[key].state.used; };
+    var discovered = function(key) { return allObjects[key].state.level > 0; };
+    var count = function(prefix, n) {
+      var c = 0;
+      for (var i = 1; i <= n; i++) {
+        c += used(prefix + i) ? 1 : 0;
+      }
+      return c;
+    };
+    $.extend(detector.effects, {
+      energy: count('upgrade-energy', 12),
+      lumi: count('upgrade-lumi', 12),
+      photons: used('upgrade-sps'),
+      jets: used('upgrade-tevatron'),
+      golden: used('upgrade-lhc'),
+      pileup: used('upgrade-hllhc'),
+      shockwave: used('upgrade-fcc'),
+      displaced: discovered('research-beauty'),
+      met: discovered('research-neutrino'),
+      annihilation: discovered('research-antihydrogen'),
+      heavyIon: discovered('research-qgp'),
+      darkTracks: prestige.expansions > 0,
+      boost: dataMultiplier() > 1
+    });
+  };
+  updateEffects();
+
+  Settings.onChange(function(values) {
+    detector.quality = values.effects;
+    detector.setTheme(Settings.isDark());
+    if (Settings.isDark()) {
+      secrets.darkSide = 1;
+    }
+  });
+
+  // Secret achievements that are checked every second.
+  var checkSecrets = function() {
+    if (new Date().getHours() < 5) {
+      secrets.nightOwl = 1;
+    }
+    if (String(lab.state.name).trim().toLowerCase() === 'cern') {
+      secrets.homeSweetHome = 1;
+    }
+  };
+  var KONAMI = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65], konamiAt = 0;
+  document.addEventListener('keydown', function(e) {
+    konamiAt = e.keyCode === KONAMI[konamiAt] ? konamiAt + 1 : (e.keyCode === KONAMI[0] ? 1 : 0);
+    if (konamiAt === KONAMI.length) {
+      konamiAt = 0;
+      secrets.konami = 1;
+    }
+  });
+
   var app = angular.module('particleClicker', []);
 
   app.filter('niceNumber', ['$filter', function($filter) {
-      return Helpers.formatNumberPostfix;
+      // Stateful: the result also depends on the number format setting.
+      var filter = function(input) { return Helpers.formatNumberPostfix(input); };
+      filter.$stateful = true;
+      return filter;
   }]);
 
   app.filter('niceTime', ['$filter', function($filter) {
@@ -95,9 +178,11 @@
   }]);
 
   app.filter('currency', ['$filter', function($filter) {
-    return function(input) {
+    var filter = function(input) {
       return 'JTN ' + $filter('niceNumber')(input);
     };
+    filter.$stateful = true;
+    return filter;
   }]);
 
   app.filter('reverse', ['$filter', function($filter) {
@@ -107,10 +192,20 @@
   }]);
 
   app.controller('DetectorController', function() {
+    var recentClicks = [];
     this.click = function() {
       var amount = lab.clickDetector(dataMultiplier());
       detector.addEvent();
       UI.showUpdateValue("#update-data", amount);
+      gainXp(XP.click);
+      var now = new Date().getTime();
+      recentClicks.push(now);
+      while (now - recentClicks[0] > 2000) {
+        recentClicks.shift();
+      }
+      if (recentClicks.length >= 15) {
+        secrets.speedOfLight = 1;
+      }
       return false;
     };
   });
@@ -123,7 +218,7 @@
   app.controller('LabController', ['$interval', function($interval) {
     this.lab = lab;
     this.dataRate = function() {
-      return game.getDataRate() * dataMultiplier();
+      return (game.getDataRate() + game.getAutoRate()) * dataMultiplier();
     };
     this.boostFactor = function() {
       return lab.state.boostFactor;
@@ -140,7 +235,7 @@
     $interval(function() {  // one tick
       var grant = lab.getGrant();
       UI.showUpdateValue("#update-funding", grant);
-      var sum = game.getDataRate() * dataMultiplier();
+      var sum = (game.getDataRate() + game.getAutoRate()) * dataMultiplier();
       if (sum > 0) {
         lab.acquireData(sum);
         UI.showUpdateValue("#update-data", sum);
@@ -148,6 +243,11 @@
           return w.state.hired;
         }).reduce(function(a, b){return a + b}, 0));
       }
+      if (game.bonus.autoClicks > 0 && detector.visible) {
+        detector.addEvent();  // the automated trigger at work
+      }
+      updateEffects();
+      checkSecrets();
     }, 1000);
   }]);
 
@@ -160,20 +260,35 @@
     this.isAvailable = function(item) {
       return this.bulk.canAfford(item);
     };
+    this.reputationBonus = function() {
+      return game.bonus.reputation;
+    };
     this.doResearch = function(item) {
-      var reputation = 0;
+      var reputation = 0, levels = 0;
       var cost = this.bulk.buy(item, function() {
-        reputation += item.state.reputation;
-        return item.research(lab);
+        var before = lab.state.reputation;
+        var paid = item.research(lab);
+        if (paid >= 0) {
+          reputation += lab.state.reputation - before;
+          levels++;
+        }
+        return paid;
       });
       if (cost > 0) {
         UI.showUpdateValue("#update-data", -cost);
         UI.showUpdateValue("#update-reputation", reputation);
+        gainXp(XP.research * levels);
+        updateEffects();
       }
     };
     this.showInfo = function(r) {
       UI.showModal(r.name, r.getInfo());
       UI.showLevels(r.state.level);
+      // Secret: read the page of every research topic.
+      secrets.infoPages |= 1 << research.indexOf(r);
+      if (secrets.infoPages === (1 << research.length) - 1) {
+        secrets.curious = 1;
+      }
     };
   }]);
 
@@ -186,10 +301,19 @@
     this.isAvailable = function(worker) {
       return this.bulk.canAfford(worker);
     };
+    this.dataBonus = function() {
+      return game.bonus.data;
+    };
     this.hire = function(worker) {
-      var total = this.bulk.buy(worker, function() { return worker.hire(lab); });
+      var hired = 0;
+      var total = this.bulk.buy(worker, function() {
+        var paid = worker.hire(lab);
+        hired += paid >= 0 ? 1 : 0;
+        return paid;
+      });
       if (total > 0) {
         UI.showUpdateValue("#update-funding", -total);
+        gainXp(XP.hire * hired);
       }
     };
   });
@@ -203,8 +327,10 @@
       return upgrade.isAvailable(lab, allObjects);
     };
     this.upgrade = function(upgrade) {
-      if (upgrade.buy(lab, allObjects)) {
-        UI.showUpdateValue("#update-funding", upgrade.cost);
+      if (upgrade.buy(lab, allObjects) > 0) {
+        UI.showUpdateValue("#update-funding", -upgrade.cost);
+        gainXp(XP.upgrade);
+        updateEffects();
       }
     }
   });
@@ -213,6 +339,11 @@
     $scope.achievements = achievements;
     $scope.progress = function() {
       return achievements.filter(function(a) { return a.validate(lab, allObjects, lastSaved); }).length;
+    };
+    var secretOnes = achievements.filter(function(a) { return a.secret; });
+    $scope.secretCount = secretOnes.length;
+    $scope.secretsFound = function() {
+      return secretOnes.filter(function(a) { return a.isAchieved(); }).length;
     };
   });
 
@@ -228,9 +359,13 @@
         'Do you really want to restart the game? All progress will be lost.'
       )) {
         savingEnabled = false;
+        var settings = ObjectStorage.load(Settings.KEY);
         ObjectStorage.clear();
         ObjectStorage.save('saveVersion', Helpers.saveVersion);
         ObjectStorage.save('updatesSeen', updatesSeen);
+        if (settings) {
+          ObjectStorage.save(Settings.KEY, settings);
+        }
         window.location.reload(true);
       }
     };
@@ -324,9 +459,10 @@
       }
     ];
 
+    var spawnedAt = 0;
     var schedule = function(range) {
       var seconds = (range[0] + Math.random() * (range[1] - range[0])) /
-          lab.state.anomalyRate;
+          (lab.state.anomalyRate * game.bonus.anomalyRate);
       $timeout(spawn, seconds * 1000);
     };
     var spawn = function() {
@@ -340,10 +476,12 @@
         x: Math.round(size * 0.1 + Math.random() * (size * 0.8 - button)),
         y: Math.round(size * 0.1 + Math.random() * (size * 0.8 - button))
       };
+      spawnedAt = new Date().getTime();
       fadeTimer = $timeout(function() {
         $scope.anomaly = null;
+        secrets.missed += 1;
         schedule(DELAY);
-      }, lab.state.anomalyLifetime * 1000);
+      }, (lab.state.anomalyLifetime + game.bonus.anomalyLifetime) * 1000);
     };
     $scope.anomaly = null;
     $scope.catchAnomaly = function() {
@@ -353,6 +491,10 @@
       $timeout.cancel(fadeTimer);
       $scope.anomaly = null;
       lab.state.anomalies += 1;
+      if (new Date().getTime() - spawnedAt < 1000) {
+        secrets.reflexes = 1;
+      }
+      gainXp(XP.anomaly);
       var reward = rewards[Math.floor(Math.random() * rewards.length)];
       UI.showMessage('fa-certificate', reward(), 6000).addClass('anomaly-message');
       schedule(DELAY);
@@ -378,10 +520,117 @@
     }
   }]);
 
+  app.controller('LevelController', ['$scope', function($scope) {
+    $scope.floor = Math.floor;
+    $scope.player = player;
+    $scope.prestige = prestige;
+    $scope.needed = function() {
+      return game.xpForLevel(player.level);
+    };
+    $scope.percent = function() {
+      return Math.min(100, 100 * player.xp / game.xpForLevel(player.level));
+    };
+    var offerKey = null, offer = null;
+    $scope.offer = function() {
+      var key = [player.points, player.offerA, player.offerB, player.offerC].join();
+      if (key !== offerKey) {
+        offer = game.getBoostOffer();
+        offerKey = [player.points, player.offerA, player.offerB, player.offerC].join();
+      }
+      return offer;
+    };
+    /** What the player already has of this boost, e.g. "+15%". */
+    $scope.total = function(boost) {
+      var n = player[boost.key] * boost.amount;
+      if (boost.type === 'anomalyLifetime') {
+        return '+' + n + ' s';
+      }
+      if (boost.type === 'offlineHours') {
+        return '+' + n + ' h';
+      }
+      return '+' + Math.round(n * 100) + '%';
+    };
+    $scope.choose = function(boost) {
+      if (game.chooseBoost(boost.key) && player.points <= 0) {
+        $('#boost-modal').modal('hide');
+      }
+    };
+    $scope.canExpand = function() {
+      return game.darkMatterGain() >= 1;
+    };
+    $scope.showExpansion = function() {
+      return prestige.expansions > 0 || $scope.canExpand();
+    };
+  }]);
+
+  app.controller('ExpansionController', ['$scope', function($scope) {
+    $scope.prestige = prestige;
+    $scope.bonus = game.bonus;
+    $scope.upgrades = game.darkMatterUpgrades;
+    $scope.gain = function() {
+      return game.darkMatterGain();
+    };
+    $scope.nextAt = function() {
+      return game.nextDarkMatterAt();
+    };
+    $scope.percent = function(darkMatter) {
+      return Math.round(game.bonus.perDarkMatter * darkMatter * 100);
+    };
+    $scope.bought = function(u) {
+      return !!prestige[u.key];
+    };
+    $scope.locked = function(u) {
+      return !!u.requires && !prestige[u.requires];
+    };
+    $scope.canBuy = function(u) {
+      return game.canBuyDarkMatterUpgrade(u);
+    };
+    $scope.requiredName = function(u) {
+      var required = game.darkMatterUpgrades.filter(function(x) { return x.key === u.requires; })[0];
+      return required ? required.name : '';
+    };
+    $scope.buy = function(u) {
+      if (game.buyDarkMatterUpgrade(u.key)) {
+        saveGame();
+      }
+    };
+    $scope.expanding = false;
+    $scope.expand = function() {
+      if ($scope.expanding || game.darkMatterGain() < 1 || !window.confirm(
+        'Expand the universe? Your data, funding, reputation, staff, research ' +
+        'and upgrades start over. You keep your achievements, level, boosts ' +
+        'and dark matter.'
+      )) {
+        return;
+      }
+      $scope.expanding = true;
+      saveGame();
+      var info = game.expand(new Date().getTime());
+      savingEnabled = false;
+      try {
+        window.sessionStorage.setItem('expansion', JSON.stringify(info));
+      } catch (e) {}
+      $('#expansion-modal').modal('hide');
+      UI.playExpansion(info, function() { window.location.reload(); });
+    };
+  }]);
+
+  app.controller('SettingsController', ['$scope', function($scope) {
+    var keys = ['theme', 'numbers', 'effects', 'floatingNumbers', 'popups', 'reduceMotion'];
+    $scope.s = {};
+    keys.forEach(function(k) { $scope.s[k] = Settings.get(k); });
+    $scope.set = function(key, value) {
+      Settings.set(key, value);
+      $scope.s[key] = Settings.get(key);
+    };
+  }]);
+
   app.controller('StatsController', function($scope) {
     $scope.lab = lab;
+    $scope.player = player;
+    $scope.prestige = prestige;
     $scope.dataRate = function() {
-      return game.getDataRate();
+      return game.getDataRate() + game.getAutoRate();
     };
     $scope.playTime = function() {
       return lab.state.time + new Date().getTime() - lastSaved;

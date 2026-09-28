@@ -36,6 +36,11 @@ var Helpers = (function () {
     ];
 
     var abs = Math.abs(number);
+    if (abs >= 1e3 && typeof Settings !== 'undefined' &&
+        Settings.get('numbers') === 'scientific') {
+      var parts = number.toExponential(2).split('e');
+      return parts[0] + 'e' + parseInt(parts[1], 10);
+    }
     for (var i = 0; i < prefixes.length; i++) {
       if (abs >= prefixes[i].magnitude) {
         return (number / prefixes[i].magnitude).toFixed(1) + prefixes[i].label;

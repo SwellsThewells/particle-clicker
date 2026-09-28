@@ -1,0 +1,99 @@
+[
+  {
+    "key": "dm-soup",
+    "name": "Primordial Soup",
+    "description": "Every new universe starts with JTN 1k and 1k data.",
+    "icon": "fa-flask",
+    "cost": 1,
+    "effects": [{ "type": "startMoney", "amount": 1000 }, { "type": "startData", "amount": 1000 }]
+  },
+  {
+    "key": "dm-trigger1",
+    "name": "Automated Trigger",
+    "description": "The detector records one event per second by itself.",
+    "icon": "fa-refresh",
+    "cost": 2,
+    "effects": [{ "type": "autoClicks", "amount": 1 }]
+  },
+  {
+    "key": "dm-photons",
+    "name": "Dark Photons",
+    "description": "Clicking the detector gives 50% more data.",
+    "icon": "fa-hand-o-up",
+    "cost": 3,
+    "effects": [{ "type": "click", "amount": 0.5 }]
+  },
+  {
+    "key": "dm-alumni",
+    "name": "Alumni Network",
+    "description": "Every new universe starts with 10 Master Students and 5 PhD Students.",
+    "icon": "fa-graduation-cap",
+    "cost": 5,
+    "effects": [{ "type": "startStaff", "amount": 1 }]
+  },
+  {
+    "key": "dm-inflation",
+    "name": "Cosmic Inflation",
+    "description": "Your staff produce 25% more data.",
+    "icon": "fa-users",
+    "cost": 5,
+    "effects": [{ "type": "data", "amount": 0.25 }]
+  },
+  {
+    "key": "dm-energy",
+    "name": "Dark Energy",
+    "description": "Reputation brings in 25% more funding.",
+    "icon": "fa-money",
+    "cost": 8,
+    "effects": [{ "type": "funding", "amount": 0.25 }]
+  },
+  {
+    "key": "dm-lensing",
+    "name": "Gravitational Lensing",
+    "description": "Anomalies appear 25% more often.",
+    "icon": "fa-certificate",
+    "cost": 8,
+    "effects": [{ "type": "anomalyRate", "amount": 0.25 }]
+  },
+  {
+    "key": "dm-tunnelling",
+    "name": "Quantum Tunnelling",
+    "description": "Your lab keeps earning 24 hours longer while you are away.",
+    "icon": "fa-moon-o",
+    "cost": 10,
+    "effects": [{ "type": "offlineHours", "amount": 24 }]
+  },
+  {
+    "key": "dm-bbn",
+    "name": "Big Bang Nucleosynthesis",
+    "description": "Earn 50% more XP.",
+    "icon": "fa-lightbulb-o",
+    "cost": 15,
+    "effects": [{ "type": "xp", "amount": 0.5 }]
+  },
+  {
+    "key": "dm-trigger2",
+    "name": "Trigger Farm",
+    "description": "The detector records five more events per second by itself.",
+    "icon": "fa-cubes",
+    "cost": 25,
+    "requires": "dm-trigger1",
+    "effects": [{ "type": "autoClicks", "amount": 5 }]
+  },
+  {
+    "key": "dm-multiverse",
+    "name": "Multiverse",
+    "description": "Each dark matter gives +15% production instead of +10%.",
+    "icon": "fa-sitemap",
+    "cost": 40,
+    "effects": [{ "type": "darkMatterBonus", "amount": 0.05 }]
+  },
+  {
+    "key": "dm-toe",
+    "name": "Theory of Everything",
+    "description": "Doubles all data and funding.",
+    "icon": "fa-magic",
+    "cost": 100,
+    "effects": [{ "type": "everything", "amount": 1 }]
+  }
+]

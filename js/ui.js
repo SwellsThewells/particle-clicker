@@ -11,6 +11,7 @@ var UI = (function () {
     FastClick.attach(document.body);    
     
     var rateHeight = 17;  // height of the per-second rate line under the status
+    var hudHeight = 46;   // the level bar and the gap around it
     var resize = function() {
       var h = $(window).height();
       var offset = 111;
@@ -44,28 +45,32 @@ var UI = (function () {
         $('#column-tabs').removeAttr('style');
       }
 
-      if ($(window).width() >= 1200) {
-        if (detector.width != 500) {
-          $('#detector').width(500).height(500);
-          detector.init(500);
-        }
-      } else if ($(window).width() < 768 && $(window).height() - 90 - rateHeight < 300) {
-        // Leave room below the detector for the status bar and its rates.
-        var newWidth = $(window).width() - Math.max($(window).width() - ($(window).height() - 90 + 10), 300) - 10 - rateHeight;
-        if (detector.width != newWidth) {
-          $('#detector').width(newWidth).height(newWidth);
-          detector.init(newWidth);
-        }
-      } else if ($(window).width() < 992) {
-        if (detector.width != 300) {
-          $('#detector').width(300).height(300);
-          detector.init(300);
-        }
+      // The level bar sits at the bottom of the lab column.
+      var lab = $('#column-lab');
+      var hudWidth = Math.min(lab.outerWidth() - 16, 460);
+      $('#level-hud').css({left: lab.offset().left + lab.outerWidth() / 2 + 'px',
+                           width: hudWidth + 'px'})
+                     .toggleClass('compact', hudWidth < 330);
+
+      var w = $(window).width(), h = $(window).height(), size;
+      if (w < 768 && h - 90 - rateHeight - hudHeight < 300) {
+        // Leave room below the detector for the status bar, its rates and
+        // the level bar.
+        size = w - Math.max(w - (h - 90 + 10), 300) - 10 - rateHeight - hudHeight;
       } else {
-        if (detector.width != 400) {
-          $('#detector').width(400).height(400);
-          detector.init(400);
+        size = w >= 1200 ? 500 : w >= 992 ? 400 : 300;
+        if (w >= 768) {
+          // On short windows, shrink the detector so the status bar and the
+          // level bar stay on screen.
+          var top = $('#detector').offset().top;
+          var status = $('.status');
+          var below = status.offset().top + status.outerHeight() - top - $('#detector').height();
+          size = Math.max(200, Math.min(size, Math.floor(h - top - below - hudHeight)));
         }
+      }
+      if (detector.width != size) {
+        $('#detector').width(size).height(size);
+        detector.init(size);
       }
     }
     
@@ -95,7 +100,7 @@ var UI = (function () {
   };
 
   var showUpdateValue = function(ident, num) {
-    if (num != 0) {
+    if (num != 0 && Settings.get('floatingNumbers')) {
       var formatted = Helpers.formatNumberPostfix(num);
       var insert;
       if (num > 0) {
@@ -123,9 +128,13 @@ var UI = (function () {
   }
 
   var showAchievement = function(obj) {
-    var alert = '<div class="alert alert-success alert-dismissible" role="alert">';
+    if (!Settings.get('popups')) {
+      return;
+    }
+    var alert = '<div class="alert ' + (obj.secret ? 'alert-warning' : 'alert-success') + ' alert-dismissible" role="alert">';
     alert += '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>';
-    alert += '<span class="fa ' + obj.icon + ' alert-glyph"></span> <span class="alert-text">' + obj.description + '</span>';
+    alert += '<span class="fa ' + obj.icon + ' alert-glyph"></span> <span class="alert-text">' +
+        (obj.secret ? 'Secret achievement: ' : '') + obj.description + '</span>';
     alert += '</div>';
 
     alert = $(alert);
@@ -211,7 +220,110 @@ var UI = (function () {
     $('#messages-container').append(alert);
   }
 
+  /** A short "Level 12!" that rises from the level bar. */
+  var showLevelUp = function(level) {
+    var toast = $('<div class="level-up-toast" role="status"></div>')
+        .text('Level ' + level + '!');
+    $('#level-hud').append(toast);
+    window.setTimeout(function() { toast.remove(); }, 2200);
+  };
+
+  /** The Big Bang: particles fall into the centre, flash, and fly out again
+   * while the new universe is announced. Calls done() at the end. */
+  var playExpansion = function(info, done) {
+    var overlay = $('<div class="expansion-overlay" role="alert">' +
+                    '<canvas></canvas><div class="expansion-text"><h2></h2><p></p></div></div>');
+    overlay.find('h2').text('Universe #' + info.universe);
+    overlay.find('p').text('+' + Helpers.formatNumberPostfix(info.gain) + ' dark matter');
+    overlay.appendTo('body');
+    if (Settings.get('reduceMotion')) {
+      overlay.addClass('show-text');
+      window.setTimeout(done, 1500);
+      return;
+    }
+    var canvas = overlay.find('canvas')[0], ctx = canvas.getContext('2d');
+    var ratio = window.devicePixelRatio || 1;
+    var W = window.innerWidth, H = window.innerHeight, cx = W / 2, cy = H / 2;
+    canvas.width = W * ratio;
+    canvas.height = H * ratio;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.scale(ratio, ratio);
+    var colors = ['#7C95FF', '#4CD964', '#E5A445', '#C792EA', '#FFD54F', '#FF5C5C'];
+    var particles = [];
+    for (var i = 0; i < 260; i++) {
+      var a = Math.random() * Math.PI * 2, d = Math.max(W, H) * (0.3 + 0.5 * Math.random());
+      particles.push({a: a, d: d, speed: 0.4 + Math.random(), size: 1 + 2 * Math.random(),
+                      color: colors[i % colors.length]});
+    }
+    var IMPLODE = 1300, FLASH = 300, EXPLODE = 1900;
+    var start = null;
+    var frame = function(time) {
+      if (start === null) {
+        start = time;
+      }
+      var t = time - start;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = 'rgba(5, 6, 20, ' + Math.min(0.95, t / 600) + ')';
+      ctx.fillRect(0, 0, W, H);
+      particles.forEach(function(p) {
+        var dist, angle = p.a;
+        if (t < IMPLODE) {
+          var k = t / IMPLODE;
+          dist = p.d * (1 - k * k * k);
+          angle += k * 2.5;                    // spiral inwards
+        } else if (t < IMPLODE + FLASH) {
+          dist = 0;
+        } else {
+          var e = (t - IMPLODE - FLASH) / EXPLODE;
+          dist = Math.max(W, H) * 0.8 * p.speed * (1 - Math.pow(1 - Math.min(e, 1), 3));
+        }
+        ctx.globalAlpha = t < IMPLODE + FLASH ? 1 : Math.max(0, 1 - (t - IMPLODE - FLASH) / EXPLODE);
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(cx + Math.cos(angle) * dist, cy + Math.sin(angle) * dist, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+      if (t >= IMPLODE - 100 && t < IMPLODE + FLASH + 500) {
+        // The flash of the Big Bang.
+        var f = (t - IMPLODE + 100) / (FLASH + 600);
+        var radius = Math.max(W, H) * f;
+        var glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(radius, 1));
+        glow.addColorStop(0, 'rgba(255, 255, 255, ' + (1 - f) + ')');
+        glow.addColorStop(1, 'rgba(255, 240, 200, 0)');
+        ctx.fillStyle = glow;
+        ctx.fillRect(0, 0, W, H);
+      }
+      if (t > IMPLODE + FLASH) {
+        overlay.addClass('show-text');
+      }
+      if (t < IMPLODE + FLASH + EXPLODE + 400) {
+        requestAnimFrame(frame);
+      } else {
+        done();
+      }
+    };
+    requestAnimFrame(frame);
+  };
+
+  /** After the reload that follows an expansion, fade in the new universe. */
+  var showUniverseIntro = function(info) {
+    var overlay = $('<div class="expansion-overlay show-text intro">' +
+                    '<div class="expansion-text"><h2></h2><p></p></div></div>');
+    overlay.find('h2').text('Universe #' + info.universe);
+    overlay.find('p').text('+' + Helpers.formatNumberPostfix(info.gain) +
+                           ' dark matter. Everything starts again, a little faster.');
+    overlay.appendTo('body');
+    window.setTimeout(function() {
+      overlay.fadeOut(Settings.get('reduceMotion') ? 0 : 900, function() { overlay.remove(); });
+    }, 1400);
+  };
+
   return {
+    showLevelUp: showLevelUp,
+    playExpansion: playExpansion,
+    showUniverseIntro: showUniverseIntro,
     showAchievement: showAchievement,
     showMessage: showMessage,
     showOfflineProgress: showOfflineProgress,
