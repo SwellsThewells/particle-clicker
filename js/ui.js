@@ -175,7 +175,8 @@ var UI = (function () {
         Helpers.formatTime(offline.time) + ', your lab collected ' +
         earned.join(' and ') + '.';
     if (offline.capped) {
-      text += ' <small>(Progress while away is capped at 24 hours.)</small>';
+      text += ' <small>(Progress while away is capped at ' + offline.maxHours +
+          ' hours.)</small>';
     }
     showMessage('fa-clock-o', text).addClass('offline-progress');
   };

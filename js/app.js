@@ -14,14 +14,13 @@
   var lastSaved = new Date().getTime();
   var savingEnabled = true;
   var MAX_BULK_BUY = 1000;
-  var BOOST_FACTOR = 2;
   var boostUntil = 0;
   var updates = Helpers.loadFile('json/updates.json');
   var updatesSeen = ObjectStorage.load('updatesSeen');
 
   /** Factor applied to all data while a beam boost is active. */
   var dataMultiplier = function() {
-    return new Date().getTime() < boostUntil ? BOOST_FACTOR : 1;
+    return new Date().getTime() < boostUntil ? lab.state.boostFactor : 1;
   };
 
   /** Shared state for the x1 / x10 / Max toggles. getBudget returns what the
@@ -125,6 +124,9 @@
     this.lab = lab;
     this.dataRate = function() {
       return game.getDataRate() * dataMultiplier();
+    };
+    this.boostFactor = function() {
+      return lab.state.boostFactor;
     };
     this.boostLeft = function() {
       return Math.max(0, Math.ceil((boostUntil - new Date().getTime()) / 1000));
@@ -289,36 +291,42 @@
 
   app.controller('AnomalyController',
       ['$scope', '$timeout', function($scope, $timeout) {
-    var FIRST_DELAY = [45, 90];   // seconds until the first anomaly
-    var DELAY = [120, 300];       // seconds between anomalies
-    var LIFETIME = 12;            // seconds an anomaly stays on the detector
-    var BOOST_DURATION = 30;      // seconds
+    // Seconds until the first anomaly, and between anomalies before upgrades.
+    // The lifetime, rewards and boost come from the lab so upgrades can
+    // change them.
+    var FIRST_DELAY = [45, 90];
+    var DELAY = [120, 300];
     var fadeTimer;
     var format = Helpers.formatNumberPostfix;
     var rewards = [
       function() {
-        var amount = Math.max(game.getDataRate() * 120, lab.state.detector * 50);
+        var amount = Math.max(game.getDataRate() * 120, lab.state.detector * 50) *
+            lab.state.anomalyReward;
         lab.acquireData(amount);
         UI.showUpdateValue('#update-data', amount);
         return 'Rare decay! Your detector recorded <strong>' +
             format(amount) + ' data</strong>.';
       },
       function() {
-        var amount = Math.max(lab.getGrantRate() * 120, 250);
+        var amount = Math.max(lab.getGrantRate() * 120, 250) * lab.state.anomalyReward;
         lab.receiveMoney(amount);
         UI.showUpdateValue('#update-funding', amount);
         return 'Press coverage! Sponsors sent <strong>JTN ' + format(amount) +
             '</strong> in extra funding.';
       },
       function() {
-        boostUntil = new Date().getTime() + BOOST_DURATION * 1000;
-        return 'Beam boost! All data is doubled for <strong>' +
-            BOOST_DURATION + ' seconds</strong>.';
+        var factor = lab.state.boostFactor, duration = lab.state.boostDuration;
+        boostUntil = new Date().getTime() + duration * 1000;
+        var effect = factor === 2 ? 'doubled' : factor === 3 ? 'tripled' :
+            'multiplied by ' + factor;
+        return 'Beam boost! All data is ' + effect + ' for <strong>' +
+            duration + ' seconds</strong>.';
       }
     ];
 
     var schedule = function(range) {
-      var seconds = range[0] + Math.random() * (range[1] - range[0]);
+      var seconds = (range[0] + Math.random() * (range[1] - range[0])) /
+          lab.state.anomalyRate;
       $timeout(spawn, seconds * 1000);
     };
     var spawn = function() {
@@ -335,7 +343,7 @@
       fadeTimer = $timeout(function() {
         $scope.anomaly = null;
         schedule(DELAY);
-      }, LIFETIME * 1000);
+      }, lab.state.anomalyLifetime * 1000);
     };
     $scope.anomaly = null;
     $scope.catchAnomaly = function() {

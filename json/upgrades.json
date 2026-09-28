@@ -738,7 +738,7 @@
     "name": "LHCb",
     "description": "CP violation research on a whole new level.",
     "effect": "Future research of CP violation gives +1M reputation.",
-    "icon": "fa-",
+    "icon": "fa-dot-circle-o",
     "cost": 4e11,
     "targets": [{"key": "research-cpv", "property": "reputation"}],
     "requirements": [
@@ -746,5 +746,406 @@
       { "key": "upgrade-lhc", "property": "used", "threshold": 1 }
     ],
     "constant": 1e6
+  },
+  {
+    "key": "upgrade-citizens1",
+    "name": "Screensaver Science",
+    "description": "Your analysis now runs as a very pretty screensaver.",
+    "effect": "Citizen Scientists produce +40B data per second.",
+    "icon": "fa-group",
+    "cost": 2e13,
+    "targets": [{ "key": "workers-citizens", "property": "rate" }],
+    "requirements": [{ "key": "workers-citizens", "property": "hired", "threshold": 5 }],
+    "constant": 4e10
+  },
+  {
+    "key": "upgrade-citizens2",
+    "name": "LHC@home",
+    "description": "Volunteer computing, now with an official home.",
+    "effect": "Citizen Scientists produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1.6e14,
+    "targets": [{ "key": "workers-citizens", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-citizens1", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-citizens3",
+    "name": "Leaderboards",
+    "description": "Volunteers compete for the most computing credits.",
+    "effect": "Citizen Scientists produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1.3e15,
+    "targets": [{ "key": "workers-citizens", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-citizens2", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-citizens4",
+    "name": "Open Data",
+    "description": "Anyone can now explore your published datasets.",
+    "effect": "Citizen Scientists produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e16,
+    "targets": [{ "key": "workers-citizens", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-citizens3", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-spokespersons1",
+    "name": "Collaboration Meetings",
+    "description": "A week of talks, coffee and consensus.",
+    "effect": "Collaboration Spokespersons produce +400B data per second.",
+    "icon": "fa-group",
+    "cost": 2.4e14,
+    "targets": [{ "key": "workers-spokespersons", "property": "rate" }],
+    "requirements": [{ "key": "workers-spokespersons", "property": "hired", "threshold": 5 }],
+    "constant": 4e11
+  },
+  {
+    "key": "upgrade-spokespersons2",
+    "name": "Video Conferencing",
+    "description": "All the meetings, none of the jet lag.",
+    "effect": "Collaboration Spokespersons produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1.9e15,
+    "targets": [{ "key": "workers-spokespersons", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-spokespersons1", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-spokespersons3",
+    "name": "Author Lists",
+    "description": "Every paper now has three thousand authors, all of them motivated.",
+    "effect": "Collaboration Spokespersons produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1.5e16,
+    "targets": [{ "key": "workers-spokespersons", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-spokespersons2", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-spokespersons4",
+    "name": "Speakers' Bureau",
+    "description": "Just the right person to give every talk.",
+    "effect": "Collaboration Spokespersons produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1.2e17,
+    "targets": [{ "key": "workers-spokespersons", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-spokespersons3", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-directors1",
+    "name": "Council Sessions",
+    "description": "The member states agree on the next big plan.",
+    "effect": "Directors-General produce +4T data per second.",
+    "icon": "fa-group",
+    "cost": 3.2e15,
+    "targets": [{ "key": "workers-directors", "property": "rate" }],
+    "requirements": [{ "key": "workers-directors", "property": "hired", "threshold": 5 }],
+    "constant": 4e12
+  },
+  {
+    "key": "upgrade-directors2",
+    "name": "Medium-Term Plan",
+    "description": "A clear roadmap for the next five years.",
+    "effect": "Directors-General produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 2.6e16,
+    "targets": [{ "key": "workers-directors", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-directors1", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-directors3",
+    "name": "European Strategy",
+    "description": "A clear roadmap for the next twenty years.",
+    "effect": "Directors-General produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 2e17,
+    "targets": [{ "key": "workers-directors", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-directors2", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-directors4",
+    "name": "Global Collaboration",
+    "description": "Laboratories around the world join forces.",
+    "effect": "Directors-General produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1.6e18,
+    "targets": [{ "key": "workers-directors", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-directors3", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-hackathon",
+    "name": "Hackathon",
+    "description": "A weekend of pizza, code and whiteboards.",
+    "effect": "Citizen Scientists, Collaboration Spokespersons and Directors-General produce twice as much data per second.",
+    "icon": "fa-laptop",
+    "cost": 5e16,
+    "targets": [
+      { "key": "workers-citizens", "property": "rate" },
+      { "key": "workers-spokespersons", "property": "rate" },
+      { "key": "workers-directors", "property": "rate" }
+    ],
+    "requirements": [
+      { "key": "workers-citizens", "property": "hired", "threshold": 1 },
+      { "key": "workers-spokespersons", "property": "hired", "threshold": 1 },
+      { "key": "workers-directors", "property": "hired", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-neutrino1",
+    "name": "Super-Kamiokande",
+    "description": "Fifty thousand tonnes of ultra-pure water, a kilometre underground.",
+    "effect": "Future neutrino oscillation research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 1e14,
+    "targets": [{ "key": "research-neutrino", "property": "reputation" }],
+    "requirements": [{ "key": "research-neutrino", "property": "level", "threshold": 5 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-qgp1",
+    "name": "Heavy-Ion Runs",
+    "description": "Smash lead nuclei together instead of protons.",
+    "effect": "Future quark–gluon plasma research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 5e14,
+    "targets": [{ "key": "research-qgp", "property": "reputation" }],
+    "requirements": [{ "key": "research-qgp", "property": "level", "threshold": 5 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-antihydrogen1",
+    "name": "Antiproton Decelerator",
+    "description": "Slows antiprotons down enough to catch them.",
+    "effect": "Future antihydrogen research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 3e15,
+    "targets": [{ "key": "research-antihydrogen", "property": "reputation" }],
+    "requirements": [{ "key": "research-antihydrogen", "property": "level", "threshold": 5 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-tetraquark1",
+    "name": "Amplitude Analysis",
+    "description": "Fit every resonance in the data at once.",
+    "effect": "Future tetraquark research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 2e16,
+    "targets": [{ "key": "research-tetraquark", "property": "reputation" }],
+    "requirements": [{ "key": "research-tetraquark", "property": "level", "threshold": 5 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-pentaquark1",
+    "name": "LHCb Upgrade",
+    "description": "A faster, sharper LHCb that reads out every collision.",
+    "effect": "Future pentaquark research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 1.5e17,
+    "targets": [{ "key": "research-pentaquark", "property": "reputation" }],
+    "requirements": [{ "key": "research-pentaquark", "property": "level", "threshold": 5 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-openaccess",
+    "name": "Open Access",
+    "description": "All of your papers are free for anyone to read.",
+    "effect": "Double the reputation for all future research.",
+    "icon": "fa-unlock",
+    "cost": 5e17,
+    "targets": [
+      { "key": "research-cpv", "property": "reputation" },
+      { "key": "research-jpsi", "property": "reputation" },
+      { "key": "research-tau", "property": "reputation" },
+      { "key": "research-beauty", "property": "reputation" },
+      { "key": "research-gluons", "property": "reputation" },
+      { "key": "research-weak", "property": "reputation" },
+      { "key": "research-top", "property": "reputation" },
+      { "key": "research-boscillations", "property": "reputation" },
+      { "key": "research-higgs", "property": "reputation" },
+      { "key": "research-dstars", "property": "reputation" },
+      { "key": "research-xib", "property": "reputation" },
+      { "key": "research-neutrino", "property": "reputation" },
+      { "key": "research-qgp", "property": "reputation" },
+      { "key": "research-antihydrogen", "property": "reputation" },
+      { "key": "research-tetraquark", "property": "reputation" },
+      { "key": "research-pentaquark", "property": "reputation" }
+    ],
+    "requirements": [
+      { "key": "research-neutrino", "property": "level", "threshold": 1 },
+      { "key": "research-qgp", "property": "level", "threshold": 1 },
+      { "key": "research-antihydrogen", "property": "level", "threshold": 1 },
+      { "key": "research-tetraquark", "property": "level", "threshold": 1 },
+      { "key": "research-pentaquark", "property": "level", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-funding1",
+    "name": "Grant Writing Workshop",
+    "description": "Learn to write proposals that actually get funded.",
+    "effect": "Reputation brings in 20% more funding.",
+    "icon": "fa-pencil",
+    "cost": 5e12,
+    "targets": [{ "key": "lab", "property": "factor" }],
+    "requirements": [{ "key": "lab", "property": "reputation", "threshold": 1e9 }],
+    "constant": 1
+  },
+  {
+    "key": "upgrade-funding2",
+    "name": "Industry Partnerships",
+    "description": "Companies pay to test their technology in your experiments.",
+    "effect": "Reputation brings in 50% more funding.",
+    "icon": "fa-briefcase",
+    "cost": 5e13,
+    "targets": [{ "key": "lab", "property": "factor" }],
+    "requirements": [
+      { "key": "lab", "property": "reputation", "threshold": 1e10 },
+      { "key": "upgrade-funding1", "property": "used", "threshold": 1 }
+    ],
+    "factor": 1.5e0
+  },
+  {
+    "key": "upgrade-funding3",
+    "name": "Member State Contributions",
+    "description": "More countries join and share the cost.",
+    "effect": "Reputation brings in 50% more funding.",
+    "icon": "fa-flag",
+    "cost": 5e14,
+    "targets": [{ "key": "lab", "property": "factor" }],
+    "requirements": [
+      { "key": "lab", "property": "reputation", "threshold": 1e11 },
+      { "key": "upgrade-funding2", "property": "used", "threshold": 1 }
+    ],
+    "factor": 1.5e0
+  },
+  {
+    "key": "upgrade-funding4",
+    "name": "Science Gateway",
+    "description": "A visitor centre that inspires the next generation, and their parents.",
+    "effect": "Reputation brings in twice as much funding.",
+    "icon": "fa-university",
+    "cost": 5e15,
+    "targets": [{ "key": "lab", "property": "factor" }],
+    "requirements": [
+      { "key": "lab", "property": "reputation", "threshold": 1e12 },
+      { "key": "upgrade-funding3", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-anomaly-lifetime",
+    "name": "Event Buffer",
+    "description": "Interesting events are kept around a little longer.",
+    "effect": "Anomalies stay on the detector 6 seconds longer.",
+    "icon": "fa-history",
+    "cost": 5e3,
+    "targets": [{ "key": "lab", "property": "anomalyLifetime" }],
+    "requirements": [{ "key": "lab", "property": "anomalies", "threshold": 3 }],
+    "constant": 6
+  },
+  {
+    "key": "upgrade-anomaly-rate1",
+    "name": "Trigger Upgrade",
+    "description": "A smarter trigger spots unusual events sooner.",
+    "effect": "Anomalies appear 25% more often.",
+    "icon": "fa-filter",
+    "cost": 2e4,
+    "targets": [{ "key": "lab", "property": "anomalyRate" }],
+    "requirements": [{ "key": "lab", "property": "anomalies", "threshold": 5 }],
+    "factor": 1.25e0
+  },
+  {
+    "key": "upgrade-anomaly-boost1",
+    "name": "Beam Optics",
+    "description": "Better focusing keeps the beam intense for longer.",
+    "effect": "Beam boosts last 15 seconds longer.",
+    "icon": "fa-magnet",
+    "cost": 1e6,
+    "targets": [{ "key": "lab", "property": "boostDuration" }],
+    "requirements": [{ "key": "lab", "property": "anomalies", "threshold": 10 }],
+    "constant": 15
+  },
+  {
+    "key": "upgrade-offline1",
+    "name": "Remote Monitoring",
+    "description": "Keep an eye on the experiment from home.",
+    "effect": "Your lab keeps earning for up to 48 hours while you are away.",
+    "icon": "fa-home",
+    "cost": 2e6,
+    "targets": [{ "key": "lab", "property": "offlineHours" }],
+    "requirements": [{ "key": "lab", "property": "time", "threshold": 7.2e6 }],
+    "constant": 24
+  },
+  {
+    "key": "upgrade-anomaly-reward",
+    "name": "Press Office",
+    "description": "Every anomaly makes the news.",
+    "effect": "Data bursts and funding windfalls from anomalies are 50% bigger.",
+    "icon": "fa-bullhorn",
+    "cost": 1e7,
+    "targets": [{ "key": "lab", "property": "anomalyReward" }],
+    "requirements": [{ "key": "lab", "property": "anomalies", "threshold": 15 }],
+    "factor": 1.5e0
+  },
+  {
+    "key": "upgrade-anomaly-rate2",
+    "name": "Machine-Learning Trigger",
+    "description": "Neural networks flag anomalies in real time.",
+    "effect": "Anomalies appear 25% more often.",
+    "icon": "fa-sitemap",
+    "cost": 1e9,
+    "targets": [{ "key": "lab", "property": "anomalyRate" }],
+    "requirements": [
+      { "key": "lab", "property": "anomalies", "threshold": 25 },
+      { "key": "upgrade-anomaly-rate1", "property": "used", "threshold": 1 }
+    ],
+    "factor": 1.25e0
+  },
+  {
+    "key": "upgrade-anomaly-boost2",
+    "name": "Crab Cavities",
+    "description": "Tilt the proton bunches so they collide head-on.",
+    "effect": "Beam boosts triple all data instead of doubling it.",
+    "icon": "fa-magnet",
+    "cost": 1e13,
+    "targets": [{ "key": "lab", "property": "boostFactor" }],
+    "requirements": [
+      { "key": "lab", "property": "anomalies", "threshold": 50 },
+      { "key": "upgrade-anomaly-boost1", "property": "used", "threshold": 1 }
+    ],
+    "constant": 1
+  },
+  {
+    "key": "upgrade-hllhc",
+    "name": "High-Luminosity LHC",
+    "description": "The LHC, upgraded to collide five to seven times more often.",
+    "effect": "Ten times the amount of data per click.",
+    "icon": "fa-circle-o-notch",
+    "cost": 5e14,
+    "targets": [{ "key": "lab", "property": "detector" }],
+    "requirements": [
+      { "key": "upgrade-energy12", "property": "used", "threshold": 1 },
+      { "key": "upgrade-lumi12", "property": "used", "threshold": 1 }
+    ],
+    "factor": 10
+  },
+  {
+    "key": "upgrade-fcc",
+    "name": "Future Circular Collider",
+    "description": "A 91 km ring for the next generation of discoveries.",
+    "effect": "Ten times the amount of data per click.",
+    "icon": "fa-circle-o-notch",
+    "cost": 5e17,
+    "targets": [{ "key": "lab", "property": "detector" }],
+    "requirements": [{ "key": "upgrade-hllhc", "property": "used", "threshold": 1 }],
+    "factor": 10
   }
 ]

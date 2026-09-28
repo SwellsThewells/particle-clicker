@@ -57,7 +57,14 @@ var GameObjects = (function() {
                                dataSpent : 0,
                                time: 0,
                                lastSeen: 0,
-                               anomalies: 0
+                               anomalies: 0,
+                               // Upgradable settings for anomalies and time away
+                               anomalyRate: 1,       // how often anomalies appear
+                               anomalyLifetime: 12,  // seconds on the detector
+                               anomalyReward: 1,     // factor on bursts and windfalls
+                               boostFactor: 2,       // data multiplier of a beam boost
+                               boostDuration: 30,    // seconds
+                               offlineHours: 24      // cap on progress while away
                              }
                            }]);
   };

@@ -1,6 +1,5 @@
 var Game = (function() {
   'use strict';
-  var MAX_OFFLINE_TIME = 24 * 60 * 60 * 1000;  // ms
   var MIN_OFFLINE_SECONDS = 60;
 
   var Game = function() {
@@ -67,7 +66,8 @@ var Game = (function() {
     if (!lastSeen || now <= lastSeen) {
       return null;
     }
-    var elapsed = Math.min(now - lastSeen, MAX_OFFLINE_TIME);
+    var maxTime = this.lab.state.offlineHours * 60 * 60 * 1000;
+    var elapsed = Math.min(now - lastSeen, maxTime);
     var seconds = Math.floor(elapsed / 1000);
     if (seconds < MIN_OFFLINE_SECONDS) {
       return null;
@@ -79,8 +79,8 @@ var Game = (function() {
     }
     this.lab.acquireData(data);
     this.lab.receiveMoney(money);
-    return {time: elapsed, capped: now - lastSeen > MAX_OFFLINE_TIME,
-            data: data, money: money};
+    return {time: elapsed, capped: now - lastSeen > maxTime,
+            maxHours: this.lab.state.offlineHours, data: data, money: money};
   };
 
   /** Serialise all object states into a portable save code. Objects that

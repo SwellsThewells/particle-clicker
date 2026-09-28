@@ -889,7 +889,7 @@
   },
   {
     "description": "100 data processed!",
-    "icon": "fa-hdd",
+    "icon": "fa-hdd-o",
     "key": "achievement-data-processed-100",
     "targetProperty": "dataSpent",
     "targetKey": "lab",
@@ -897,7 +897,7 @@
   },
   {
     "description": "10k data processed!",
-    "icon": "fa-hdd",
+    "icon": "fa-hdd-o",
     "key": "achievement-data-processed-10k",
     "targetProperty": "dataSpent",
     "targetKey": "lab",
@@ -905,7 +905,7 @@
   },
   {
     "description": "1M data processed!",
-    "icon": "fa-hdd",
+    "icon": "fa-hdd-o",
     "key": "achievement-data-processed-1M",
     "targetProperty": "dataSpent",
     "targetKey": "lab",
@@ -913,7 +913,7 @@
   },
   {
     "description": "100M data processed!",
-    "icon": "fa-hdd",
+    "icon": "fa-hdd-o",
     "key": "achievement-data-processed-100M",
     "targetProperty": "dataSpent",
     "targetKey": "lab",
@@ -921,7 +921,7 @@
   },
   {
     "description": "10G data processed!",
-    "icon": "fa-hdd",
+    "icon": "fa-hdd-o",
     "key": "achievement-data-processed-10G",
     "targetProperty": "dataSpent",
     "targetKey": "lab",
@@ -990,5 +990,485 @@
     "targetProperty": "anomalies",
     "targetKey": "lab",
     "threshold": 50
+  },
+  {
+    "description": "Neutrino oscillations discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-neutrino-1",
+    "targetProperty": "level",
+    "targetKey": "research-neutrino",
+    "threshold": 1
+  },
+  {
+    "description": "Neutrino oscillations research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-neutrino-5",
+    "targetProperty": "level",
+    "targetKey": "research-neutrino",
+    "threshold": 5
+  },
+  {
+    "description": "Neutrino oscillations research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-neutrino-25",
+    "targetProperty": "level",
+    "targetKey": "research-neutrino",
+    "threshold": 25
+  },
+  {
+    "description": "Neutrino oscillations research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-neutrino-50",
+    "targetProperty": "level",
+    "targetKey": "research-neutrino",
+    "threshold": 50
+  },
+  {
+    "description": "Neutrino oscillations research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-neutrino-100",
+    "targetProperty": "level",
+    "targetKey": "research-neutrino",
+    "threshold": 100
+  },
+  {
+    "description": "Quark\u2013gluon plasma discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-qgp-1",
+    "targetProperty": "level",
+    "targetKey": "research-qgp",
+    "threshold": 1
+  },
+  {
+    "description": "Quark\u2013gluon plasma research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-qgp-5",
+    "targetProperty": "level",
+    "targetKey": "research-qgp",
+    "threshold": 5
+  },
+  {
+    "description": "Quark\u2013gluon plasma research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-qgp-25",
+    "targetProperty": "level",
+    "targetKey": "research-qgp",
+    "threshold": 25
+  },
+  {
+    "description": "Quark\u2013gluon plasma research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-qgp-50",
+    "targetProperty": "level",
+    "targetKey": "research-qgp",
+    "threshold": 50
+  },
+  {
+    "description": "Quark\u2013gluon plasma research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-qgp-100",
+    "targetProperty": "level",
+    "targetKey": "research-qgp",
+    "threshold": 100
+  },
+  {
+    "description": "Antihydrogen discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-antihydrogen-1",
+    "targetProperty": "level",
+    "targetKey": "research-antihydrogen",
+    "threshold": 1
+  },
+  {
+    "description": "Antihydrogen research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-antihydrogen-5",
+    "targetProperty": "level",
+    "targetKey": "research-antihydrogen",
+    "threshold": 5
+  },
+  {
+    "description": "Antihydrogen research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-antihydrogen-25",
+    "targetProperty": "level",
+    "targetKey": "research-antihydrogen",
+    "threshold": 25
+  },
+  {
+    "description": "Antihydrogen research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-antihydrogen-50",
+    "targetProperty": "level",
+    "targetKey": "research-antihydrogen",
+    "threshold": 50
+  },
+  {
+    "description": "Antihydrogen research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-antihydrogen-100",
+    "targetProperty": "level",
+    "targetKey": "research-antihydrogen",
+    "threshold": 100
+  },
+  {
+    "description": "Tetraquarks discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-tetraquark-1",
+    "targetProperty": "level",
+    "targetKey": "research-tetraquark",
+    "threshold": 1
+  },
+  {
+    "description": "Tetraquarks research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-tetraquark-5",
+    "targetProperty": "level",
+    "targetKey": "research-tetraquark",
+    "threshold": 5
+  },
+  {
+    "description": "Tetraquarks research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-tetraquark-25",
+    "targetProperty": "level",
+    "targetKey": "research-tetraquark",
+    "threshold": 25
+  },
+  {
+    "description": "Tetraquarks research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-tetraquark-50",
+    "targetProperty": "level",
+    "targetKey": "research-tetraquark",
+    "threshold": 50
+  },
+  {
+    "description": "Tetraquarks research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-tetraquark-100",
+    "targetProperty": "level",
+    "targetKey": "research-tetraquark",
+    "threshold": 100
+  },
+  {
+    "description": "Pentaquarks discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-pentaquark-1",
+    "targetProperty": "level",
+    "targetKey": "research-pentaquark",
+    "threshold": 1
+  },
+  {
+    "description": "Pentaquarks research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-pentaquark-5",
+    "targetProperty": "level",
+    "targetKey": "research-pentaquark",
+    "threshold": 5
+  },
+  {
+    "description": "Pentaquarks research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-pentaquark-25",
+    "targetProperty": "level",
+    "targetKey": "research-pentaquark",
+    "threshold": 25
+  },
+  {
+    "description": "Pentaquarks research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-pentaquark-50",
+    "targetProperty": "level",
+    "targetKey": "research-pentaquark",
+    "threshold": 50
+  },
+  {
+    "description": "Pentaquarks research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-pentaquark-100",
+    "targetProperty": "level",
+    "targetKey": "research-pentaquark",
+    "threshold": 100
+  },
+  {
+    "description": "The first Citizen Scientists hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-citizens-1",
+    "targetProperty": "hired",
+    "targetKey": "workers-citizens",
+    "threshold": 1
+  },
+  {
+    "description": "5 Citizen Scientists working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-citizens-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-citizens",
+    "threshold": 5
+  },
+  {
+    "description": "25 Citizen Scientists working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-citizens-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-citizens",
+    "threshold": 25
+  },
+  {
+    "description": "50 Citizen Scientists working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-citizens-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-citizens",
+    "threshold": 50
+  },
+  {
+    "description": "100 Citizen Scientists working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-citizens-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-citizens",
+    "threshold": 100
+  },
+  {
+    "description": "The first Collaboration Spokespersons hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-spokespersons-1",
+    "targetProperty": "hired",
+    "targetKey": "workers-spokespersons",
+    "threshold": 1
+  },
+  {
+    "description": "5 Collaboration Spokespersons working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-spokespersons-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-spokespersons",
+    "threshold": 5
+  },
+  {
+    "description": "25 Collaboration Spokespersons working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-spokespersons-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-spokespersons",
+    "threshold": 25
+  },
+  {
+    "description": "50 Collaboration Spokespersons working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-spokespersons-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-spokespersons",
+    "threshold": 50
+  },
+  {
+    "description": "100 Collaboration Spokespersons working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-spokespersons-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-spokespersons",
+    "threshold": 100
+  },
+  {
+    "description": "The first Directors-General hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-directors-1",
+    "targetProperty": "hired",
+    "targetKey": "workers-directors",
+    "threshold": 1
+  },
+  {
+    "description": "5 Directors-General working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-directors-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-directors",
+    "threshold": 5
+  },
+  {
+    "description": "25 Directors-General working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-directors-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-directors",
+    "threshold": 25
+  },
+  {
+    "description": "50 Directors-General working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-directors-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-directors",
+    "threshold": 50
+  },
+  {
+    "description": "100 Directors-General working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-directors-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-directors",
+    "threshold": 100
+  },
+  {
+    "description": "100 reputation!",
+    "icon": "fa-star",
+    "key": "achievement-reputation-100",
+    "targetProperty": "reputation",
+    "targetKey": "lab",
+    "threshold": 100.0
+  },
+  {
+    "description": "10k reputation!",
+    "icon": "fa-star",
+    "key": "achievement-reputation-10k",
+    "targetProperty": "reputation",
+    "targetKey": "lab",
+    "threshold": 10000.0
+  },
+  {
+    "description": "1M reputation!",
+    "icon": "fa-star",
+    "key": "achievement-reputation-1M",
+    "targetProperty": "reputation",
+    "targetKey": "lab",
+    "threshold": 1000000.0
+  },
+  {
+    "description": "100M reputation!",
+    "icon": "fa-star",
+    "key": "achievement-reputation-100M",
+    "targetProperty": "reputation",
+    "targetKey": "lab",
+    "threshold": 100000000.0
+  },
+  {
+    "description": "10G reputation!",
+    "icon": "fa-star",
+    "key": "achievement-reputation-10G",
+    "targetProperty": "reputation",
+    "targetKey": "lab",
+    "threshold": 10000000000.0
+  },
+  {
+    "description": "10 data per click!",
+    "icon": "fa-crosshairs",
+    "key": "achievement-detector-10",
+    "targetProperty": "detector",
+    "targetKey": "lab",
+    "threshold": 10.0
+  },
+  {
+    "description": "1k data per click!",
+    "icon": "fa-crosshairs",
+    "key": "achievement-detector-1k",
+    "targetProperty": "detector",
+    "targetKey": "lab",
+    "threshold": 1000.0
+  },
+  {
+    "description": "100k data per click!",
+    "icon": "fa-crosshairs",
+    "key": "achievement-detector-100k",
+    "targetProperty": "detector",
+    "targetKey": "lab",
+    "threshold": 100000.0
+  },
+  {
+    "description": "10M data per click!",
+    "icon": "fa-crosshairs",
+    "key": "achievement-detector-10M",
+    "targetProperty": "detector",
+    "targetKey": "lab",
+    "threshold": 10000000.0
+  },
+  {
+    "description": "1G data per click!",
+    "icon": "fa-crosshairs",
+    "key": "achievement-detector-1G",
+    "targetProperty": "detector",
+    "targetKey": "lab",
+    "threshold": 1000000000.0
+  },
+  {
+    "description": "25 anomalies caught!",
+    "icon": "fa-certificate",
+    "key": "achievement-anomalies-25",
+    "targetProperty": "anomalies",
+    "targetKey": "lab",
+    "threshold": 25
+  },
+  {
+    "description": "100 anomalies caught!",
+    "icon": "fa-certificate",
+    "key": "achievement-anomalies-100",
+    "targetProperty": "anomalies",
+    "targetKey": "lab",
+    "threshold": 100
+  },
+  {
+    "description": "250 anomalies caught!",
+    "icon": "fa-certificate",
+    "key": "achievement-anomalies-250",
+    "targetProperty": "anomalies",
+    "targetKey": "lab",
+    "threshold": 250
+  },
+  {
+    "description": "One hour of physics!",
+    "icon": "fa-clock-o",
+    "key": "achievement-time-1h",
+    "targetProperty": "time",
+    "targetKey": "lab",
+    "threshold": 3600000.0
+  },
+  {
+    "description": "Ten hours of physics!",
+    "icon": "fa-clock-o",
+    "key": "achievement-time-10h",
+    "targetProperty": "time",
+    "targetKey": "lab",
+    "threshold": 36000000.0
+  },
+  {
+    "description": "A hundred hours of physics!",
+    "icon": "fa-clock-o",
+    "key": "achievement-time-100h",
+    "targetProperty": "time",
+    "targetKey": "lab",
+    "threshold": 360000000.0
+  },
+  {
+    "description": "1T data collected!",
+    "icon": "fa-database",
+    "key": "achievement-dataCollected-1T",
+    "targetProperty": "dataCollected",
+    "targetKey": "lab",
+    "threshold": 1000000000000.0
+  },
+  {
+    "description": "1T data processed!",
+    "icon": "fa-hdd-o",
+    "key": "achievement-dataSpent-1T",
+    "targetProperty": "dataSpent",
+    "targetKey": "lab",
+    "threshold": 1000000000000.0
+  },
+  {
+    "description": "JTN 1T funding gathered!",
+    "icon": "fa-money",
+    "key": "achievement-moneyCollected-1T",
+    "targetProperty": "moneyCollected",
+    "targetKey": "lab",
+    "threshold": 1000000000000.0
+  },
+  {
+    "description": "JTN 1T funding spent!",
+    "icon": "fa-money",
+    "key": "achievement-moneySpent-1T",
+    "targetProperty": "moneySpent",
+    "targetKey": "lab",
+    "threshold": 1000000000000.0
   }
 ]

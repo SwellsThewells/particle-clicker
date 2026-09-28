@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <circle cx="32" cy="32" r="30" style="fill:#ad1457"/>
+  <text x="29" y="43" text-anchor="middle" style="font-family:'TeX Gyre Pagella','Palatino Linotype',Palatino,'Liberation Serif',Georgia,serif;font-size:32px;fill:#ffffff">Z</text>
+  <text x="40" y="49" text-anchor="start" style="font-family:'TeX Gyre Pagella','Palatino Linotype',Palatino,'Liberation Serif',Georgia,serif;font-size:16px;fill:#ffffff;font-style:italic">c</text>
+</svg>

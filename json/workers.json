@@ -78,5 +78,35 @@
       "cost": 1.25e8,
       "rate": 2e7
     }
+  },
+  {
+    "key": "workers-citizens",
+    "name": "Citizen Scientists",
+    "description": "Thousands of volunteers lend their computers' spare time to analyse your data.",
+    "cost_increase": 1.12e0,
+    "state": {
+      "cost": 5e12,
+      "rate": 2e10
+    }
+  },
+  {
+    "key": "workers-spokespersons",
+    "name": "Collaboration Spokespersons",
+    "description": "They speak for thousands of physicists and somehow get them all to agree.",
+    "cost_increase": 1.1e0,
+    "state": {
+      "cost": 6e13,
+      "rate": 2e11
+    }
+  },
+  {
+    "key": "workers-directors",
+    "name": "Directors-General",
+    "description": "They run the whole laboratory, and the whole laboratory runs faster.",
+    "cost_increase": 1.08e0,
+    "state": {
+      "cost": 8e14,
+      "rate": 2e12
+    }
   }
 ]

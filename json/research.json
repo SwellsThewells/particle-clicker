@@ -141,5 +141,70 @@
       "cost": 9e10,
       "info_levels": [ 1 ]
     }
+  },
+  {
+    "key": "research-neutrino",
+    "name": "Neutrino oscillations",
+    "description": "Neutrinos change their flavour as they travel, so they must have mass.",
+    "cost_increase": 1.15e0,
+    "image": "assets/icons/png/nu.png",
+    "info": "html/nu.html",
+    "state": {
+      "reputation": 3e8,
+      "cost": 1e14,
+      "info_levels": [ 1, 5 ]
+    }
+  },
+  {
+    "key": "research-qgp",
+    "name": "Quark–gluon plasma",
+    "description": "A hot soup of free quarks and gluons, like the universe a microsecond after the Big Bang.",
+    "cost_increase": 1.15e0,
+    "image": "assets/icons/png/QGP.png",
+    "info": "html/QGP.html",
+    "state": {
+      "reputation": 1.2e9,
+      "cost": 5e14,
+      "info_levels": [ 1, 5 ]
+    }
+  },
+  {
+    "key": "research-antihydrogen",
+    "name": "Antihydrogen",
+    "description": "An antiproton and a positron bound together: the simplest atom of antimatter.",
+    "cost_increase": 1.15e0,
+    "image": "assets/icons/png/Hbar.png",
+    "info": "html/Hbar.html",
+    "state": {
+      "reputation": 6e9,
+      "cost": 3e15,
+      "info_levels": [ 1, 5 ]
+    }
+  },
+  {
+    "key": "research-tetraquark",
+    "name": "Tetraquarks",
+    "description": "Exotic hadrons made of two quarks and two antiquarks.",
+    "cost_increase": 1.15e0,
+    "image": "assets/icons/png/Zc.png",
+    "info": "html/Zc.html",
+    "state": {
+      "reputation": 3e10,
+      "cost": 2e16,
+      "info_levels": [ 1, 5 ]
+    }
+  },
+  {
+    "key": "research-pentaquark",
+    "name": "Pentaquarks",
+    "description": "Exotic hadrons made of four quarks and one antiquark.",
+    "cost_increase": 1.15e0,
+    "image": "assets/icons/png/Pc.png",
+    "info": "html/Pc.html",
+    "state": {
+      "reputation": 1.5e11,
+      "cost": 1.5e17,
+      "info_levels": [ 1, 5 ]
+    }
   }
 ]
