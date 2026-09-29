@@ -23,6 +23,7 @@ function ParticleEvent(type, count, external, opts)
     this.width = 2;
     this.count = count;
     this.origin = {x: 0, y: 0};
+    this.hue = Math.floor(Math.random() * 360);  // for the Rainbow and Aurora skins
 
     var r = detector.radius, ratio = detector.ratio;
     switch (this.type.name)
@@ -108,6 +109,9 @@ ParticleEvent.prototype.draw = function(duration, init)
 
     ctx.translate(cx + this.origin.x, cy + this.origin.y);
     ctx.rotate(this.direction);
+    if (this.kind === 'arc' || this.kind === 'line') {
+        detector.applySkin(ctx, this);
+    }
 
     var r = detector.radius, ratio = detector.ratio;
     switch (this.kind)

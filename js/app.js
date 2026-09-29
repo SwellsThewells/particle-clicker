@@ -146,6 +146,53 @@
     }
   });
 
+  // Particle skins, unlocked by the number of achievements.
+  var skins = Helpers.loadFile('json/skins.json');
+  var openSkins = false;  // open the achievements window on the Skins tab
+  var achievedCount = function() {
+    return achievements.filter(function(a) { return a.isAchieved(); }).length;
+  };
+  var skinUnlocked = function(skin) {
+    return achievedCount() >= skin.requires;
+  };
+  var unlockedSkinCount = function() {
+    var n = achievedCount();
+    return skins.filter(function(s) { return n >= s.requires; }).length;
+  };
+  /** Use the chosen skin while it is unlocked, and the classic look if not
+   * (after a restart, for example). */
+  var applySkin = function() {
+    var chosen = skins.filter(function(s) { return s.key === Settings.get('skin'); })[0];
+    detector.skin = chosen && skinUnlocked(chosen) ? chosen : skins[0];
+  };
+  applySkin();
+  var skinsKnown = unlockedSkinCount();
+  var checkSkins = function() {
+    var n = unlockedSkinCount();
+    for (var i = skinsKnown; i < n; i++) {
+      UI.showPopup('alert-info', 'fa-paint-brush', 'New particle skin: <strong>' + skins[i].name +
+                   '</strong>. Try it in Achievements, Skins.', 4000);
+    }
+    skinsKnown = n;
+    applySkin();
+  };
+  var useSkin = function(skin) {
+    if (!skinUnlocked(skin)) {
+      return;
+    }
+    Settings.set('skin', skin.key);
+    applySkin();
+    // Secret: try five different skins.
+    secrets.skinsTried |= 1 << skins.indexOf(skin);
+    var tried = 0;
+    for (var i = 0; i < skins.length; i++) {
+      tried += (secrets.skinsTried >> i) & 1;
+    }
+    if (tried >= 5) {
+      secrets.fashionista = 1;
+    }
+  };
+
   // Secret achievements that are checked every second.
   var checkSecrets = function() {
     if (new Date().getHours() < 5) {
@@ -226,6 +273,13 @@
     this.boostLeft = function() {
       return Math.max(0, Math.ceil((boostUntil - new Date().getTime()) / 1000));
     };
+    this.skinsNew = function() {
+      return unlockedSkinCount() > Settings.get('skinsSeen');
+    };
+    this.showSkins = function() {
+      openSkins = true;
+      $('#achievements-modal').modal('show');
+    };
     this.showDetectorInfo = function() {
       if (!this._detectorInfo) {
         this._detectorInfo = Helpers.loadFile('html/detector.html');
@@ -248,6 +302,7 @@
       }
       updateEffects();
       checkSecrets();
+      checkSkins();
     }, 1000);
   }]);
 
@@ -274,6 +329,7 @@
         }
         return paid;
       });
+      player.researchLevels += levels;
       if (cost > 0) {
         UI.showUpdateValue("#update-data", -cost);
         UI.showUpdateValue("#update-reputation", reputation);
@@ -314,6 +370,7 @@
       if (total > 0) {
         UI.showUpdateValue("#update-funding", -total);
         gainXp(XP.hire * hired);
+        player.staffHired += hired;
       }
     };
   });
@@ -329,6 +386,7 @@
     this.upgrade = function(upgrade) {
       if (upgrade.buy(lab, allObjects) > 0) {
         UI.showUpdateValue("#update-funding", -upgrade.cost);
+        player.upgradesBought += 1;
         gainXp(XP.upgrade);
         updateEffects();
       }
@@ -345,7 +403,38 @@
     $scope.secretsFound = function() {
       return secretOnes.filter(function(a) { return a.isAchieved(); }).length;
     };
+    $scope.skinsNew = function() {
+      return unlockedSkinCount() > Settings.get('skinsSeen');
+    };
+    // The navbar opens the achievements; the brush on the detector opens the skins.
+    $('#achievements-modal').on('show.bs.modal', function() {
+      $('#achievements-tabs a[href="' + (openSkins ? '#skins-tab' : '#achievements-tab') + '"]').tab('show');
+      openSkins = false;
+    });
+    $('#achievements-tabs a[href="#skins-tab"]').on('shown.bs.tab', function() {
+      // This can fire inside a digest (from the brush button) or outside one.
+      $scope.$evalAsync(function() { Settings.set('skinsSeen', unlockedSkinCount()); });
+    });
   });
+
+  /** Draws the preview of a skin (scope.s) and redraws it when the theme changes. */
+  app.directive('skinPreview', function() {
+    return {
+      link: function(scope, element) {
+        Settings.onChange(function() { detector.drawPreview(element[0], scope.s); });
+      }
+    };
+  });
+
+  app.controller('SkinsController', ['$scope', function($scope) {
+    $scope.skins = skins;
+    $scope.achieved = achievedCount;
+    $scope.unlocked = skinUnlocked;
+    $scope.inUse = function(skin) {
+      return detector.skin === skin;
+    };
+    $scope.use = useSkin;
+  }]);
 
   app.controller('SaveController',
       ['$scope', '$interval', function($scope, $interval) {
@@ -370,6 +459,14 @@
       }
     };
     $interval($scope.saveNow, 10000);
+    // Ctrl+S (Cmd+S on a Mac) saves the game instead of the web page.
+    document.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.keyCode === 83)) {
+        e.preventDefault();
+        secrets.saveShortcut = 1;
+        $scope.$apply($scope.saveNow);
+      }
+    });
     // Also save when the page is closed so no progress is lost.
     window.addEventListener('pagehide', saveGame);
   }]);

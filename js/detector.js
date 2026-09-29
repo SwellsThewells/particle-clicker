@@ -38,6 +38,8 @@ var detector =
     },
     quality: 'full',
     maxEvents: 600,
+    // The particle skin in use (see json/skins.json); null draws the classic look.
+    skin: null,
 
     width: 400,
     height: 400,
@@ -166,6 +168,123 @@ var detector =
             detector.running = true;
             detector.animate();
         }
+    },
+
+    /** A skin value that may differ between the light and dark theme, as
+     * {light: ..., dark: ...}. (A colour map can also have a plain 'dark'
+     * entry: the colour of dark matter tracks.) */
+    themed: function(value)
+    {
+        if (value && !Array.isArray(value) && typeof value.light === 'object' &&
+            typeof value.dark === 'object') {
+            return detector.palette === detector.palettes.dark ? value.dark : value.light;
+        }
+        return value;
+    },
+
+    /** The colour (or gradient) of a track in the current skin. The context
+     * must already be rotated so the track runs from (0, 0) along x. */
+    strokeFor: function(ev, ctx)
+    {
+        var style = detector.skin && detector.skin.style;
+        var fallback = detector.palette[ev.type.name] || ev.type.color;
+        if (!style) {
+            return fallback;
+        }
+        var dark = detector.palette === detector.palettes.dark;
+        var gradient = function(from, to) {
+            var g = ctx.createLinearGradient(0, 0, Math.max(ev.length, 1), 0);
+            g.addColorStop(0, from);
+            g.addColorStop(1, to);
+            return g;
+        };
+        if (style.mode === 'hue') {
+            return 'hsl(' + ev.hue + ', 85%, ' + (dark ? 65 : 42) + '%)';
+        }
+        if (style.mode === 'aurora') {
+            var shift = (new Date().getTime() / 40 + ev.hue / 4) % 360;
+            var light = dark ? 65 : 40;
+            return gradient('hsl(' + (120 + shift) % 360 + ', 90%, ' + light + '%)',
+                            'hsl(' + (260 + shift) % 360 + ', 90%, ' + light + '%)');
+        }
+        if (style.gradient) {
+            var stops = detector.themed(style.gradient);
+            return gradient(stops[0], stops[1]);
+        }
+        if (style.colors) {
+            var colors = detector.themed(style.colors);
+            return colors[ev.type.name] || colors.all || fallback;
+        }
+        return fallback;
+    },
+
+    /** Draw a charged track or a line in the style of the current skin. */
+    applySkin: function(ctx, ev)
+    {
+        var style = detector.skin && detector.skin.style;
+        if (!style) {
+            return;
+        }
+        var stroke = detector.strokeFor(ev, ctx);
+        ctx.strokeStyle = stroke;
+        ctx.fillStyle = stroke;
+        if (style.width) {
+            ctx.lineWidth = ev.width * style.width;
+        }
+        if (style.dash && ev.kind === 'arc' && !ev.dash && ctx.setLineDash) {
+            ctx.setLineDash(style.dash);
+        }
+        if (style.cap) {
+            ctx.lineCap = style.cap;
+        }
+        if (style.glow && detector.quality === 'full') {
+            ctx.shadowColor = style.glow === true ?
+                (typeof stroke === 'string' ? stroke : detector.palette.glow) : detector.themed(style.glow);
+            ctx.shadowBlur = 8;
+        }
+    },
+
+    /** A small still picture of the event display in a skin, for the Skins tab. */
+    drawPreview: function(canvas, skin)
+    {
+        var ctx = canvas.getContext('2d');
+        var w = canvas.width, h = canvas.height;
+        var dark = detector.palette === detector.palettes.dark;
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = dark ? '#16171a' : '#ffffff';
+        ctx.fillRect(0, 0, w, h);
+        ctx.strokeStyle = dark ? '#3a3c42' : '#dddddd';
+        ctx.lineWidth = 1;
+        [0.12, 0.28, 0.44].forEach(function(r) {
+            ctx.beginPath();
+            ctx.arc(w / 2, h / 2, r * w, 0, Math.PI * 2);
+            ctx.stroke();
+        });
+        var saved = detector.skin;
+        detector.skin = skin;
+        var names = ['electron', 'jet', 'muon', 'jet', 'electron', 'pion'];
+        for (var i = 0; i < 12; i++) {
+            // The same tracks for every skin, so they are easy to compare.
+            var pseudo = function(k) { return (Math.sin(i * 12.9898 + k * 78.233) * 43758.5453) % 1; };
+            var ev = {type: {name: names[i % names.length]}, kind: 'arc', width: 1.5,
+                      length: w * (0.22 + 0.22 * Math.abs(pseudo(1))),
+                      radius: w * (0.25 + 1.2 * Math.abs(pseudo(2))),
+                      sign: pseudo(3) > 0 ? 1 : -1, hue: (i * 47) % 360};
+            ev.radius = Math.max(ev.radius, ev.length / 2 + 1);
+            ctx.save();
+            ctx.translate(w / 2, h / 2);
+            ctx.rotate(i * Math.PI / 6 + pseudo(4) * 0.4);
+            ctx.lineWidth = ev.width;
+            ctx.strokeStyle = detector.strokeFor(ev, ctx);
+            detector.applySkin(ctx, ev);
+            var arcH = Math.sqrt(Math.max(ev.radius * ev.radius - ev.length * ev.length / 4, 0));
+            var a = Math.asin(Math.min(1, ev.length / (2 * ev.radius)));
+            ctx.beginPath();
+            ctx.arc(ev.length / 2, ev.sign * arcH, ev.radius, -ev.sign * Math.PI / 2 - a, -ev.sign * Math.PI / 2 + a, false);
+            ctx.stroke();
+            ctx.restore();
+        }
+        detector.skin = saved;
     },
 
     setTheme: function(dark)

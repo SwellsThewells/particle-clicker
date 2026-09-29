@@ -1646,5 +1646,271 @@
     "targetKey": "secrets",
     "threshold": 1,
     "secret": true
+  },
+  {
+    "description": "10 upgrades bought!",
+    "icon": "fa-wrench",
+    "key": "achievement-upgrades-10",
+    "targetProperty": "upgradesBought",
+    "targetKey": "player",
+    "threshold": 10
+  },
+  {
+    "description": "25 upgrades bought!",
+    "icon": "fa-wrench",
+    "key": "achievement-upgrades-25",
+    "targetProperty": "upgradesBought",
+    "targetKey": "player",
+    "threshold": 25
+  },
+  {
+    "description": "50 upgrades bought!",
+    "icon": "fa-wrench",
+    "key": "achievement-upgrades-50",
+    "targetProperty": "upgradesBought",
+    "targetKey": "player",
+    "threshold": 50
+  },
+  {
+    "description": "100 upgrades bought!",
+    "icon": "fa-wrench",
+    "key": "achievement-upgrades-100",
+    "targetProperty": "upgradesBought",
+    "targetKey": "player",
+    "threshold": 100
+  },
+  {
+    "description": "100 staff hired!",
+    "icon": "fa-users",
+    "key": "achievement-staff-100",
+    "targetProperty": "staffHired",
+    "targetKey": "player",
+    "threshold": 100
+  },
+  {
+    "description": "500 staff hired!",
+    "icon": "fa-users",
+    "key": "achievement-staff-500",
+    "targetProperty": "staffHired",
+    "targetKey": "player",
+    "threshold": 500
+  },
+  {
+    "description": "1k staff hired!",
+    "icon": "fa-users",
+    "key": "achievement-staff-1000",
+    "targetProperty": "staffHired",
+    "targetKey": "player",
+    "threshold": 1000
+  },
+  {
+    "description": "5k staff hired!",
+    "icon": "fa-users",
+    "key": "achievement-staff-5000",
+    "targetProperty": "staffHired",
+    "targetKey": "player",
+    "threshold": 5000
+  },
+  {
+    "description": "100 research levels!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-levels-100",
+    "targetProperty": "researchLevels",
+    "targetKey": "player",
+    "threshold": 100
+  },
+  {
+    "description": "500 research levels!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-levels-500",
+    "targetProperty": "researchLevels",
+    "targetKey": "player",
+    "threshold": 500
+  },
+  {
+    "description": "1k research levels!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-levels-1000",
+    "targetProperty": "researchLevels",
+    "targetKey": "player",
+    "threshold": 1000
+  },
+  {
+    "description": "5 boosts chosen!",
+    "icon": "fa-star",
+    "key": "achievement-boosts-5",
+    "targetProperty": "boostsChosen",
+    "targetKey": "player",
+    "threshold": 5
+  },
+  {
+    "description": "15 boosts chosen!",
+    "icon": "fa-star",
+    "key": "achievement-boosts-15",
+    "targetProperty": "boostsChosen",
+    "targetKey": "player",
+    "threshold": 15
+  },
+  {
+    "description": "30 boosts chosen!",
+    "icon": "fa-star",
+    "key": "achievement-boosts-30",
+    "targetProperty": "boostsChosen",
+    "targetKey": "player",
+    "threshold": 30
+  },
+  {
+    "description": "10M clicks!",
+    "icon": "fa-hand-o-up",
+    "key": "achievement-clicks-10M",
+    "targetProperty": "clicks",
+    "targetKey": "lab",
+    "threshold": 10000000
+  },
+  {
+    "description": "Level 75!",
+    "icon": "fa-level-up",
+    "key": "achievement-level-75",
+    "targetProperty": "level",
+    "targetKey": "player",
+    "threshold": 75
+  },
+  {
+    "description": "Level 100!",
+    "icon": "fa-level-up",
+    "key": "achievement-level-100",
+    "targetProperty": "level",
+    "targetKey": "player",
+    "threshold": 100
+  },
+  {
+    "description": "10k dark matter collected!",
+    "icon": "fa-adjust",
+    "key": "achievement-darkmatter-10000",
+    "targetProperty": "darkMatterTotal",
+    "targetKey": "prestige",
+    "threshold": 10000
+  },
+  {
+    "description": "50 universes expanded!",
+    "icon": "fa-expand",
+    "key": "achievement-expansions-50",
+    "targetProperty": "expansions",
+    "targetKey": "prestige",
+    "threshold": 50
+  },
+  {
+    "description": "100 universes expanded!",
+    "icon": "fa-expand",
+    "key": "achievement-expansions-100",
+    "targetProperty": "expansions",
+    "targetKey": "prestige",
+    "threshold": 100
+  },
+  {
+    "description": "100G data per click!",
+    "icon": "fa-crosshairs",
+    "key": "achievement-detector-100G",
+    "targetProperty": "detector",
+    "targetKey": "lab",
+    "threshold": 100000000000.0
+  },
+  {
+    "description": "10T data per click!",
+    "icon": "fa-crosshairs",
+    "key": "achievement-detector-10T",
+    "targetProperty": "detector",
+    "targetKey": "lab",
+    "threshold": 10000000000000.0
+  },
+  {
+    "description": "1T reputation!",
+    "icon": "fa-star",
+    "key": "achievement-reputation-1T",
+    "targetProperty": "reputation",
+    "targetKey": "lab",
+    "threshold": 1000000000000.0
+  },
+  {
+    "description": "100T reputation!",
+    "icon": "fa-star",
+    "key": "achievement-reputation-100T",
+    "targetProperty": "reputation",
+    "targetKey": "lab",
+    "threshold": 100000000000000.0
+  },
+  {
+    "description": "1P data collected!",
+    "icon": "fa-database",
+    "key": "achievement-dataCollected-1P",
+    "targetProperty": "dataCollected",
+    "targetKey": "lab",
+    "threshold": 1000000000000000.0
+  },
+  {
+    "description": "1P data processed!",
+    "icon": "fa-hdd-o",
+    "key": "achievement-dataSpent-1P",
+    "targetProperty": "dataSpent",
+    "targetKey": "lab",
+    "threshold": 1000000000000000.0
+  },
+  {
+    "description": "JTN 1P funding gathered!",
+    "icon": "fa-money",
+    "key": "achievement-moneyCollected-1P",
+    "targetProperty": "moneyCollected",
+    "targetKey": "lab",
+    "threshold": 1000000000000000.0
+  },
+  {
+    "description": "JTN 1P funding spent!",
+    "icon": "fa-money",
+    "key": "achievement-moneySpent-1P",
+    "targetProperty": "moneySpent",
+    "targetKey": "lab",
+    "threshold": 1000000000000000.0
+  },
+  {
+    "description": "500 anomalies caught!",
+    "icon": "fa-certificate",
+    "key": "achievement-anomalies-500",
+    "targetProperty": "anomalies",
+    "targetKey": "lab",
+    "threshold": 500
+  },
+  {
+    "description": "1k anomalies caught!",
+    "icon": "fa-certificate",
+    "key": "achievement-anomalies-1000",
+    "targetProperty": "anomalies",
+    "targetKey": "lab",
+    "threshold": 1000
+  },
+  {
+    "description": "Five hundred hours of physics!",
+    "icon": "fa-clock-o",
+    "key": "achievement-time-500h",
+    "targetProperty": "time",
+    "targetKey": "lab",
+    "threshold": 1800000000
+  },
+  {
+    "description": "Saved by the keyboard: you pressed Ctrl+S (or Cmd+S) to save.",
+    "icon": "fa-floppy-o",
+    "key": "achievement-secret-save",
+    "targetProperty": "saveShortcut",
+    "targetKey": "secrets",
+    "threshold": 1,
+    "secret": true
+  },
+  {
+    "description": "Fashion physicist: you tried 5 different particle skins.",
+    "icon": "fa-paint-brush",
+    "key": "achievement-secret-fashion",
+    "targetProperty": "fashionista",
+    "targetKey": "secrets",
+    "threshold": 1,
+    "secret": true
   }
 ]

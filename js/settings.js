@@ -15,8 +15,10 @@ var Settings = (function() {
     numbers: 'short',      // 'short' (1.2M) or 'scientific' (1.2e6)
     effects: 'full',       // 'full', 'reduced' or 'minimal'
     floatingNumbers: true, // the +123 that float up from the counters
-    popups: true,          // achievement pop-ups
-    reduceMotion: !!(systemReducedMotion && systemReducedMotion.matches)
+    popups: true,          // pop-ups for achievements, level-ups and skins
+    reduceMotion: !!(systemReducedMotion && systemReducedMotion.matches),
+    skin: 'classic',       // the particle skin in use (json/skins.json)
+    skinsSeen: 1           // skins unlocked when the Skins tab was last opened
   };
   var values = $.extend({}, defaults);
   var listeners = [];

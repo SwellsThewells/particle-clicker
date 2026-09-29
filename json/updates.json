@@ -1,5 +1,18 @@
 [
   {
+    "version": "1.6",
+    "date": "2026-09-29",
+    "title": "Particle skins",
+    "changes": [
+      "Particle skins: 12 looks for the event display, from Neon and Bubble Chamber to Plasma and Cosmic. They unlock as you earn achievements. Find them in the new Skins tab of the Achievements window, or with the brush button on the detector.",
+      "24 new upgrades: one for each of the original research topics, a fifth upgrade for each of the original staff once you have 50, and upgrades that unlock at levels 10, 30 and 50.",
+      "33 new achievements for upgrades bought, staff hired, research levels and boosts over all your universes, bigger milestones, and 2 more secrets.",
+      "The level bar and boosts now look like the rest of the game, and level-ups show a pop-up like achievements.",
+      "Levels come at a steadier pace, so the higher ones can actually be reached.",
+      "Ctrl+S (Cmd+S on a Mac) saves the game."
+    ]
+  },
+  {
     "version": "1.5",
     "date": "2026-09-28",
     "title": "Levels, Particle Expansion and dark mode",

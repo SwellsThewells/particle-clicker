@@ -136,6 +136,7 @@
           </div>
         </div>
         <button id="detector-info" class="btn btn-info" ng-click="lc.showDetectorInfo()"><i class="fa fa-info"></i></button>
+        <button id="detector-skins" class="btn btn-default" ng-click="lc.showSkins()" title="Particle skins" aria-label="Particle skins"><i class="fa fa-paint-brush"></i><span class="new-dot" ng-show="lc.skinsNew()" ng-cloak></span></button>
         <div class="row status" ng-cloak>
           <div class="col-xs-4 text-center col-no-padding-xs">
             <strong>Data</strong><br>
@@ -252,16 +253,39 @@
             <h4 class="modal-title" id="achievements-label"><i class="fa fa-trophy"></i> Achievements</h4>
           </div>
           <div class="modal-body">
-            <p class="text-center"><strong>Progress</strong> <span class="label label-info">{{ progress() }} / {{ achievements.length }}</span></p>
-            <p class="text-center small text-muted"><i class="fa fa-eye-slash"></i> Secret achievements found: {{ secretsFound() }} / {{ secretCount }}</p>
-            <ul class="list-group">
-              <li class="list-group-item" ng-repeat="a in achievements | orderBy:'state.timeAchieved' | reverse" ng-show="a.isAchieved()">
-                <i class="fa {{ a.icon }}"></i>
-                {{ a.description }}
-                <span class="label label-warning" ng-show="a.secret">Secret</span>
-                <span class="badge">{{ a.state.timeAchieved | niceTime }}</span>
-              </li>
+            <ul class="nav nav-tabs" id="achievements-tabs" role="tablist">
+              <li class="active"><a href="#achievements-tab" role="tab" data-toggle="tab"><i class="fa fa-trophy"></i> Achievements</a></li>
+              <li><a href="#skins-tab" role="tab" data-toggle="tab"><i class="fa fa-paint-brush"></i> Skins <span class="label label-danger" ng-show="skinsNew()">New</span></a></li>
             </ul>
+            <div class="tab-content achievements-tabs">
+              <div class="tab-pane active" id="achievements-tab" role="tabpanel">
+                <p class="text-center"><strong>Progress</strong> <span class="label label-info">{{ progress() }} / {{ achievements.length }}</span></p>
+                <p class="text-center small text-muted"><i class="fa fa-eye-slash"></i> Secret achievements found: {{ secretsFound() }} / {{ secretCount }}</p>
+                <ul class="list-group">
+                  <li class="list-group-item" ng-repeat="a in achievements | orderBy:'state.timeAchieved' | reverse" ng-show="a.isAchieved()">
+                    <i class="fa {{ a.icon }}"></i>
+                    {{ a.description }}
+                    <span class="label label-warning" ng-show="a.secret">Secret</span>
+                    <span class="badge">{{ a.state.timeAchieved | niceTime }}</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="tab-pane" id="skins-tab" role="tabpanel" ng-controller="SkinsController">
+                <p class="text-center">You have <strong>{{ achieved() }}</strong> achievements. Earn more to unlock new particle skins for the event display.</p>
+                <div class="row skins">
+                  <div class="col-xs-6 col-sm-4" ng-repeat="s in skins">
+                    <div class="skin" ng-class="{locked: !unlocked(s), 'in-use': inUse(s)}">
+                      <canvas class="skin-preview" width="120" height="120" skin-preview aria-hidden="true"></canvas>
+                      <h5><i class="fa fa-lock" ng-hide="unlocked(s)"></i> {{ s.name }}</h5>
+                      <p class="small">{{ s.description }}</p>
+                      <button type="button" class="btn btn-primary btn-sm" ng-show="unlocked(s) && !inUse(s)" ng-click="use(s)">Use</button>
+                      <span class="label label-success" ng-show="inUse(s)"><i class="fa fa-check"></i> In use</span>
+                      <span class="small text-muted" ng-hide="unlocked(s)">{{ s.requires }} achievements ({{ s.requires - achieved() }} to go)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

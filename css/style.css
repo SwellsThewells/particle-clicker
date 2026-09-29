@@ -49,6 +49,21 @@ h1 br {
   position: absolute;
 }
 
+#detector-skins {
+  z-index: 10;
+  position: absolute;
+}
+
+#detector-skins .new-dot {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 10px;
+  height: 10px;
+  background: #d9534f;
+  border-radius: 50% !important;
+}
+
 .scrollable {
   overflow: auto;
 }
@@ -399,6 +414,41 @@ h1 br {
   font-size: 18px;
 }
 
+/** Achievements and skins */
+.achievements-tabs {
+  border-left: 0;
+  padding-top: 15px;
+}
+
+.skins .skin {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.skin-preview {
+  width: 120px;
+  height: 120px;
+  border: 1px solid #ddd;
+}
+
+.skin.in-use .skin-preview {
+  border: 2px solid #337ab7;
+}
+
+.skin.locked .skin-preview {
+  opacity: 0.35;
+}
+
+.skin h5 {
+  margin: 8px 0 4px;
+  font-weight: bold;
+}
+
+.skin .small {
+  min-height: 34px;
+  margin-bottom: 6px;
+}
+
 /** Settings */
 .settings .setting {
   margin-bottom: 15px;
@@ -450,6 +500,10 @@ h1 br {
 
   #detector-info {
     top: 85px; right: 15px;
+  }
+
+  #detector-skins {
+    top: 125px; right: 15px;
   }
 }
 
@@ -518,6 +572,10 @@ h1 br {
 
   #detector-info {
     top: 15px; right: 15px;
+  }
+
+  #detector-skins {
+    top: 55px; right: 15px;
   }
 }
 
@@ -756,4 +814,12 @@ html.theme-dark {
 .theme-dark .btn-primary .badge {
   background: #fff;
   color: #337ab7;
+}
+
+.theme-dark .skin-preview {
+  border-color: #3a3c42;
+}
+
+.theme-dark .skin.in-use .skin-preview {
+  border-color: #5b8def;
 }

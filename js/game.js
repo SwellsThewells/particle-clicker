@@ -15,7 +15,9 @@ var Game = (function() {
     // universe expands; everything else in the lab starts over.
     this.player = new GameObjects.Record('player', {
       level: 1, xp: 0, totalXp: 0, points: 0, boostsChosen: 0,
-      offerA: -1, offerB: -1, offerC: -1
+      offerA: -1, offerB: -1, offerC: -1,
+      // Lifetime totals, for achievements.
+      upgradesBought: 0, staffHired: 0, researchLevels: 0, totalsCounted: 0
     });
     this.prestige = new GameObjects.Record('prestige', {
       expansions: 0, darkMatter: 0, darkMatterTotal: 0,
@@ -23,7 +25,8 @@ var Game = (function() {
     });
     this.secrets = new GameObjects.Record('secrets', {
       konami: 0, nightOwl: 0, homeSweetHome: 0, reflexes: 0, missed: 0,
-      darkSide: 0, speedOfLight: 0, infoPages: 0, curious: 0
+      darkSide: 0, speedOfLight: 0, infoPages: 0, curious: 0,
+      saveShortcut: 0, skinsTried: 0, fashionista: 0
     });
     this.research = null;
     this.workers = null;
@@ -81,6 +84,14 @@ var Game = (function() {
       this.initialStates[key] = JSON.stringify(o.state);
       o.loadState(ObjectStorage.load(key));
     }
+    // Saves from before the lifetime totals existed start from the current lab.
+    var player = this.player.state;
+    if (!player.totalsCounted) {
+      player.staffHired = this.workers.reduce(function(sum, w) { return sum + w.state.hired; }, 0);
+      player.researchLevels = this.research.reduce(function(sum, r) { return sum + r.state.level; }, 0);
+      player.upgradesBought = this.upgrades.filter(function(u) { return u.state.used; }).length;
+      player.totalsCounted = 1;
+    }
     this.updateBonuses();
     this.loaded = true;
   };
@@ -133,9 +144,10 @@ var Game = (function() {
     return this.lab.state.detector * this.bonus.click * this.bonus.autoClicks;
   };
 
-  /** XP needed to get from this level to the next. */
+  /** XP needed to get from this level to the next. Grows steadily, so that
+   * level 50 takes a few dozen hours of play and level 100 a few hundred. */
   Game.prototype.xpForLevel = function(level) {
-    return Math.floor(100 * Math.pow(1.3, level - 1));
+    return Math.floor(50 * Math.pow(level, 1.5)) + 50;
   };
 
   /** Add XP (before bonuses). Returns the number of levels gained. */

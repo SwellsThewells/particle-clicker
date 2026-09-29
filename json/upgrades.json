@@ -1292,5 +1292,328 @@
     ],
     "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 5 }],
     "factor": 2
+  },
+  {
+    "key": "upgrade-jpsi1",
+    "name": "Charm Factory",
+    "description": "Electron–positron collisions tuned to make charm quarks by the million.",
+    "effect": "Future J/ψ research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 4e4,
+    "targets": [{ "key": "research-jpsi", "property": "reputation" }],
+    "requirements": [{ "key": "research-jpsi", "property": "level", "threshold": 5 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-tau1",
+    "name": "Lepton Universality",
+    "description": "Check whether the tau really behaves like a heavy electron.",
+    "effect": "Future τ lepton research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 1e6,
+    "targets": [{ "key": "research-tau", "property": "reputation" }],
+    "requirements": [{ "key": "research-tau", "property": "level", "threshold": 5 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-beauty1",
+    "name": "Beauty Tagging",
+    "description": "Recognise b quarks by the tracks they leave behind.",
+    "effect": "Future beauty quark research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 2e7,
+    "targets": [{ "key": "research-beauty", "property": "reputation" }],
+    "requirements": [{ "key": "research-beauty", "property": "level", "threshold": 5 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-gluons1",
+    "name": "Three-Jet Events",
+    "description": "See gluons directly, as a third jet of particles.",
+    "effect": "Future gluon research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 3e8,
+    "targets": [{ "key": "research-gluons", "property": "reputation" }],
+    "requirements": [{ "key": "research-gluons", "property": "level", "threshold": 5 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-weak1",
+    "name": "Stochastic Cooling",
+    "description": "The beam-cooling trick that made the W and Z discovery possible.",
+    "effect": "Future W and Z boson research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 3.2e9,
+    "targets": [{ "key": "research-weak", "property": "reputation" }],
+    "requirements": [{ "key": "research-weak", "property": "level", "threshold": 5 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-top1",
+    "name": "Top Quark Factory",
+    "description": "The LHC makes millions of top quarks. Study every one.",
+    "effect": "Future top quark research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 1.28e10,
+    "targets": [{ "key": "research-top", "property": "reputation" }],
+    "requirements": [{ "key": "research-top", "property": "level", "threshold": 5 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-boscillations1",
+    "name": "Time-Dependent Analysis",
+    "description": "Watch B mesons turn into their antiparticles and back.",
+    "effect": "Future B oscillation research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 9e10,
+    "targets": [{ "key": "research-boscillations", "property": "reputation" }],
+    "requirements": [{ "key": "research-boscillations", "property": "level", "threshold": 5 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-higgs1",
+    "name": "Higgs Factory",
+    "description": "A collider built just to study the Higgs boson.",
+    "effect": "Future Higgs boson research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 5e11,
+    "targets": [{ "key": "research-higgs", "property": "reputation" }],
+    "requirements": [{ "key": "research-higgs", "property": "level", "threshold": 5 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-dstars1",
+    "name": "Charm Spectroscopy",
+    "description": "Map every excited state of the charm-strange mesons.",
+    "effect": "Future D*s⁻ research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 2.4e12,
+    "targets": [{ "key": "research-dstars", "property": "reputation" }],
+    "requirements": [{ "key": "research-dstars", "property": "level", "threshold": 5 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-xib1",
+    "name": "Baryon Hunters",
+    "description": "Search every corner of the data for new baryons.",
+    "effect": "Future Ξb baryon research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 9e12,
+    "targets": [{ "key": "research-xib", "property": "reputation" }],
+    "requirements": [{ "key": "research-xib", "property": "level", "threshold": 5 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-masterstudents5",
+    "name": "Student Lounge",
+    "description": "A sofa, a coffee machine and a whiteboard.",
+    "effect": "Master Students produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 4e6,
+    "targets": [{ "key": "workers-masterstudents", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-masterstudents", "property": "hired", "threshold": 50 },
+      { "key": "upgrade-masterstudents4", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-phdstudents5",
+    "name": "Conference Travel",
+    "description": "Nothing motivates like a talk on the other side of the world.",
+    "effect": "PhD Students produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 6e7,
+    "targets": [{ "key": "workers-phdstudents", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-phdstudents", "property": "hired", "threshold": 50 },
+      { "key": "upgrade-phdstudents4", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-postdocs5",
+    "name": "Fellowship Applications",
+    "description": "Everyone wins a fellowship... eventually.",
+    "effect": "Postdocs produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 7.5e8,
+    "targets": [{ "key": "workers-postdocs", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-postdocs", "property": "hired", "threshold": 50 },
+      { "key": "upgrade-postdocs4", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-fellows5",
+    "name": "Sabbaticals",
+    "description": "A whole year to think deep thoughts.",
+    "effect": "Research Fellows produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 6e9,
+    "targets": [{ "key": "workers-fellows", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-fellows", "property": "hired", "threshold": 50 },
+      { "key": "upgrade-fellows4", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-permanent5",
+    "name": "Pension Plan",
+    "description": "Peace of mind, and a lot more focus.",
+    "effect": "Permanent Staff produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 6.5e10,
+    "targets": [{ "key": "workers-permanent", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-permanent", "property": "hired", "threshold": 50 },
+      { "key": "upgrade-permanent4", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-profs5",
+    "name": "Endowed Chairs",
+    "description": "A named chair, and a very comfortable one.",
+    "effect": "Tenured Professors produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 5e11,
+    "targets": [{ "key": "workers-profs", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-profs", "property": "hired", "threshold": 50 },
+      { "key": "upgrade-profs4", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-nobel5",
+    "name": "Lecture Tour",
+    "description": "They inspire thousands of students and come back full of ideas.",
+    "effect": "Nobel Laureates produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 3e12,
+    "targets": [{ "key": "workers-nobel", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-nobel", "property": "hired", "threshold": 50 },
+      { "key": "upgrade-nobel4", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-summies5",
+    "name": "Webfest",
+    "description": "A weekend hackathon at CERN, where this very game was born.",
+    "effect": "Summer Students produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 2e13,
+    "targets": [{ "key": "workers-summies", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-summies", "property": "hired", "threshold": 50 },
+      { "key": "upgrade-summies4", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-honorary",
+    "name": "Honorary Doctorate",
+    "description": "Your expertise is finally recognised.",
+    "effect": "Reputation brings in 10% more funding.",
+    "icon": "fa-graduation-cap",
+    "cost": 1e5,
+    "targets": [{ "key": "lab", "property": "factor" }],
+    "requirements": [{ "key": "player", "property": "level", "threshold": 10 }],
+    "factor": 1.1e0
+  },
+  {
+    "key": "upgrade-keynote",
+    "name": "Keynote Speaker",
+    "description": "Everyone wants to hear about your research.",
+    "effect": "Future research gives 25% more reputation.",
+    "icon": "fa-microphone",
+    "cost": 1e11,
+    "targets": [
+      { "key": "research-cpv", "property": "reputation" },
+      { "key": "research-jpsi", "property": "reputation" },
+      { "key": "research-tau", "property": "reputation" },
+      { "key": "research-beauty", "property": "reputation" },
+      { "key": "research-gluons", "property": "reputation" },
+      { "key": "research-weak", "property": "reputation" },
+      { "key": "research-top", "property": "reputation" },
+      { "key": "research-boscillations", "property": "reputation" },
+      { "key": "research-higgs", "property": "reputation" },
+      { "key": "research-dstars", "property": "reputation" },
+      { "key": "research-xib", "property": "reputation" },
+      { "key": "research-neutrino", "property": "reputation" },
+      { "key": "research-qgp", "property": "reputation" },
+      { "key": "research-antihydrogen", "property": "reputation" },
+      { "key": "research-tetraquark", "property": "reputation" },
+      { "key": "research-pentaquark", "property": "reputation" }
+    ],
+    "requirements": [{ "key": "player", "property": "level", "threshold": 30 }],
+    "factor": 1.25e0
+  },
+  {
+    "key": "upgrade-lifetime",
+    "name": "Lifetime Achievement Award",
+    "description": "For a career of groundbreaking physics.",
+    "effect": "All staff produce 50% more data per second.",
+    "icon": "fa-trophy",
+    "cost": 1e16,
+    "targets": [
+      { "key": "workers-masterstudents", "property": "rate" },
+      { "key": "workers-phdstudents", "property": "rate" },
+      { "key": "workers-postdocs", "property": "rate" },
+      { "key": "workers-fellows", "property": "rate" },
+      { "key": "workers-permanent", "property": "rate" },
+      { "key": "workers-profs", "property": "rate" },
+      { "key": "workers-nobel", "property": "rate" },
+      { "key": "workers-summies", "property": "rate" },
+      { "key": "workers-citizens", "property": "rate" },
+      { "key": "workers-spokespersons", "property": "rate" },
+      { "key": "workers-directors", "property": "rate" }
+    ],
+    "requirements": [{ "key": "player", "property": "level", "threshold": 50 }],
+    "factor": 1.5e0
+  },
+  {
+    "key": "upgrade-particleflow",
+    "name": "Particle Flow",
+    "description": "Combine every part of the detector to reconstruct each particle.",
+    "effect": "Double the amount of data per click.",
+    "icon": "fa-crosshairs",
+    "cost": 1e9,
+    "targets": [{ "key": "lab", "property": "detector" }],
+    "requirements": [{ "key": "lab", "property": "clicks", "threshold": 2.5e4 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-discovery",
+    "name": "Discovery Channel",
+    "description": "Your anomalies get their own TV show.",
+    "effect": "Data bursts and funding windfalls from anomalies are 50% bigger.",
+    "icon": "fa-video-camera",
+    "cost": 1e12,
+    "targets": [{ "key": "lab", "property": "anomalyReward" }],
+    "requirements": [
+      { "key": "lab", "property": "anomalies", "threshold": 100 },
+      { "key": "upgrade-anomaly-reward", "property": "used", "threshold": 1 }
+    ],
+    "factor": 1.5e0
+  },
+  {
+    "key": "upgrade-offline2",
+    "name": "Remote Shifts",
+    "description": "Take control-room shifts from anywhere in the world.",
+    "effect": "Your lab keeps earning for 24 more hours while you are away.",
+    "icon": "fa-globe",
+    "cost": 1e11,
+    "targets": [{ "key": "lab", "property": "offlineHours" }],
+    "requirements": [
+      { "key": "lab", "property": "time", "threshold": 7.2e7 },
+      { "key": "upgrade-offline1", "property": "used", "threshold": 1 }
+    ],
+    "constant": 24
   }
 ]
