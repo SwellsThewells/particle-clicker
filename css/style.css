@@ -49,21 +49,6 @@ h1 br {
   position: absolute;
 }
 
-#detector-skins {
-  z-index: 10;
-  position: absolute;
-}
-
-#detector-skins .new-dot {
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  width: 10px;
-  height: 10px;
-  background: #d9534f;
-  border-radius: 50% !important;
-}
-
 .scrollable {
   overflow: auto;
 }
@@ -414,12 +399,7 @@ h1 br {
   font-size: 18px;
 }
 
-/** Achievements and skins */
-.achievements-tabs {
-  border-left: 0;
-  padding-top: 15px;
-}
-
+/** Particle skins */
 .skins .skin {
   text-align: center;
   margin-bottom: 20px;
@@ -501,10 +481,6 @@ h1 br {
   #detector-info {
     top: 85px; right: 15px;
   }
-
-  #detector-skins {
-    top: 125px; right: 15px;
-  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
@@ -572,10 +548,6 @@ h1 br {
 
   #detector-info {
     top: 15px; right: 15px;
-  }
-
-  #detector-skins {
-    top: 55px; right: 15px;
   }
 }
 

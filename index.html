@@ -53,8 +53,9 @@
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
           <ul class="nav navbar-nav navbar-left">
-            <li><a href="#" data-toggle="modal" data-target="#achievements-modal"><i class="fa fa-trophy"></i> Achievements</a></li>
-            <li><a href="#" data-toggle="modal" data-target="#stats-modal"><i class="fa fa-bar-chart"></i> Statistics</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#achievements-modal" title="Achievements"><i class="fa fa-trophy"></i><span class="hidden-sm"> Achievements</span></a></li>
+            <li ng-controller="SkinsController"><a href="#" data-toggle="modal" data-target="#skins-modal" title="Particle skins"><i class="fa fa-paint-brush"></i><span class="hidden-sm"> Skins</span> <span class="label label-danger" ng-show="skinsNew()" ng-cloak>New</span></a></li>
+            <li><a href="#" data-toggle="modal" data-target="#stats-modal" title="Statistics"><i class="fa fa-bar-chart"></i><span class="hidden-sm"> Statistics</span></a></li>
             <li class="dropdown" ng-controller="SaveController">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-floppy-o"></i> Saved: <span ng-cloak>{{ lastSaved | date : 'H:mm' }}</span> <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -67,10 +68,10 @@
             <!--<li><a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-users"></i> About</a></li>-->
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li ng-controller="UpdatesController"><a href="#" data-toggle="modal" data-target="#updates-modal" title="What's new"><i class="fa fa-bullhorn"></i><span class="hidden-sm"> Updates</span> <span class="label label-danger" ng-show="isNew()" ng-cloak>New</span></a></li>
-            <li><a href="#" data-toggle="modal" data-target="#settings-modal" title="Settings"><i class="fa fa-cog"></i><span class="hidden-sm"> Settings</span></a></li>
+            <li ng-controller="UpdatesController"><a href="#" data-toggle="modal" data-target="#updates-modal" title="What's new"><i class="fa fa-bullhorn"></i><span class="hidden-sm hidden-md"> Updates</span> <span class="label label-danger" ng-show="isNew()" ng-cloak>New</span></a></li>
+            <li><a href="#" data-toggle="modal" data-target="#settings-modal" title="Settings"><i class="fa fa-cog"></i><span class="hidden-sm hidden-md"> Settings</span></a></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Social"><i class="fa fa-share-alt"></i><span class="hidden-sm"> Social</span><span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Social"><i class="fa fa-share-alt"></i><span class="hidden-sm hidden-md"> Social</span><span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="https://github.com/particle-clicker/particle-clicker/" target="_blank"><i class="fa fa-github"></i> GitHub</a></li>
                 <li><a href="https://facebook.com/particleclicker"><i class="fa fa-facebook-square"></i> Facebook</a></li>
@@ -136,7 +137,6 @@
           </div>
         </div>
         <button id="detector-info" class="btn btn-info" ng-click="lc.showDetectorInfo()"><i class="fa fa-info"></i></button>
-        <button id="detector-skins" class="btn btn-default" ng-click="lc.showSkins()" title="Particle skins" aria-label="Particle skins"><i class="fa fa-paint-brush"></i><span class="new-dot" ng-show="lc.skinsNew()" ng-cloak></span></button>
         <div class="row status" ng-cloak>
           <div class="col-xs-4 text-center col-no-padding-xs">
             <strong>Data</strong><br>
@@ -253,36 +253,39 @@
             <h4 class="modal-title" id="achievements-label"><i class="fa fa-trophy"></i> Achievements</h4>
           </div>
           <div class="modal-body">
-            <ul class="nav nav-tabs" id="achievements-tabs" role="tablist">
-              <li class="active"><a href="#achievements-tab" role="tab" data-toggle="tab"><i class="fa fa-trophy"></i> Achievements</a></li>
-              <li><a href="#skins-tab" role="tab" data-toggle="tab"><i class="fa fa-paint-brush"></i> Skins <span class="label label-danger" ng-show="skinsNew()">New</span></a></li>
+            <p class="text-center"><strong>Progress</strong> <span class="label label-info">{{ progress() }} / {{ achievements.length }}</span></p>
+            <p class="text-center small text-muted"><i class="fa fa-eye-slash"></i> Secret achievements found: {{ secretsFound() }} / {{ secretCount }}</p>
+            <ul class="list-group">
+              <li class="list-group-item" ng-repeat="a in achievements | orderBy:'state.timeAchieved' | reverse" ng-show="a.isAchieved()">
+                <i class="fa {{ a.icon }}"></i>
+                {{ a.description }}
+                <span class="label label-warning" ng-show="a.secret">Secret</span>
+                <span class="badge">{{ a.state.timeAchieved | niceTime }}</span>
+              </li>
             </ul>
-            <div class="tab-content achievements-tabs">
-              <div class="tab-pane active" id="achievements-tab" role="tabpanel">
-                <p class="text-center"><strong>Progress</strong> <span class="label label-info">{{ progress() }} / {{ achievements.length }}</span></p>
-                <p class="text-center small text-muted"><i class="fa fa-eye-slash"></i> Secret achievements found: {{ secretsFound() }} / {{ secretCount }}</p>
-                <ul class="list-group">
-                  <li class="list-group-item" ng-repeat="a in achievements | orderBy:'state.timeAchieved' | reverse" ng-show="a.isAchieved()">
-                    <i class="fa {{ a.icon }}"></i>
-                    {{ a.description }}
-                    <span class="label label-warning" ng-show="a.secret">Secret</span>
-                    <span class="badge">{{ a.state.timeAchieved | niceTime }}</span>
-                  </li>
-                </ul>
-              </div>
-              <div class="tab-pane" id="skins-tab" role="tabpanel" ng-controller="SkinsController">
-                <p class="text-center">You have <strong>{{ achieved() }}</strong> achievements. Earn more to unlock new particle skins for the event display.</p>
-                <div class="row skins">
-                  <div class="col-xs-6 col-sm-4" ng-repeat="s in skins">
-                    <div class="skin" ng-class="{locked: !unlocked(s), 'in-use': inUse(s)}">
-                      <canvas class="skin-preview" width="120" height="120" skin-preview aria-hidden="true"></canvas>
-                      <h5><i class="fa fa-lock" ng-hide="unlocked(s)"></i> {{ s.name }}</h5>
-                      <p class="small">{{ s.description }}</p>
-                      <button type="button" class="btn btn-primary btn-sm" ng-show="unlocked(s) && !inUse(s)" ng-click="use(s)">Use</button>
-                      <span class="label label-success" ng-show="inUse(s)"><i class="fa fa-check"></i> In use</span>
-                      <span class="small text-muted" ng-hide="unlocked(s)">{{ s.requires }} achievements ({{ s.requires - achieved() }} to go)</span>
-                    </div>
-                  </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="skins-modal" tabindex="-1" role="dialog" aria-labelledby="skins-label" aria-hidden="true" ng-controller="SkinsController">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="skins-label"><i class="fa fa-paint-brush"></i> Particle skins</h4>
+          </div>
+          <div class="modal-body">
+            <p class="text-center">You have <strong>{{ achieved() }}</strong> achievements. Earn more to unlock new particle skins for the event display.</p>
+            <div class="row skins">
+              <div class="col-xs-6 col-sm-4" ng-repeat="s in skins">
+                <div class="skin" ng-class="{locked: !unlocked(s), 'in-use': inUse(s)}">
+                  <canvas class="skin-preview" width="120" height="120" skin-preview aria-hidden="true"></canvas>
+                  <h5><i class="fa fa-lock" ng-hide="unlocked(s)"></i> {{ s.name }}</h5>
+                  <p class="small">{{ s.description }}</p>
+                  <button type="button" class="btn btn-primary btn-sm" ng-show="unlocked(s) && !inUse(s)" ng-click="use(s)">Use</button>
+                  <span class="label label-success" ng-show="inUse(s)"><i class="fa fa-check"></i> In use</span>
+                  <span class="small text-muted" ng-hide="unlocked(s)">{{ s.requires }} achievements ({{ s.requires - achieved() }} to go)</span>
                 </div>
               </div>
             </div>
@@ -405,15 +408,16 @@
             <h4 class="modal-title" id="expansion-label"><i class="fa fa-expand"></i> Particle Expansion</h4>
           </div>
           <div class="modal-body">
-            <p>Expand the universe to turn your reputation into <strong>dark matter</strong>. Your data, funding, reputation, staff, research and upgrades start over. You keep your achievements, your level and boosts, and all of your dark matter. Each dark matter makes you produce {{ percent(1) }}% more, forever, and expanding unlocks new upgrades.</p>
+            <p>Collecting data earns you <strong>dark matter</strong>: the first at 1T data, 10 at 1P and 100 at 1E, counting every universe. Expand the universe to claim it. Your data, funding, reputation, staff, research and upgrades start over. You keep your achievements, your level and boosts, and all of your dark matter. Each dark matter makes you produce {{ percent(1) }}% more, forever, and expanding unlocks new upgrades.</p>
             <ul class="list-group stats-list">
               <li class="list-group-item"><i class="fa fa-adjust fa-fw"></i> Dark matter <strong class="pull-right">{{ prestige.darkMatter | niceNumber }} to spend, {{ prestige.darkMatterTotal | niceNumber }} in total</strong></li>
               <li class="list-group-item"><i class="fa fa-line-chart fa-fw"></i> Production bonus <strong class="pull-right">+{{ percent(prestige.darkMatterTotal) | niceNumber }}%</strong></li>
               <li class="list-group-item"><i class="fa fa-expand fa-fw"></i> Universes expanded <strong class="pull-right">{{ prestige.expansions }}</strong></li>
+              <li class="list-group-item"><i class="fa fa-database fa-fw"></i> Data collected in all universes <strong class="pull-right">{{ collected() | niceNumber }}</strong></li>
             </ul>
             <div class="expand-now text-center">
-              <p ng-show="gain() >= 1">Expanding now gives <strong>+{{ gain() | niceNumber }} dark matter</strong>, for +{{ percent(prestige.darkMatterTotal + gain()) | niceNumber }}% production in total. <span class="text-muted">The next one comes at {{ nextAt() | niceNumber }} reputation.</span></p>
-              <p ng-show="gain() < 1" class="text-muted">Reach {{ nextAt() | niceNumber }} reputation in this universe to earn your next dark matter.</p>
+              <p ng-show="gain() >= 1">Expanding now gives <strong>+{{ gain() | niceNumber }} dark matter</strong>, for +{{ percent(prestige.darkMatterTotal + gain()) | niceNumber }}% production in total. <span class="text-muted">The next one comes at {{ nextAt() | niceNumber }} data collected.</span></p>
+              <p ng-show="gain() < 1" class="text-muted">Collect {{ nextAt() - collected() | niceNumber }} more data ({{ collected() | niceNumber }} of {{ nextAt() | niceNumber }}) to earn your next dark matter.</p>
               <button type="button" class="btn btn-primary btn-lg" ng-disabled="gain() < 1 || expanding" ng-click="expand()"><i class="fa fa-expand"></i> Expand the universe</button>
             </div>
             <h5>Dark matter upgrades</h5>

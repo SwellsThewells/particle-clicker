@@ -1615,5 +1615,238 @@
       { "key": "upgrade-offline1", "property": "used", "threshold": 1 }
     ],
     "constant": 24
+  },
+  {
+    "key": "upgrade-masterstudents6",
+    "name": "Graduation Ceremony",
+    "description": "Caps in the air, and straight back to the lab.",
+    "effect": "Master Students produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 4e7,
+    "targets": [{ "key": "workers-masterstudents", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-masterstudents", "property": "hired", "threshold": 100 },
+      { "key": "upgrade-masterstudents5", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-phdstudents6",
+    "name": "Thesis Prize",
+    "description": "A shiny award for the best thesis of the year.",
+    "effect": "PhD Students produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 6e8,
+    "targets": [{ "key": "workers-phdstudents", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-phdstudents", "property": "hired", "threshold": 100 },
+      { "key": "upgrade-phdstudents5", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-postdocs6",
+    "name": "Starting Grants",
+    "description": "Money to build their own research groups.",
+    "effect": "Postdocs produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 7.5e9,
+    "targets": [{ "key": "workers-postdocs", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-postdocs", "property": "hired", "threshold": 100 },
+      { "key": "upgrade-postdocs5", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-fellows6",
+    "name": "Visiting Professorships",
+    "description": "A term abroad, and a notebook full of new collaborators.",
+    "effect": "Research Fellows produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 6e10,
+    "targets": [{ "key": "workers-fellows", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-fellows", "property": "hired", "threshold": 100 },
+      { "key": "upgrade-fellows5", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-permanent6",
+    "name": "Technical Training",
+    "description": "Everyone learns the newest tools and tricks.",
+    "effect": "Permanent Staff produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 6.5e11,
+    "targets": [{ "key": "workers-permanent", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-permanent", "property": "hired", "threshold": 100 },
+      { "key": "upgrade-permanent5", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-profs6",
+    "name": "Research Institutes",
+    "description": "A whole institute behind every professor.",
+    "effect": "Tenured Professors produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 5e12,
+    "targets": [{ "key": "workers-profs", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-profs", "property": "hired", "threshold": 100 },
+      { "key": "upgrade-profs5", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-nobel6",
+    "name": "Nobel Symposium",
+    "description": "The laureates meet and argue about the future of physics.",
+    "effect": "Nobel Laureates produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 3e13,
+    "targets": [{ "key": "workers-nobel", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-nobel", "property": "hired", "threshold": 100 },
+      { "key": "upgrade-nobel5", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-summies6",
+    "name": "Summer Student Alumni",
+    "description": "Many summer students come back as physicists.",
+    "effect": "Summer Students produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 2e14,
+    "targets": [{ "key": "workers-summies", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-summies", "property": "hired", "threshold": 100 },
+      { "key": "upgrade-summies5", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-citizens5",
+    "name": "Volunteer Authors",
+    "description": "The volunteers who found a signal join the author list.",
+    "effect": "Citizen Scientists produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 8e16,
+    "targets": [{ "key": "workers-citizens", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-citizens", "property": "hired", "threshold": 50 },
+      { "key": "upgrade-citizens4", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-spokespersons5",
+    "name": "Collaboration Week",
+    "description": "Everyone in one place, for a week of decisions.",
+    "effect": "Collaboration Spokespersons produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e18,
+    "targets": [{ "key": "workers-spokespersons", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-spokespersons", "property": "hired", "threshold": 50 },
+      { "key": "upgrade-spokespersons4", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-directors5",
+    "name": "Global Science Council",
+    "description": "Directors from every laboratory, working as one.",
+    "effect": "Directors-General produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 5e18,
+    "targets": [{ "key": "workers-directors", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-directors", "property": "hired", "threshold": 50 },
+      { "key": "upgrade-directors4", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-openoffice",
+    "name": "Open Office",
+    "description": "Master Students, PhD Students and Postdocs share one big room, and a lot of ideas.",
+    "effect": "Master Students, PhD Students and Postdocs produce three times as much data per second.",
+    "icon": "fa-users",
+    "cost": 5e9,
+    "targets": [
+      { "key": "workers-masterstudents", "property": "rate" },
+      { "key": "workers-phdstudents", "property": "rate" },
+      { "key": "workers-postdocs", "property": "rate" }
+    ],
+    "requirements": [
+      { "key": "workers-masterstudents", "property": "hired", "threshold": 75 },
+      { "key": "workers-phdstudents", "property": "hired", "threshold": 75 },
+      { "key": "workers-postdocs", "property": "hired", "threshold": 75 }
+    ],
+    "factor": 3
+  },
+  {
+    "key": "upgrade-retreat",
+    "name": "Lab Retreat",
+    "description": "A weekend in the mountains for the whole lab.",
+    "effect": "All staff produce 50% more data per second.",
+    "icon": "fa-tree",
+    "cost": 1e13,
+    "targets": [
+      { "key": "workers-masterstudents", "property": "rate" },
+      { "key": "workers-phdstudents", "property": "rate" },
+      { "key": "workers-postdocs", "property": "rate" },
+      { "key": "workers-fellows", "property": "rate" },
+      { "key": "workers-permanent", "property": "rate" },
+      { "key": "workers-profs", "property": "rate" },
+      { "key": "workers-nobel", "property": "rate" },
+      { "key": "workers-summies", "property": "rate" },
+      { "key": "workers-citizens", "property": "rate" },
+      { "key": "workers-spokespersons", "property": "rate" },
+      { "key": "workers-directors", "property": "rate" }
+    ],
+    "requirements": [
+      { "key": "workers-masterstudents", "property": "hired", "threshold": 25 },
+      { "key": "workers-phdstudents", "property": "hired", "threshold": 25 },
+      { "key": "workers-postdocs", "property": "hired", "threshold": 25 },
+      { "key": "workers-fellows", "property": "hired", "threshold": 25 },
+      { "key": "workers-permanent", "property": "hired", "threshold": 25 },
+      { "key": "workers-profs", "property": "hired", "threshold": 25 },
+      { "key": "workers-nobel", "property": "hired", "threshold": 25 },
+      { "key": "workers-summies", "property": "hired", "threshold": 25 }
+    ],
+    "factor": 1.5e0
+  },
+  {
+    "key": "upgrade-espresso",
+    "name": "Espresso Bar",
+    "description": "Free coffee was good. This is better.",
+    "effect": "All staff produce 50% more data per second.",
+    "icon": "fa-coffee",
+    "cost": 1e17,
+    "targets": [
+      { "key": "workers-masterstudents", "property": "rate" },
+      { "key": "workers-phdstudents", "property": "rate" },
+      { "key": "workers-postdocs", "property": "rate" },
+      { "key": "workers-fellows", "property": "rate" },
+      { "key": "workers-permanent", "property": "rate" },
+      { "key": "workers-profs", "property": "rate" },
+      { "key": "workers-nobel", "property": "rate" },
+      { "key": "workers-summies", "property": "rate" },
+      { "key": "workers-citizens", "property": "rate" },
+      { "key": "workers-spokespersons", "property": "rate" },
+      { "key": "workers-directors", "property": "rate" }
+    ],
+    "requirements": [
+      { "key": "upgrade-coffee", "property": "used", "threshold": 1 },
+      { "key": "workers-citizens", "property": "hired", "threshold": 10 },
+      { "key": "workers-spokespersons", "property": "hired", "threshold": 10 },
+      { "key": "workers-directors", "property": "hired", "threshold": 10 }
+    ],
+    "factor": 1.5e0
   }
 ]

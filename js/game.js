@@ -1,8 +1,9 @@
 var Game = (function() {
   'use strict';
   var MIN_OFFLINE_SECONDS = 60;
-  // Dark matter: floor(sqrt(reputation over all universes / this)) in total.
-  var DARK_MATTER_SCALE = 1e8;
+  // Dark matter comes from the data collected in all universes together: the
+  // first at 1T data, and cbrt(data / 1T) in total (10 at 1P, 100 at 1E).
+  var DARK_MATTER_DATA = 1e12;
   var DARK_MATTER_BONUS = 0.1;  // production per dark matter
   // Lab state that survives an expansion: the name and lifetime totals.
   var LIFETIME_LAB_STATE = ['name', 'clicks', 'time', 'anomalies',
@@ -20,13 +21,15 @@ var Game = (function() {
       upgradesBought: 0, staffHired: 0, researchLevels: 0, totalsCounted: 0
     });
     this.prestige = new GameObjects.Record('prestige', {
-      expansions: 0, darkMatter: 0, darkMatterTotal: 0,
-      reputationBanked: 0, upgradesBought: 0
+      expansions: 0, darkMatter: 0, darkMatterTotal: 0, upgradesBought: 0,
+      lastExpansionAt: 0
     });
     this.secrets = new GameObjects.Record('secrets', {
       konami: 0, nightOwl: 0, homeSweetHome: 0, reflexes: 0, missed: 0,
       darkSide: 0, speedOfLight: 0, infoPages: 0, curious: 0,
-      saveShortcut: 0, skinsTried: 0, fashionista: 0
+      saveShortcut: 0, skinsTried: 0, fashionista: 0,
+      namesake: 0, patience: 0, piTime: 0, streak: 0, hotStreak: 0, allIn: 0,
+      themeSwitches: 0, nerd: 0, dejaVu: 0
     });
     this.research = null;
     this.workers = null;
@@ -199,18 +202,17 @@ var Game = (function() {
     return true;
   };
 
-  /** Dark matter the player would get by expanding now. */
+  /** Dark matter the player would get by expanding now. The data collected
+   * is a lifetime total, so it counts every universe. */
   Game.prototype.darkMatterGain = function() {
-    var total = this.prestige.state.reputationBanked + this.lab.state.reputation;
-    return Math.max(0, Math.floor(Math.sqrt(total / DARK_MATTER_SCALE)) -
-                           this.prestige.state.darkMatterTotal);
+    var earned = Math.floor(Math.cbrt(this.lab.state.dataCollected / DARK_MATTER_DATA) + 1e-9);
+    return Math.max(0, earned - this.prestige.state.darkMatterTotal);
   };
 
-  /** Reputation needed in this universe for the next dark matter. */
+  /** Data collected (in all universes) needed for the next dark matter. */
   Game.prototype.nextDarkMatterAt = function() {
-    var pr = this.prestige.state;
-    var next = pr.darkMatterTotal + this.darkMatterGain() + 1;
-    return Math.max(0, next * next * DARK_MATTER_SCALE - pr.reputationBanked);
+    var next = this.prestige.state.darkMatterTotal + this.darkMatterGain() + 1;
+    return next * next * next * DARK_MATTER_DATA;
   };
 
   Game.prototype.canBuyDarkMatterUpgrade = function(u) {
@@ -267,10 +269,14 @@ var Game = (function() {
       hireFree.call(this, 'workers-phdstudents', 5);
     }
     var pr = fresh.prestige;
+    // Secret: expand twice within ten minutes.
+    if (pr.lastExpansionAt && now - pr.lastExpansionAt < 10 * 60 * 1000) {
+      fresh.secrets.dejaVu = 1;
+    }
+    pr.lastExpansionAt = now;
     pr.expansions += 1;
     pr.darkMatter += gain;
     pr.darkMatterTotal += gain;
-    pr.reputationBanked += this.lab.state.reputation;
     for (var k in fresh) {
       ObjectStorage.save(k, fresh[k]);
     }

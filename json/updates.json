@@ -1,5 +1,16 @@
 [
   {
+    "version": "1.7",
+    "date": "2026-09-29",
+    "title": "Dark matter from data",
+    "changes": [
+      "Dark matter now comes from the data you collect: the first at 1T data, 10 at 1P and 100 at 1E, counting every universe. The Particle Expansion window shows how close you are.",
+      "14 new HR upgrades: a sixth upgrade for each of the original staff once you have 100, a fifth for the newer staff once you have 50, and three team upgrades: Open Office, Lab Retreat and Espresso Bar.",
+      "Particle skins have moved to the top bar.",
+      "8 more secret achievements, for 18 in all."
+    ]
+  },
+  {
     "version": "1.6",
     "date": "2026-09-29",
     "title": "Particle skins",

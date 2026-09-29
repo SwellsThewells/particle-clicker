@@ -1912,5 +1912,77 @@
     "targetKey": "secrets",
     "threshold": 1,
     "secret": true
+  },
+  {
+    "description": "Namesake: you named your lab after a particle.",
+    "icon": "fa-tag",
+    "key": "achievement-secret-namesake",
+    "targetProperty": "namesake",
+    "targetKey": "secrets",
+    "threshold": 1,
+    "secret": true
+  },
+  {
+    "description": "Patience: ten minutes without touching anything. The lab kept working.",
+    "icon": "fa-pause",
+    "key": "achievement-secret-patience",
+    "targetProperty": "patience",
+    "targetKey": "secrets",
+    "threshold": 1,
+    "secret": true
+  },
+  {
+    "description": "Pi o'clock: playing at 3:14.",
+    "icon": "fa-clock-o",
+    "key": "achievement-secret-pi",
+    "targetProperty": "piTime",
+    "targetKey": "secrets",
+    "threshold": 1,
+    "secret": true
+  },
+  {
+    "description": "Hot streak: 5 anomalies in a row without missing one.",
+    "icon": "fa-fire",
+    "key": "achievement-secret-streak",
+    "targetProperty": "hotStreak",
+    "targetKey": "secrets",
+    "threshold": 1,
+    "secret": true
+  },
+  {
+    "description": "All in: you spent 99% of your funding in one go.",
+    "icon": "fa-shopping-cart",
+    "key": "achievement-secret-allin",
+    "targetProperty": "allIn",
+    "targetKey": "secrets",
+    "threshold": 1,
+    "secret": true
+  },
+  {
+    "description": "Day and night: you switched the theme 10 times.",
+    "icon": "fa-sun-o",
+    "key": "achievement-secret-daynight",
+    "targetProperty": "themeSwitches",
+    "targetKey": "secrets",
+    "threshold": 10,
+    "secret": true
+  },
+  {
+    "description": "Nerd alert: you switched to scientific numbers.",
+    "icon": "fa-calculator",
+    "key": "achievement-secret-nerd",
+    "targetProperty": "nerd",
+    "targetKey": "secrets",
+    "threshold": 1,
+    "secret": true
+  },
+  {
+    "description": "D\u00e9j\u00e0 vu: you expanded the universe twice within ten minutes.",
+    "icon": "fa-repeat",
+    "key": "achievement-secret-dejavu",
+    "targetProperty": "dejaVu",
+    "targetKey": "secrets",
+    "threshold": 1,
+    "secret": true
   }
 ]

@@ -138,17 +138,24 @@
   };
   updateEffects();
 
+  var lastTheme = Settings.get('theme');
   Settings.onChange(function(values) {
     detector.quality = values.effects;
     detector.setTheme(Settings.isDark());
     if (Settings.isDark()) {
       secrets.darkSide = 1;
     }
+    if (values.theme !== lastTheme) {
+      secrets.themeSwitches += 1;
+      lastTheme = values.theme;
+    }
+    if (values.numbers === 'scientific') {
+      secrets.nerd = 1;
+    }
   });
 
   // Particle skins, unlocked by the number of achievements.
   var skins = Helpers.loadFile('json/skins.json');
-  var openSkins = false;  // open the achievements window on the Skins tab
   var achievedCount = function() {
     return achievements.filter(function(a) { return a.isAchieved(); }).length;
   };
@@ -171,7 +178,7 @@
     var n = unlockedSkinCount();
     for (var i = skinsKnown; i < n; i++) {
       UI.showPopup('alert-info', 'fa-paint-brush', 'New particle skin: <strong>' + skins[i].name +
-                   '</strong>. Try it in Achievements, Skins.', 4000);
+                   '</strong>. Try it under Skins in the top bar.', 4000);
     }
     skinsKnown = n;
     applySkin();
@@ -194,12 +201,38 @@
   };
 
   // Secret achievements that are checked every second.
+  var PARTICLES = /\b(electron|positron|muon|tau|neutrino|quark|gluon|photon|higgs|boson|proton|neutron|pion|kaon|hadron|lepton|meson|baryon|graviton|axion)s?\b/i;
+  var lastInteraction = new Date().getTime();
+  ['mousedown', 'keydown', 'touchstart'].forEach(function(type) {
+    document.addEventListener(type, function() { lastInteraction = new Date().getTime(); }, true);
+  });
+  document.addEventListener('visibilitychange', function() {
+    lastInteraction = new Date().getTime();
+  });
   var checkSecrets = function() {
-    if (new Date().getHours() < 5) {
+    var now = new Date();
+    if (now.getHours() < 5) {
       secrets.nightOwl = 1;
     }
-    if (String(lab.state.name).trim().toLowerCase() === 'cern') {
+    if ((now.getHours() === 3 || now.getHours() === 15) && now.getMinutes() === 14) {
+      secrets.piTime = 1;
+    }
+    var name = String(lab.state.name).trim();
+    if (name.toLowerCase() === 'cern') {
       secrets.homeSweetHome = 1;
+    }
+    if (PARTICLES.test(name)) {
+      secrets.namesake = 1;
+    }
+    // Ten minutes with the game in view and no clicks or keys.
+    if (detector.visible && now.getTime() - lastInteraction >= 10 * 60 * 1000) {
+      secrets.patience = 1;
+    }
+  };
+  /** Secret: spend at least 99% of your funding (and at least JTN 1k) at once. */
+  var checkAllIn = function(before, spent) {
+    if (before >= 1000 && spent >= 0.99 * before) {
+      secrets.allIn = 1;
     }
   };
   var KONAMI = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65], konamiAt = 0;
@@ -272,13 +305,6 @@
     };
     this.boostLeft = function() {
       return Math.max(0, Math.ceil((boostUntil - new Date().getTime()) / 1000));
-    };
-    this.skinsNew = function() {
-      return unlockedSkinCount() > Settings.get('skinsSeen');
-    };
-    this.showSkins = function() {
-      openSkins = true;
-      $('#achievements-modal').modal('show');
     };
     this.showDetectorInfo = function() {
       if (!this._detectorInfo) {
@@ -361,7 +387,7 @@
       return game.bonus.data;
     };
     this.hire = function(worker) {
-      var hired = 0;
+      var hired = 0, before = lab.state.money;
       var total = this.bulk.buy(worker, function() {
         var paid = worker.hire(lab);
         hired += paid >= 0 ? 1 : 0;
@@ -371,6 +397,7 @@
         UI.showUpdateValue("#update-funding", -total);
         gainXp(XP.hire * hired);
         player.staffHired += hired;
+        checkAllIn(before, total);
       }
     };
   });
@@ -384,7 +411,9 @@
       return upgrade.isAvailable(lab, allObjects);
     };
     this.upgrade = function(upgrade) {
+      var before = lab.state.money;
       if (upgrade.buy(lab, allObjects) > 0) {
+        checkAllIn(before, upgrade.cost);
         UI.showUpdateValue("#update-funding", -upgrade.cost);
         player.upgradesBought += 1;
         gainXp(XP.upgrade);
@@ -403,18 +432,6 @@
     $scope.secretsFound = function() {
       return secretOnes.filter(function(a) { return a.isAchieved(); }).length;
     };
-    $scope.skinsNew = function() {
-      return unlockedSkinCount() > Settings.get('skinsSeen');
-    };
-    // The navbar opens the achievements; the brush on the detector opens the skins.
-    $('#achievements-modal').on('show.bs.modal', function() {
-      $('#achievements-tabs a[href="' + (openSkins ? '#skins-tab' : '#achievements-tab') + '"]').tab('show');
-      openSkins = false;
-    });
-    $('#achievements-tabs a[href="#skins-tab"]').on('shown.bs.tab', function() {
-      // This can fire inside a digest (from the brush button) or outside one.
-      $scope.$evalAsync(function() { Settings.set('skinsSeen', unlockedSkinCount()); });
-    });
   });
 
   /** Draws the preview of a skin (scope.s) and redraws it when the theme changes. */
@@ -426,10 +443,19 @@
     };
   });
 
-  app.controller('SkinsController', ['$scope', function($scope) {
+  app.controller('SkinsController', ['$scope', '$element', function($scope, $element) {
     $scope.skins = skins;
     $scope.achieved = achievedCount;
     $scope.unlocked = skinUnlocked;
+    $scope.skinsNew = function() {
+      return unlockedSkinCount() > Settings.get('skinsSeen');
+    };
+    // Opening the skins window clears the "New" label in the top bar.
+    if ($element.is('#skins-modal')) {
+      $element.on('shown.bs.modal', function() {
+        $scope.$evalAsync(function() { Settings.set('skinsSeen', unlockedSkinCount()); });
+      });
+    }
     $scope.inUse = function(skin) {
       return detector.skin === skin;
     };
@@ -577,6 +603,7 @@
       fadeTimer = $timeout(function() {
         $scope.anomaly = null;
         secrets.missed += 1;
+        secrets.streak = 0;
         schedule(DELAY);
       }, (lab.state.anomalyLifetime + game.bonus.anomalyLifetime) * 1000);
     };
@@ -590,6 +617,10 @@
       lab.state.anomalies += 1;
       if (new Date().getTime() - spawnedAt < 1000) {
         secrets.reflexes = 1;
+      }
+      secrets.streak += 1;
+      if (secrets.streak >= 5) {
+        secrets.hotStreak = 1;
       }
       gainXp(XP.anomaly);
       var reward = rewards[Math.floor(Math.random() * rewards.length)];
@@ -669,6 +700,9 @@
     };
     $scope.nextAt = function() {
       return game.nextDarkMatterAt();
+    };
+    $scope.collected = function() {
+      return lab.state.dataCollected;
     };
     $scope.percent = function(darkMatter) {
       return Math.round(game.bonus.perDarkMatter * darkMatter * 100);
