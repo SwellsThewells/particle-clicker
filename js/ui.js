@@ -127,29 +127,28 @@ var UI = (function () {
     }});
   }
 
-  var showAchievement = function(obj) {
+  /** A short pop-up in the bottom left corner, like the achievements. */
+  var showPopup = function(kind, icon, text, duration) {
     if (!Settings.get('popups')) {
       return;
     }
-    var alert = '<div class="alert ' + (obj.secret ? 'alert-warning' : 'alert-success') + ' alert-dismissible" role="alert">';
+    var alert = '<div class="alert ' + kind + ' alert-dismissible" role="alert">';
     alert += '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>';
-    alert += '<span class="fa ' + obj.icon + ' alert-glyph"></span> <span class="alert-text">' +
-        (obj.secret ? 'Secret achievement: ' : '') + obj.description + '</span>';
+    alert += '<span class="fa ' + icon + ' alert-glyph"></span> <span class="alert-text">' + text + '</span>';
     alert += '</div>';
 
     alert = $(alert);
 
     $('#achievements-container').prepend(alert);
-    var remove = function(a)
-    {
-      return function()
-      {
-        a.slideUp(300, function() { a.remove(); });
-      };
-    };
+    window.setTimeout(function() {
+      alert.slideUp(300, function() { alert.remove(); });
+    }, duration || 2000);
+  };
 
-    window.setTimeout(remove(alert), 2000);
-  }
+  var showAchievement = function(obj) {
+    showPopup(obj.secret ? 'alert-warning' : 'alert-success', obj.icon,
+              (obj.secret ? 'Secret achievement: ' : '') + obj.description);
+  };
 
   /** Show a dismissible message in the bottom right corner. If timeout (ms)
    * is given, the message also disappears by itself. */
@@ -220,12 +219,12 @@ var UI = (function () {
     $('#messages-container').append(alert);
   }
 
-  /** A short "Level 12!" that rises from the level bar. */
+  /** Level-up: the XP bar flashes and a pop-up offers the new boost. */
   var showLevelUp = function(level) {
-    var toast = $('<div class="level-up-toast" role="status"></div>')
-        .text('Level ' + level + '!');
-    $('#level-hud').append(toast);
-    window.setTimeout(function() { toast.remove(); }, 2200);
+    var hud = $('#level-hud').addClass('levelled-up');
+    window.setTimeout(function() { hud.removeClass('levelled-up'); }, 1200);
+    showPopup('alert-info', 'fa-level-up',
+              'Level ' + level + '! Choose a boost in the level bar.', 3000);
   };
 
   /** The Big Bang: particles fall into the centre, flash, and fly out again
@@ -321,6 +320,7 @@ var UI = (function () {
   };
 
   return {
+    showPopup: showPopup,
     showLevelUp: showLevelUp,
     playExpansion: playExpansion,
     showUniverseIntro: showUniverseIntro,

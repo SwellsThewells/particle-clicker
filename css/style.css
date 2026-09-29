@@ -280,59 +280,47 @@ h1 br {
   }
 }
 
-/** Level bar at the bottom of the lab column. */
+/** Level bar at the bottom of the lab column, built from Bootstrap's panel,
+ * badge, progress bar and buttons like the rest of the game. */
 #level-hud {
   position: fixed;
   bottom: 8px;
   left: 50%;
   width: 420px;
-  height: 32px;
+  height: 34px;
   z-index: 20;
+  margin: 0;
+  padding: 0 8px;
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
   display: flex;
   display: -webkit-flex;
   align-items: center;
   -webkit-align-items: center;
-  padding: 4px 6px;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-#level-hud .level-badge {
-  font-weight: bold;
-  white-space: nowrap;
-  margin-right: 6px;
-  color: #333;
+#level-hud .level-label {
+  color: #666;
+  margin-right: 5px;
 }
 
-#level-hud .xp-bar {
-  position: relative;
+#level-hud .progress {
   flex: 1;
   -webkit-flex: 1;
-  height: 20px;
-  background: #e8eaf0;
-  overflow: hidden;
+  height: 12px;
+  margin: 0 8px;
 }
 
-#level-hud .xp-fill {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  background: linear-gradient(90deg, #5b7cfa, #9b6bff);
-  transition: width 0.3s;
+#level-hud .progress-bar {
+  transition: width 0.3s ease, background-color 0.3s;
+}
+
+#level-hud.levelled-up .progress-bar {
+  background-color: #5cb85c;
 }
 
 #level-hud .xp-text {
-  position: relative;
-  display: block;
-  text-align: center;
-  font-size: 11px;
-  line-height: 20px;
-  color: #222;
-  text-shadow: 0 0 3px rgba(255, 255, 255, 0.9);
+  color: #767676;
   white-space: nowrap;
 }
 
@@ -346,73 +334,10 @@ h1 br {
   display: none;
 }
 
-.level-up-toast {
-  position: absolute;
-  left: 50%;
-  bottom: 100%;
-  margin-bottom: 6px;
-  transform: translateX(-50%);
-  -webkit-transform: translateX(-50%);
-  padding: 4px 14px;
-  background: #ffc107;
-  color: #3e2a00;
-  font-weight: bold;
-  font-size: 16px;
-  white-space: nowrap;
-  box-shadow: 0 0 12px rgba(255, 193, 7, 0.8);
-  pointer-events: none;
-  animation: level-up 2.2s ease-out forwards;
-  -webkit-animation: level-up 2.2s ease-out forwards;
-}
-
-@keyframes level-up {
-  0% { opacity: 0; transform: translate(-50%, 10px) scale(0.8); }
-  15% { opacity: 1; transform: translate(-50%, 0) scale(1.1); }
-  30% { transform: translate(-50%, 0) scale(1); }
-  80% { opacity: 1; }
-  100% { opacity: 0; transform: translate(-50%, -20px); }
-}
-
-@-webkit-keyframes level-up {
-  0% { opacity: 0; -webkit-transform: translate(-50%, 10px) scale(0.8); }
-  15% { opacity: 1; -webkit-transform: translate(-50%, 0) scale(1.1); }
-  30% { -webkit-transform: translate(-50%, 0) scale(1); }
-  80% { opacity: 1; }
-  100% { opacity: 0; -webkit-transform: translate(-50%, -20px); }
-}
-
-/** Level-up boosts */
-.boost-cards .col-sm-4 {
-  margin-bottom: 10px;
-}
-
-.boost-card {
-  display: block;
-  width: 100%;
-  min-height: 150px;
-  padding: 12px 8px;
-  text-align: center;
-  background: #f7f8fc;
-  border: 1px solid #ccd;
-  color: inherit;
-}
-
-.boost-card:hover,
-.boost-card:focus {
-  background: #eef1ff;
-  border-color: #5b7cfa;
-}
-
-.boost-card .fa {
-  display: block;
-  margin-bottom: 6px;
-  color: #5b7cfa;
-}
-
-.boost-card strong,
-.boost-card .small {
-  display: block;
-  margin-bottom: 6px;
+.boost-list .media,
+.dm-upgrades .media {
+  margin-top: 0;
+  margin-bottom: 15px;
 }
 
 /** Particle Expansion */
@@ -420,20 +345,8 @@ h1 br {
   margin: 15px 0 20px;
 }
 
-.dm-upgrade {
+.dm-upgrades .media {
   min-height: 118px;
-  margin-bottom: 12px;
-  padding: 10px;
-  border: 1px solid #ddd;
-}
-
-.dm-upgrade h4 {
-  margin-top: 0;
-  font-size: 16px;
-}
-
-.dm-upgrade.bought {
-  background: #f0faf0;
 }
 
 .expansion-overlay {
@@ -499,13 +412,12 @@ h1 br {
 
 /** Reduce motion */
 .reduce-motion .anomaly,
-.reduce-motion .blink,
-.reduce-motion .level-up-toast {
+.reduce-motion .blink {
   animation: none !important;
   -webkit-animation: none !important;
 }
 
-.reduce-motion #level-hud .xp-fill,
+.reduce-motion #level-hud .progress-bar,
 .reduce-motion a,
 .reduce-motion button {
   transition: none !important;
@@ -828,43 +740,20 @@ html.theme-dark {
   background: #16171a;
 }
 
-.theme-dark #level-hud {
-  background: rgba(31, 32, 36, 0.95);
-  border-color: #3a3c42;
+.theme-dark #level-hud .level-label {
+  color: #c4c4cc;
 }
 
-.theme-dark #level-hud .level-badge {
-  color: #e4e4e7;
-}
-
-.theme-dark #level-hud .xp-bar {
+.theme-dark .progress {
   background: #2a2c31;
+  box-shadow: none;
 }
 
 .theme-dark #level-hud .xp-text {
-  color: #fff;
-  text-shadow: 0 0 3px rgba(0, 0, 0, 0.9);
+  color: #a1a1aa;
 }
 
-.theme-dark .boost-card {
-  background: #24262b;
-  border-color: #3a3c42;
-}
-
-.theme-dark .boost-card:hover,
-.theme-dark .boost-card:focus {
-  background: #2c2f44;
-  border-color: #7c95ff;
-}
-
-.theme-dark .boost-card .fa {
-  color: #8fa6ff;
-}
-
-.theme-dark .dm-upgrade {
-  border-color: #3a3c42;
-}
-
-.theme-dark .dm-upgrade.bought {
-  background: #1c2e22;
+.theme-dark .btn-primary .badge {
+  background: #fff;
+  color: #337ab7;
 }

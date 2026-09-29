@@ -336,13 +336,14 @@
       </div>
     </div>
 
-    <div id="level-hud" ng-controller="LevelController" ng-cloak>
-      <span class="level-badge" title="Your level">Lv {{ player.level }}</span>
-      <div class="xp-bar" role="progressbar" aria-label="XP to the next level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ floor(percent()) }}" title="{{ floor(player.xp) | niceNumber }} / {{ needed() | niceNumber }} XP to level {{ player.level + 1 }}">
-        <div class="xp-fill" ng-style="{width: percent() + '%'}"></div>
-        <span class="xp-text">{{ floor(player.xp) | niceNumber }} / {{ needed() | niceNumber }} XP</span>
+    <div id="level-hud" class="panel panel-default" ng-controller="LevelController" ng-cloak>
+      <strong class="level-label">Level</strong>
+      <span class="badge" title="Your level">{{ player.level }}</span>
+      <div class="progress" title="{{ floor(player.xp) | niceNumber }} / {{ needed() | niceNumber }} XP to level {{ player.level + 1 }}">
+        <div class="progress-bar" role="progressbar" aria-label="XP to the next level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ floor(percent()) }}" ng-style="{width: percent() + '%'}"></div>
       </div>
-      <button type="button" class="btn btn-warning btn-xs hud-boost" ng-show="player.points > 0" data-toggle="modal" data-target="#boost-modal" title="Choose a boost"><i class="fa fa-star"></i><span class="hud-label"> Boost</span> <span class="badge">{{ player.points }}</span></button>
+      <span class="xp-text small">{{ floor(player.xp) | niceNumber }} / {{ needed() | niceNumber }} XP</span>
+      <button type="button" class="btn btn-primary btn-xs hud-boost" ng-show="player.points > 0" data-toggle="modal" data-target="#boost-modal" title="Choose a boost"><i class="fa fa-star"></i><span class="hud-label"> Boost</span> <span class="badge">{{ player.points }}</span></button>
       <button type="button" class="btn btn-xs hud-expand" ng-class="canExpand() ? 'btn-primary' : 'btn-default'" ng-show="showExpansion()" data-toggle="modal" data-target="#expansion-modal" title="Particle Expansion"><i class="fa fa-expand"></i><span class="hud-label"> Expand</span></button>
     </div>
 
@@ -357,16 +358,16 @@
             <p ng-show="player.points > 1">You have {{ player.points }} boosts to choose. Each one lasts forever, even when the universe expands.</p>
             <p ng-show="player.points == 1">Pick one. It lasts forever, even when the universe expands.</p>
             <p ng-hide="player.points > 0">No boosts to choose right now. Level up to earn more.</p>
-            <div class="row boost-cards">
-              <div class="col-sm-4" ng-repeat="b in offer()">
-                <button type="button" class="boost-card" ng-click="choose(b)">
-                  <i class="fa {{ b.icon }} fa-2x"></i>
-                  <strong>{{ b.name }}</strong>
-                  <span class="small">{{ b.description }}</span>
-                  <span class="label label-default" ng-show="player[b.key] > 0">You have {{ total(b) }}</span>
-                </button>
-              </div>
-            </div>
+            <ul class="media-list boost-list">
+              <li class="media" ng-repeat="b in offer()">
+                <div class="media-body">
+                  <h4 class="media-heading"><i class="fa {{ b.icon }} fa-fw"></i> {{ b.name }}</h4>
+                  <p>{{ b.description }}</p>
+                  <p class="small" ng-show="player[b.key] > 0">You already have {{ total(b) }} from this boost.</p>
+                  <button type="button" class="btn btn-primary" ng-click="choose(b)"><i class="fa fa-check"></i> Choose</button>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -395,14 +396,16 @@
             <p class="small text-muted">Bought with dark matter. They last forever.</p>
             <div class="row dm-upgrades">
               <div class="col-sm-6" ng-repeat="u in upgrades">
-                <div class="dm-upgrade" ng-class="{bought: bought(u)}">
-                  <h4><i class="fa {{ u.icon }} fa-fw"></i> {{ u.name }}</h4>
-                  <p class="small">{{ u.description }}</p>
-                  <button type="button" class="btn btn-sm" ng-class="bought(u) ? 'btn-success' : 'btn-primary'" ng-disabled="!canBuy(u)" ng-click="buy(u)">
-                    <span ng-show="bought(u)"><i class="fa fa-check"></i> Bought</span>
-                    <span ng-hide="bought(u)"><i class="fa fa-adjust"></i> {{ u.cost }} dark matter</span>
-                  </button>
-                  <span class="small text-muted" ng-show="locked(u) && !bought(u)">Needs {{ requiredName(u) }} first.</span>
+                <div class="media dm-upgrade" ng-class="{bought: bought(u)}">
+                  <div class="media-body">
+                    <h4 class="media-heading"><i class="fa {{ u.icon }} fa-fw"></i> {{ u.name }}</h4>
+                    <p>{{ u.description }}</p>
+                    <button type="button" class="btn" ng-class="bought(u) ? 'btn-success' : 'btn-primary'" ng-disabled="!canBuy(u)" ng-click="buy(u)">
+                      <span ng-show="bought(u)"><i class="fa fa-check"></i> Bought</span>
+                      <span ng-hide="bought(u)"><i class="fa fa-adjust"></i> <small>{{ u.cost }} dark matter</small></span>
+                    </button>
+                    <span class="small text-muted" ng-show="locked(u) && !bought(u)">Needs {{ requiredName(u) }} first.</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -443,7 +446,7 @@
               </div>
             </div>
             <div class="checkbox"><label><input type="checkbox" ng-model="s.floatingNumbers" ng-change="set('floatingNumbers', s.floatingNumbers)"> Show floating numbers when you earn or spend</label></div>
-            <div class="checkbox"><label><input type="checkbox" ng-model="s.popups" ng-change="set('popups', s.popups)"> Show achievement pop-ups</label></div>
+            <div class="checkbox"><label><input type="checkbox" ng-model="s.popups" ng-change="set('popups', s.popups)"> Show pop-ups for achievements, level-ups and skins</label></div>
             <div class="checkbox"><label><input type="checkbox" ng-model="s.reduceMotion" ng-change="set('reduceMotion', s.reduceMotion)"> Reduce motion: shorter animations and no pulsing</label></div>
             <p class="small text-muted">Settings are saved in this browser. Restarting, importing a save or expanding the universe keeps them.</p>
           </div>
