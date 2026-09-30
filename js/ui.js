@@ -49,8 +49,8 @@ var UI = (function () {
       var lab = $('#column-lab');
       var hudWidth = Math.min(lab.outerWidth() - 16, 460);
       $('#level-hud').css({left: lab.offset().left + lab.outerWidth() / 2 + 'px',
-                           width: hudWidth + 'px'})
-                     .toggleClass('compact', hudWidth < 330);
+                           width: hudWidth + 'px'});
+      fitHud();
 
       var w = $(window).width(), h = $(window).height(), size;
       if (w < 768 && h - 90 - rateHeight - hudHeight < 300) {
@@ -74,6 +74,24 @@ var UI = (function () {
       }
     }
     
+    /** The level bar only shows its XP numbers and button labels when they
+     * fit, which depends on the width and on which buttons are shown. */
+    var hud = document.getElementById('level-hud');
+    var fitHud = function() {
+      var $hud = $(hud).removeClass('compact');
+      if (hud.scrollWidth > hud.clientWidth + 1) {
+        $hud.addClass('compact');
+      }
+    };
+    if (window.MutationObserver) {
+      var observer = new MutationObserver(function() {
+        fitHud();
+        observer.takeRecords();  // our own class change is not a reason to refit
+      });
+      observer.observe(hud, {attributes: true, attributeFilter: ['class'], subtree: true,
+                             childList: true, characterData: true});
+    }
+
     $(window).resize(resize);
     resize();
   });
@@ -143,6 +161,7 @@ var UI = (function () {
     window.setTimeout(function() {
       alert.slideUp(300, function() { alert.remove(); });
     }, duration || 2000);
+    return alert;
   };
 
   var showAchievement = function(obj) {
@@ -219,12 +238,18 @@ var UI = (function () {
     $('#messages-container').append(alert);
   }
 
-  /** Level-up: the XP bar flashes and a pop-up offers the new boost. */
+  /** Level-up: the XP bar flashes and a pop-up offers the new boost. Quick
+   * level-ups update the pop-up that is already there. */
+  var levelPopup = null;
   var showLevelUp = function(level) {
     var hud = $('#level-hud').addClass('levelled-up');
     window.setTimeout(function() { hud.removeClass('levelled-up'); }, 1200);
-    showPopup('alert-info', 'fa-level-up',
-              'Level ' + level + '! Choose a boost in the level bar.', 3000);
+    var text = 'Level ' + level + '! Choose a boost in the level bar.';
+    if (levelPopup && $.contains(document.documentElement, levelPopup[0])) {
+      levelPopup.find('.alert-text').text(text);
+      return;
+    }
+    levelPopup = showPopup('alert-info', 'fa-level-up', text, 3000);
   };
 
   /** The Big Bang: particles fall into the centre, flash, and fly out again
@@ -307,16 +332,113 @@ var UI = (function () {
   };
 
   /** After the reload that follows an expansion, fade in the new universe. */
-  var showUniverseIntro = function(info) {
+  var showIntro = function(title, text) {
     var overlay = $('<div class="expansion-overlay show-text intro">' +
                     '<div class="expansion-text"><h2></h2><p></p></div></div>');
-    overlay.find('h2').text('Universe #' + info.universe);
-    overlay.find('p').text('+' + Helpers.formatNumberPostfix(info.gain) +
-                           ' dark matter. Everything starts again, a little faster.');
+    overlay.find('h2').text(title);
+    overlay.find('p').text(text);
     overlay.appendTo('body');
     window.setTimeout(function() {
       overlay.fadeOut(Settings.get('reduceMotion') ? 0 : 900, function() { overlay.remove(); });
     }, 1400);
+  };
+
+  var showUniverseIntro = function(info) {
+    showIntro('Universe #' + info.universe, '+' + Helpers.formatNumberPostfix(info.gain) +
+              ' dark matter. Everything starts again, a little faster.');
+  };
+
+  var stringsText = function(n) {
+    return '+' + Helpers.formatNumberPostfix(n) + (n === 1 ? ' string' : ' strings');
+  };
+
+  /** Entering a new multiverse: we zoom out of our universe until it is one
+   * bubble among many, and the new multiverse is announced. Calls done() at
+   * the end. */
+  var playMultiverse = function(info, done) {
+    var overlay = $('<div class="expansion-overlay" role="alert">' +
+                    '<canvas></canvas><div class="expansion-text"><h2></h2><p></p></div></div>');
+    overlay.find('h2').text('Multiverse #' + info.multiverse);
+    overlay.find('p').text(stringsText(info.gain));
+    overlay.appendTo('body');
+    if (Settings.get('reduceMotion')) {
+      overlay.addClass('show-text');
+      window.setTimeout(done, 1500);
+      return;
+    }
+    var canvas = overlay.find('canvas')[0], ctx = canvas.getContext('2d');
+    var ratio = window.devicePixelRatio || 1;
+    var W = window.innerWidth, H = window.innerHeight, cx = W / 2, cy = H / 2;
+    canvas.width = W * ratio;
+    canvas.height = H * ratio;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.scale(ratio, ratio);
+    var colors = [[124, 149, 255], [76, 217, 100], [229, 164, 69], [199, 146, 234],
+                  [255, 213, 79], [255, 92, 92], [90, 200, 250]];
+    var rgba = function(c, a) { return 'rgba(' + c.join(', ') + ', ' + a + ')'; };
+    // Positions are in units of our universe's radius.
+    var bubbles = [{x: 0, y: 0, r: 1, color: [159, 180, 255], delay: 0}];
+    for (var i = 0; i < 70; i++) {
+      var a = Math.random() * Math.PI * 2, d = 1.5 + Math.random() * Math.random() * 14;
+      bubbles.push({x: Math.cos(a) * d, y: Math.sin(a) * d, r: 0.3 + Math.random() * 0.9,
+                    color: colors[i % colors.length], delay: Math.random()});
+    }
+    var stars = [];
+    for (var j = 0; j < 160; j++) {
+      var sa = Math.random() * Math.PI * 2, sd = Math.sqrt(Math.random()) * 0.95;
+      stars.push({x: Math.cos(sa) * sd, y: Math.sin(sa) * sd, color: colors[j % colors.length]});
+    }
+    var ZOOM = 2600, HOLD = 1500;
+    var start = null;
+    var frame = function(time) {
+      if (start === null) {
+        start = time;
+      }
+      var t = time - start;
+      var k = Math.min(1, t / ZOOM), ease = 1 - Math.pow(1 - k, 3);
+      // Our universe first fills the screen, then shrinks to a small bubble.
+      var scale = Math.max(W, H) * 0.6 * Math.pow(0.06, ease);
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = 'rgba(5, 6, 20, ' + Math.min(0.95, t / 500) + ')';
+      ctx.fillRect(0, 0, W, H);
+      stars.forEach(function(s) {
+        ctx.fillStyle = rgba(s.color, 1 - k * 0.6);
+        ctx.fillRect(cx + s.x * scale - 1, cy + s.y * scale - 1, 2, 2);
+      });
+      bubbles.forEach(function(b, n) {
+        var grow = n === 0 ? 1 : Math.min(1, Math.max(0, (k - b.delay * 0.7) / 0.3));
+        var r = b.r * scale * grow, x = cx + b.x * scale, y = cy + b.y * scale;
+        if (r < 0.5 || x + r < 0 || x - r > W || y + r < 0 || y - r > H) {
+          return;
+        }
+        var glow = ctx.createRadialGradient(x, y, r * 0.5, x, y, r);
+        glow.addColorStop(0, rgba(b.color, 0.03));
+        glow.addColorStop(1, rgba(b.color, 0.45));
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = rgba(b.color, 0.9);
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      });
+      if (t > ZOOM * 0.75) {
+        overlay.addClass('show-text');
+      }
+      if (t < ZOOM + HOLD) {
+        requestAnimFrame(frame);
+      } else {
+        done();
+      }
+    };
+    requestAnimFrame(frame);
+  };
+
+  /** After the reload that follows a new multiverse. */
+  var showMultiverseIntro = function(info) {
+    showIntro('Multiverse #' + info.multiverse, stringsText(info.gain) +
+              '. Universe ' + info.universe + ': everything starts again, much faster.');
   };
 
   return {
@@ -324,6 +446,8 @@ var UI = (function () {
     showLevelUp: showLevelUp,
     playExpansion: playExpansion,
     showUniverseIntro: showUniverseIntro,
+    playMultiverse: playMultiverse,
+    showMultiverseIntro: showMultiverseIntro,
     showAchievement: showAchievement,
     showMessage: showMessage,
     showOfflineProgress: showOfflineProgress,

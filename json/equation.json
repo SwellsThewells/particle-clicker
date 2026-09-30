@@ -1,0 +1,162 @@
+[
+  {
+    "key": "term-gauge",
+    "name": "Gauge fields",
+    "html": "−¼ F<sub>μν</sub>F<sup>μν</sup>",
+    "description": "How the forces work: photons, gluons, and W and Z bosons.",
+    "cost": 50,
+    "size": 8
+  },
+  {
+    "key": "term-matter",
+    "name": "Matter",
+    "html": "+ i<span class=\"bar\">ψ</span><span class=\"slash\">D</span>ψ",
+    "description": "How quarks and leptons move and feel the forces.",
+    "cost": 75,
+    "size": 5
+  },
+  {
+    "key": "term-hc1",
+    "name": "Hermitian conjugate",
+    "html": "+ h.c.",
+    "description": "The same again, the other way round. Physicists love writing it.",
+    "cost": 110,
+    "size": 5
+  },
+  {
+    "key": "term-yukawa",
+    "name": "Yukawa couplings",
+    "html": "+ <span class=\"bar\">ψ</span><sub>i</sub>y<sub>ij</sub>ψ<sub>j</sub>φ",
+    "description": "How quarks and leptons get their masses from the Higgs field.",
+    "cost": 170,
+    "size": 9
+  },
+  {
+    "key": "term-hc2",
+    "name": "Another hermitian conjugate",
+    "html": "+ h.c.",
+    "description": "Yes, again.",
+    "cost": 250,
+    "size": 5
+  },
+  {
+    "key": "term-higgs",
+    "name": "Higgs field",
+    "html": "+ |D<sub>μ</sub>φ|<sup>2</sup>",
+    "description": "How the Higgs field moves, and how the W and Z bosons get heavy.",
+    "cost": 380,
+    "size": 7
+  },
+  {
+    "key": "term-potential",
+    "name": "Higgs potential",
+    "html": "− V(φ)",
+    "description": "The Mexican hat. With this, the Standard Model is complete.",
+    "cost": 570,
+    "size": 5
+  },
+  {
+    "key": "term-majorana",
+    "name": "Neutrino masses",
+    "html": "− ½M<span class=\"bar\">ν</span><sub>R</sub>ν<sub>R</sub>",
+    "description": "Right-handed neutrinos, to give neutrinos their tiny masses.",
+    "cost": 850,
+    "size": 7
+  },
+  {
+    "key": "term-theta",
+    "name": "Theta term",
+    "html": "+ θG<sub>μν</sub>G̃<sup>μν</sup>",
+    "description": "It could break CP symmetry in the strong force. Nobody knows why it is so small.",
+    "cost": 1.3e3,
+    "size": 8
+  },
+  {
+    "key": "term-axion",
+    "name": "Axion",
+    "html": "+ ½∂<sub>μ</sub>a∂<sup>μ</sup>a",
+    "description": "A new field that would explain why. It could be the dark matter, too.",
+    "cost": 1.9e3,
+    "size": 8
+  },
+  {
+    "key": "term-wimp",
+    "name": "Dark matter",
+    "html": "+ <span class=\"bar\">χ</span>(i<span class=\"slash\">∂</span> − m<sub>χ</sub>)χ",
+    "description": "A particle for the dark matter: heavy, shy and still missing.",
+    "cost": 2.9e3,
+    "size": 10
+  },
+  {
+    "key": "term-gravity",
+    "name": "Gravity",
+    "html": "+ √−g R/16πG",
+    "description": "Einstein's general relativity, in one term.",
+    "cost": 4.3e3,
+    "size": 10
+  },
+  {
+    "key": "term-lambda",
+    "name": "Cosmological constant",
+    "html": "− Λ",
+    "description": "The smallest term with the biggest effect: the universe expands faster and faster.",
+    "cost": 6.5e3,
+    "size": 2
+  },
+  {
+    "key": "term-inflaton",
+    "name": "Inflaton",
+    "html": "+ ½(∂ϕ)<sup>2</sup> − U(ϕ)",
+    "description": "The field that blew up the early universe.",
+    "cost": 9.7e3,
+    "size": 12
+  },
+  {
+    "key": "term-susy",
+    "name": "Supersymmetry",
+    "html": "+ ∫d<sup>2</sup>θ W(Φ)",
+    "description": "A superpartner for every particle.",
+    "cost": 1.5e4,
+    "size": 9
+  },
+  {
+    "key": "term-kk",
+    "name": "Extra dimensions",
+    "html": "+ Σ<sub>n</sub>(n/R)<sup>2</sup>|φ<sub>n</sub>|<sup>2</sup>",
+    "description": "Heavier copies of every particle, from dimensions curled up too small to see.",
+    "cost": 2.2e4,
+    "size": 14
+  },
+  {
+    "key": "term-strings",
+    "name": "String theory",
+    "html": "+ ∂<sub>a</sub>X<sup>μ</sup>∂<sup>a</sup>X<sub>μ</sub>/4πα′",
+    "description": "Every particle is a tiny vibrating string.",
+    "cost": 3.3e4,
+    "size": 14
+  },
+  {
+    "key": "term-qg",
+    "name": "Quantum gravity",
+    "html": "+ ∫𝒟g e<sup>iS[g]</sup>",
+    "description": "Add up every possible shape of spacetime.",
+    "cost": 4.9e4,
+    "size": 10
+  },
+  {
+    "key": "term-landscape",
+    "name": "The multiverse",
+    "html": "+ Σ<sub>i</sub><sup>10<sup>500</sup></sup>ℒ<sub>i</sub>",
+    "description": "One Lagrangian for every universe in the string landscape.",
+    "cost": 7.4e4,
+    "size": 10
+  },
+  {
+    "key": "term-unknown",
+    "name": "The next discovery",
+    "html": "+ …",
+    "description": "Whatever we find next. Physics is never finished.",
+    "cost": 1.1e5,
+    "size": 2
+  }
+]

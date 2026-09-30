@@ -17,7 +17,8 @@ var Helpers = (function () {
     return res;
   };
 
-  /** Format a number with proper postfix.
+  /** Format a number with proper postfix. Numbers too big for the postfixes
+   * are written in scientific notation.
    */
   var formatNumberPostfix = function (number) {
     if (typeof number !== "number") {
@@ -25,6 +26,8 @@ var Helpers = (function () {
     }
 
     var prefixes = [
+      { magnitude: 1e30, label: 'Q' },
+      { magnitude: 1e27, label: 'R' },
       { magnitude: 1e24, label: 'Y' },
       { magnitude: 1e21, label: 'Z' },
       { magnitude: 1e18, label: 'E' },
@@ -36,7 +39,7 @@ var Helpers = (function () {
     ];
 
     var abs = Math.abs(number);
-    if (abs >= 1e3 && typeof Settings !== 'undefined' &&
+    if (abs >= 1e33 || abs >= 1e3 && typeof Settings !== 'undefined' &&
         Settings.get('numbers') === 'scientific') {
       var parts = number.toExponential(2).split('e');
       return parts[0] + 'e' + parseInt(parts[1], 10);

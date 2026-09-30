@@ -1515,7 +1515,7 @@
     "description": "The universe expands!",
     "icon": "fa-expand",
     "key": "achievement-expansions-1",
-    "targetProperty": "expansions",
+    "targetProperty": "lifetimeExpansions",
     "targetKey": "prestige",
     "threshold": 1
   },
@@ -1523,7 +1523,7 @@
     "description": "3 universes expanded!",
     "icon": "fa-expand",
     "key": "achievement-expansions-3",
-    "targetProperty": "expansions",
+    "targetProperty": "lifetimeExpansions",
     "targetKey": "prestige",
     "threshold": 3
   },
@@ -1531,7 +1531,7 @@
     "description": "10 universes expanded!",
     "icon": "fa-expand",
     "key": "achievement-expansions-10",
-    "targetProperty": "expansions",
+    "targetProperty": "lifetimeExpansions",
     "targetKey": "prestige",
     "threshold": 10
   },
@@ -1539,7 +1539,7 @@
     "description": "25 universes expanded!",
     "icon": "fa-expand",
     "key": "achievement-expansions-25",
-    "targetProperty": "expansions",
+    "targetProperty": "lifetimeExpansions",
     "targetKey": "prestige",
     "threshold": 25
   },
@@ -1547,7 +1547,7 @@
     "description": "10 dark matter collected!",
     "icon": "fa-adjust",
     "key": "achievement-darkmatter-10",
-    "targetProperty": "darkMatterTotal",
+    "targetProperty": "lifetimeDarkMatter",
     "targetKey": "prestige",
     "threshold": 10
   },
@@ -1555,7 +1555,7 @@
     "description": "100 dark matter collected!",
     "icon": "fa-adjust",
     "key": "achievement-darkmatter-100",
-    "targetProperty": "darkMatterTotal",
+    "targetProperty": "lifetimeDarkMatter",
     "targetKey": "prestige",
     "threshold": 100
   },
@@ -1563,7 +1563,7 @@
     "description": "1k dark matter collected!",
     "icon": "fa-adjust",
     "key": "achievement-darkmatter-1000",
-    "targetProperty": "darkMatterTotal",
+    "targetProperty": "lifetimeDarkMatter",
     "targetKey": "prestige",
     "threshold": 1000
   },
@@ -1787,7 +1787,7 @@
     "description": "10k dark matter collected!",
     "icon": "fa-adjust",
     "key": "achievement-darkmatter-10000",
-    "targetProperty": "darkMatterTotal",
+    "targetProperty": "lifetimeDarkMatter",
     "targetKey": "prestige",
     "threshold": 10000
   },
@@ -1795,7 +1795,7 @@
     "description": "50 universes expanded!",
     "icon": "fa-expand",
     "key": "achievement-expansions-50",
-    "targetProperty": "expansions",
+    "targetProperty": "lifetimeExpansions",
     "targetKey": "prestige",
     "threshold": 50
   },
@@ -1803,7 +1803,7 @@
     "description": "100 universes expanded!",
     "icon": "fa-expand",
     "key": "achievement-expansions-100",
-    "targetProperty": "expansions",
+    "targetProperty": "lifetimeExpansions",
     "targetKey": "prestige",
     "threshold": 100
   },
@@ -1984,5 +1984,637 @@
     "targetKey": "secrets",
     "threshold": 1,
     "secret": true
+  },
+  {
+    "description": "Antimatter gravity discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-antigravity-1",
+    "targetProperty": "level",
+    "targetKey": "research-antigravity",
+    "threshold": 1
+  },
+  {
+    "description": "Antimatter gravity research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-antigravity-5",
+    "targetProperty": "level",
+    "targetKey": "research-antigravity",
+    "threshold": 5
+  },
+  {
+    "description": "Antimatter gravity research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-antigravity-25",
+    "targetProperty": "level",
+    "targetKey": "research-antigravity",
+    "threshold": 25
+  },
+  {
+    "description": "Antimatter gravity research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-antigravity-50",
+    "targetProperty": "level",
+    "targetKey": "research-antigravity",
+    "threshold": 50
+  },
+  {
+    "description": "Antimatter gravity research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-antigravity-100",
+    "targetProperty": "level",
+    "targetKey": "research-antigravity",
+    "threshold": 100
+  },
+  {
+    "description": "Magnetic monopoles discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-monopole-1",
+    "targetProperty": "level",
+    "targetKey": "research-monopole",
+    "threshold": 1
+  },
+  {
+    "description": "Magnetic monopoles research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-monopole-5",
+    "targetProperty": "level",
+    "targetKey": "research-monopole",
+    "threshold": 5
+  },
+  {
+    "description": "Magnetic monopoles research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-monopole-25",
+    "targetProperty": "level",
+    "targetKey": "research-monopole",
+    "threshold": 25
+  },
+  {
+    "description": "Magnetic monopoles research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-monopole-50",
+    "targetProperty": "level",
+    "targetKey": "research-monopole",
+    "threshold": 50
+  },
+  {
+    "description": "Magnetic monopoles research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-monopole-100",
+    "targetProperty": "level",
+    "targetKey": "research-monopole",
+    "threshold": 100
+  },
+  {
+    "description": "Muon g\u22122 discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-gminus2-1",
+    "targetProperty": "level",
+    "targetKey": "research-gminus2",
+    "threshold": 1
+  },
+  {
+    "description": "Muon g\u22122 research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-gminus2-5",
+    "targetProperty": "level",
+    "targetKey": "research-gminus2",
+    "threshold": 5
+  },
+  {
+    "description": "Muon g\u22122 research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-gminus2-25",
+    "targetProperty": "level",
+    "targetKey": "research-gminus2",
+    "threshold": 25
+  },
+  {
+    "description": "Muon g\u22122 research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-gminus2-50",
+    "targetProperty": "level",
+    "targetKey": "research-gminus2",
+    "threshold": 50
+  },
+  {
+    "description": "Muon g\u22122 research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-gminus2-100",
+    "targetProperty": "level",
+    "targetKey": "research-gminus2",
+    "threshold": 100
+  },
+  {
+    "description": "Glueballs discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-glueball-1",
+    "targetProperty": "level",
+    "targetKey": "research-glueball",
+    "threshold": 1
+  },
+  {
+    "description": "Glueballs research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-glueball-5",
+    "targetProperty": "level",
+    "targetKey": "research-glueball",
+    "threshold": 5
+  },
+  {
+    "description": "Glueballs research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-glueball-25",
+    "targetProperty": "level",
+    "targetKey": "research-glueball",
+    "threshold": 25
+  },
+  {
+    "description": "Glueballs research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-glueball-50",
+    "targetProperty": "level",
+    "targetKey": "research-glueball",
+    "threshold": 50
+  },
+  {
+    "description": "Glueballs research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-glueball-100",
+    "targetProperty": "level",
+    "targetKey": "research-glueball",
+    "threshold": 100
+  },
+  {
+    "description": "Supersymmetry discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-susy-1",
+    "targetProperty": "level",
+    "targetKey": "research-susy",
+    "threshold": 1
+  },
+  {
+    "description": "Supersymmetry research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-susy-5",
+    "targetProperty": "level",
+    "targetKey": "research-susy",
+    "threshold": 5
+  },
+  {
+    "description": "Supersymmetry research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-susy-25",
+    "targetProperty": "level",
+    "targetKey": "research-susy",
+    "threshold": 25
+  },
+  {
+    "description": "Supersymmetry research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-susy-50",
+    "targetProperty": "level",
+    "targetKey": "research-susy",
+    "threshold": 50
+  },
+  {
+    "description": "Supersymmetry research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-susy-100",
+    "targetProperty": "level",
+    "targetKey": "research-susy",
+    "threshold": 100
+  },
+  {
+    "description": "Extra dimensions discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-extradim-1",
+    "targetProperty": "level",
+    "targetKey": "research-extradim",
+    "threshold": 1
+  },
+  {
+    "description": "Extra dimensions research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-extradim-5",
+    "targetProperty": "level",
+    "targetKey": "research-extradim",
+    "threshold": 5
+  },
+  {
+    "description": "Extra dimensions research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-extradim-25",
+    "targetProperty": "level",
+    "targetKey": "research-extradim",
+    "threshold": 25
+  },
+  {
+    "description": "Extra dimensions research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-extradim-50",
+    "targetProperty": "level",
+    "targetKey": "research-extradim",
+    "threshold": 50
+  },
+  {
+    "description": "Extra dimensions research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-extradim-100",
+    "targetProperty": "level",
+    "targetKey": "research-extradim",
+    "threshold": 100
+  },
+  {
+    "description": "String theory discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-strings-1",
+    "targetProperty": "level",
+    "targetKey": "research-strings",
+    "threshold": 1
+  },
+  {
+    "description": "String theory research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-strings-5",
+    "targetProperty": "level",
+    "targetKey": "research-strings",
+    "threshold": 5
+  },
+  {
+    "description": "String theory research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-strings-25",
+    "targetProperty": "level",
+    "targetKey": "research-strings",
+    "threshold": 25
+  },
+  {
+    "description": "String theory research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-strings-50",
+    "targetProperty": "level",
+    "targetKey": "research-strings",
+    "threshold": 50
+  },
+  {
+    "description": "String theory research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-strings-100",
+    "targetProperty": "level",
+    "targetKey": "research-strings",
+    "threshold": 100
+  },
+  {
+    "description": "The first Engineers hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-engineers-1",
+    "targetProperty": "hired",
+    "targetKey": "workers-engineers",
+    "threshold": 1
+  },
+  {
+    "description": "5 Engineers working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-engineers-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-engineers",
+    "threshold": 5
+  },
+  {
+    "description": "25 Engineers working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-engineers-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-engineers",
+    "threshold": 25
+  },
+  {
+    "description": "50 Engineers working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-engineers-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-engineers",
+    "threshold": 50
+  },
+  {
+    "description": "100 Engineers working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-engineers-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-engineers",
+    "threshold": 100
+  },
+  {
+    "description": "The first Data Scientists hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-datascientists-1",
+    "targetProperty": "hired",
+    "targetKey": "workers-datascientists",
+    "threshold": 1
+  },
+  {
+    "description": "5 Data Scientists working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-datascientists-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-datascientists",
+    "threshold": 5
+  },
+  {
+    "description": "25 Data Scientists working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-datascientists-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-datascientists",
+    "threshold": 25
+  },
+  {
+    "description": "50 Data Scientists working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-datascientists-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-datascientists",
+    "threshold": 50
+  },
+  {
+    "description": "100 Data Scientists working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-datascientists-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-datascientists",
+    "threshold": 100
+  },
+  {
+    "description": "The first Theorists hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-theorists-1",
+    "targetProperty": "hired",
+    "targetKey": "workers-theorists",
+    "threshold": 1
+  },
+  {
+    "description": "5 Theorists working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-theorists-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-theorists",
+    "threshold": 5
+  },
+  {
+    "description": "25 Theorists working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-theorists-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-theorists",
+    "threshold": 25
+  },
+  {
+    "description": "50 Theorists working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-theorists-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-theorists",
+    "threshold": 50
+  },
+  {
+    "description": "100 Theorists working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-theorists-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-theorists",
+    "threshold": 100
+  },
+  {
+    "description": "The first Parallel Selves hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-selves-1",
+    "targetProperty": "hired",
+    "targetKey": "workers-selves",
+    "threshold": 1
+  },
+  {
+    "description": "5 Parallel Selves working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-selves-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-selves",
+    "threshold": 5
+  },
+  {
+    "description": "25 Parallel Selves working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-selves-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-selves",
+    "threshold": 25
+  },
+  {
+    "description": "50 Parallel Selves working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-selves-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-selves",
+    "threshold": 50
+  },
+  {
+    "description": "100 Parallel Selves working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-selves-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-selves",
+    "threshold": 100
+  },
+  {
+    "description": "The first Boltzmann Brains hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-brains-1",
+    "targetProperty": "hired",
+    "targetKey": "workers-brains",
+    "threshold": 1
+  },
+  {
+    "description": "5 Boltzmann Brains working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-brains-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-brains",
+    "threshold": 5
+  },
+  {
+    "description": "25 Boltzmann Brains working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-brains-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-brains",
+    "threshold": 25
+  },
+  {
+    "description": "50 Boltzmann Brains working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-brains-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-brains",
+    "threshold": 50
+  },
+  {
+    "description": "100 Boltzmann Brains working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-brains-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-brains",
+    "threshold": 100
+  },
+  {
+    "description": "The first Universe Builders hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-builders-1",
+    "targetProperty": "hired",
+    "targetKey": "workers-builders",
+    "threshold": 1
+  },
+  {
+    "description": "5 Universe Builders working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-builders-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-builders",
+    "threshold": 5
+  },
+  {
+    "description": "25 Universe Builders working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-builders-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-builders",
+    "threshold": 25
+  },
+  {
+    "description": "50 Universe Builders working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-builders-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-builders",
+    "threshold": 50
+  },
+  {
+    "description": "100 Universe Builders working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-builders-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-builders",
+    "threshold": 100
+  },
+  {
+    "description": "A new multiverse!",
+    "icon": "fa-code-fork",
+    "key": "achievement-multiverse-1",
+    "targetProperty": "jumps",
+    "targetKey": "multiverse",
+    "threshold": 1
+  },
+  {
+    "description": "3 multiverses entered!",
+    "icon": "fa-code-fork",
+    "key": "achievement-multiverse-3",
+    "targetProperty": "jumps",
+    "targetKey": "multiverse",
+    "threshold": 3
+  },
+  {
+    "description": "10 multiverses entered!",
+    "icon": "fa-code-fork",
+    "key": "achievement-multiverse-10",
+    "targetProperty": "jumps",
+    "targetKey": "multiverse",
+    "threshold": 10
+  },
+  {
+    "description": "25 multiverses entered!",
+    "icon": "fa-code-fork",
+    "key": "achievement-multiverse-25",
+    "targetProperty": "jumps",
+    "targetKey": "multiverse",
+    "threshold": 25
+  },
+  {
+    "description": "10 strings collected!",
+    "icon": "fa-code-fork",
+    "key": "achievement-strings-10",
+    "targetProperty": "stringsTotal",
+    "targetKey": "multiverse",
+    "threshold": 10
+  },
+  {
+    "description": "100 strings collected!",
+    "icon": "fa-code-fork",
+    "key": "achievement-strings-100",
+    "targetProperty": "stringsTotal",
+    "targetKey": "multiverse",
+    "threshold": 100
+  },
+  {
+    "description": "1k strings collected!",
+    "icon": "fa-code-fork",
+    "key": "achievement-strings-1000",
+    "targetProperty": "stringsTotal",
+    "targetKey": "multiverse",
+    "threshold": 1000
+  },
+  {
+    "description": "Every multiverse upgrade bought!",
+    "icon": "fa-magic",
+    "key": "achievement-multiverse-upgrades",
+    "targetProperty": "upgradesBought",
+    "targetKey": "multiverse",
+    "threshold": 12
+  },
+  {
+    "description": "Universe 10, in a single multiverse!",
+    "icon": "fa-expand",
+    "key": "achievement-universe-10",
+    "targetProperty": "expansions",
+    "targetKey": "prestige",
+    "threshold": 9
+  },
+  {
+    "description": "Universe 20, in a single multiverse!",
+    "icon": "fa-expand",
+    "key": "achievement-universe-20",
+    "targetProperty": "expansions",
+    "targetKey": "prestige",
+    "threshold": 19
+  },
+  {
+    "description": "Your first term: the equation begins!",
+    "icon": "fa-superscript",
+    "key": "achievement-equation-1",
+    "targetProperty": "terms",
+    "targetKey": "equation",
+    "threshold": 1
+  },
+  {
+    "description": "The Standard Model is complete!",
+    "icon": "fa-superscript",
+    "key": "achievement-equation-7",
+    "targetProperty": "terms",
+    "targetKey": "equation",
+    "threshold": 7
+  },
+  {
+    "description": "10 terms in your equation!",
+    "icon": "fa-superscript",
+    "key": "achievement-equation-10",
+    "targetProperty": "terms",
+    "targetKey": "equation",
+    "threshold": 10
+  },
+  {
+    "description": "Every term in the equation: a theory of everything!",
+    "icon": "fa-superscript",
+    "key": "achievement-equation-20",
+    "targetProperty": "terms",
+    "targetKey": "equation",
+    "threshold": 20
   }
 ]

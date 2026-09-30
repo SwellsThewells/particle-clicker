@@ -88,18 +88,28 @@
   var prestige = game.prestige.state;
   var secrets = game.secrets.state;
 
-  // After the reload that follows an expansion, welcome the new universe.
-  var expansionInfo = null;
-  try {
-    expansionInfo = JSON.parse(window.sessionStorage.getItem('expansion'));
-    window.sessionStorage.removeItem('expansion');
-  } catch (e) {}
+  // After the reload that follows an expansion or a new multiverse, welcome
+  // the new universe.
+  var arrival = function(key) {
+    try {
+      var info = JSON.parse(window.sessionStorage.getItem(key));
+      window.sessionStorage.removeItem(key);
+      return info;
+    } catch (e) {
+      return null;
+    }
+  };
+  var expansionInfo = arrival('expansion'), multiverseInfo = arrival('multiverse');
   if (expansionInfo) {
     $(function() { UI.showUniverseIntro(expansionInfo); });
   }
+  if (multiverseInfo) {
+    $(function() { UI.showMultiverseIntro(multiverseInfo); });
+  }
 
   /** XP for each kind of progress, before bonuses. */
-  var XP = {click: 1, hire: 5, research: 10, upgrade: 25, anomaly: 30, achievement: 50};
+  var XP = {click: 1, hire: 5, research: 10, upgrade: 25, term: 25, anomaly: 30,
+            achievement: 50};
   var gainXp = function(amount) {
     if (game.addXp(amount) > 0) {
       UI.showLevelUp(player.level);
@@ -336,10 +346,10 @@
     this.research = research;
     this.bulk = new BulkBuyer(function() { return lab.state.data; });
     this.isVisible = function(item) {
-      return item.isVisible(lab);
+      return item.isVisible(lab, allObjects);
     };
     this.isAvailable = function(item) {
-      return this.bulk.canAfford(item);
+      return item.meetsRequirements(allObjects) && this.bulk.canAfford(item);
     };
     this.reputationBonus = function() {
       return game.bonus.reputation;
@@ -348,7 +358,7 @@
       var reputation = 0, levels = 0;
       var cost = this.bulk.buy(item, function() {
         var before = lab.state.reputation;
-        var paid = item.research(lab);
+        var paid = item.research(lab, allObjects);
         if (paid >= 0) {
           reputation += lab.state.reputation - before;
           levels++;
@@ -378,10 +388,10 @@
     this.workers = workers;
     this.bulk = new BulkBuyer(function() { return lab.state.money; });
     this.isVisible = function(worker) {
-      return worker.isVisible(lab);
+      return worker.isVisible(lab, allObjects);
     };
     this.isAvailable = function(worker) {
-      return this.bulk.canAfford(worker);
+      return worker.meetsRequirements(allObjects) && this.bulk.canAfford(worker);
     };
     this.dataBonus = function() {
       return game.bonus.data;
@@ -389,7 +399,7 @@
     this.hire = function(worker) {
       var hired = 0, before = lab.state.money;
       var total = this.bulk.buy(worker, function() {
-        var paid = worker.hire(lab);
+        var paid = worker.hire(lab, allObjects);
         hired += paid >= 0 ? 1 : 0;
         return paid;
       });
@@ -687,7 +697,13 @@
       return game.darkMatterGain() >= 1;
     };
     $scope.showExpansion = function() {
-      return prestige.expansions > 0 || $scope.canExpand();
+      return prestige.lifetimeExpansions > 0 || $scope.canExpand();
+    };
+    $scope.canEnterMultiverse = function() {
+      return game.stringGain() >= 1;
+    };
+    $scope.showMultiverse = function() {
+      return game.multiverse.state.jumps > 0 || game.multiverseOpen();
     };
   }]);
 
@@ -701,9 +717,16 @@
     $scope.nextAt = function() {
       return game.nextDarkMatterAt();
     };
-    $scope.collected = function() {
-      return lab.state.dataCollected;
+    $scope.at = function(darkMatter) {
+      return game.darkMatterAt(darkMatter);
     };
+    $scope.collected = function() {
+      return game.multiverseData();
+    };
+    $scope.universe = function() {
+      return game.universe();
+    };
+    $scope.multiverse = game.multiverse.state;
     $scope.percent = function(darkMatter) {
       return Math.round(game.bonus.perDarkMatter * darkMatter * 100);
     };
@@ -729,8 +752,8 @@
     $scope.expand = function() {
       if ($scope.expanding || game.darkMatterGain() < 1 || !window.confirm(
         'Expand the universe? Your data, funding, reputation, staff, research ' +
-        'and upgrades start over. You keep your achievements, level, boosts ' +
-        'and dark matter.'
+        'and upgrades start over. You keep your achievements, level, boosts, ' +
+        'dark matter, strings and equation.'
       )) {
         return;
       }
@@ -743,6 +766,118 @@
       } catch (e) {}
       $('#expansion-modal').modal('hide');
       UI.playExpansion(info, function() { window.location.reload(); });
+    };
+  }]);
+
+  app.controller('MultiverseController', ['$scope', function($scope) {
+    $scope.multiverse = game.multiverse.state;
+    $scope.prestige = prestige;
+    $scope.upgrades = game.multiverseUpgrades;
+    $scope.universe = function() {
+      return game.universe();
+    };
+    $scope.open = function() {
+      return game.multiverseOpen();
+    };
+    $scope.gain = function() {
+      return game.stringGain();
+    };
+    $scope.nextAt = function() {
+      return game.nextStringAt();
+    };
+    $scope.at = function(strings) {
+      return game.stringsAt(strings);
+    };
+    /** Production bonus of the given number of strings, in percent. */
+    $scope.percent = function(strings) {
+      return Math.round(game.bonus.perString * strings * 100);
+    };
+    $scope.darkMatterPercent = function() {
+      return Math.round(game.bonus.perDarkMatter * prestige.darkMatterTotal * 100);
+    };
+    $scope.bought = function(u) {
+      return !!game.multiverse.state[u.key];
+    };
+    $scope.locked = function(u) {
+      return !!u.requires && !game.multiverse.state[u.requires];
+    };
+    $scope.canBuy = function(u) {
+      return game.canBuyMultiverseUpgrade(u);
+    };
+    $scope.requiredName = function(u) {
+      var required = game.multiverseUpgrades.filter(function(x) { return x.key === u.requires; })[0];
+      return required ? required.name : '';
+    };
+    $scope.buy = function(u) {
+      if (game.buyMultiverseUpgrade(u.key)) {
+        saveGame();
+      }
+    };
+    $scope.entering = false;
+    $scope.enter = function() {
+      var gain = game.stringGain();
+      if ($scope.entering || gain < 1 || !window.confirm(
+        'Enter a new multiverse for ' + gain + (gain === 1 ? ' string' : ' strings') +
+        '? Your universes, dark matter and dark matter upgrades start over, ' +
+        'as well as your data, funding, reputation, staff, research and ' +
+        'upgrades. You keep your achievements, level, boosts, strings and equation.'
+      )) {
+        return;
+      }
+      $scope.entering = true;
+      saveGame();
+      var info = game.enterMultiverse(new Date().getTime());
+      savingEnabled = false;
+      try {
+        window.sessionStorage.setItem('multiverse', JSON.stringify(info));
+      } catch (e) {}
+      $('#multiverse-modal').modal('hide');
+      UI.playMultiverse(info, function() { window.location.reload(); });
+    };
+  }]);
+
+  /** Fills an element with the HTML of an equation term (from our own
+   * json/equation.json). */
+  app.directive('termHtml', function() {
+    return {
+      link: function(scope, element, attrs) {
+        scope.$watch(attrs.termHtml, function(html) { element.html(html || ''); });
+      }
+    };
+  });
+
+  app.controller('EquationController', ['$scope', function($scope) {
+    $scope.terms = game.terms;
+    $scope.equation = game.equation.state;
+    $scope.bought = function() {
+      return game.terms.slice(0, game.equation.state.terms);
+    };
+    $scope.next = function() {
+      return game.nextTerm();
+    };
+    $scope.cost = function(term) {
+      return game.termCost(term);
+    };
+    $scope.clicks = function() {
+      return game.clicksToSpend();
+    };
+    $scope.size = function() {
+      return game.equationSize();
+    };
+    $scope.percent = function() {
+      return Math.round((game.bonus.equation - 1) * 1000) / 10;
+    };
+    $scope.perSymbol = function() {
+      return Math.round(game.bonus.perSymbol * 1000) / 10;
+    };
+    $scope.canBuy = function() {
+      return game.canBuyTerm();
+    };
+    $scope.buy = function() {
+      if (game.buyTerm()) {
+        gainXp(XP.term);
+        saveGame();
+      }
     };
   }]);
 
@@ -760,6 +895,14 @@
     $scope.lab = lab;
     $scope.player = player;
     $scope.prestige = prestige;
+    $scope.multiverse = game.multiverse.state;
+    $scope.equation = game.equation.state;
+    $scope.universe = function() {
+      return game.universe();
+    };
+    $scope.equationSize = function() {
+      return game.equationSize();
+    };
     $scope.dataRate = function() {
       return game.getDataRate() + game.getAutoRate();
     };

@@ -108,5 +108,71 @@
       "cost": 8e14,
       "rate": 2e12
     }
+  },
+  {
+    "key": "workers-engineers",
+    "name": "Engineers",
+    "description": "They keep thousands of magnets cold and the beam on track.",
+    "cost_increase": 1.2e0,
+    "state": {
+      "cost": 1e7,
+      "rate": 4e5
+    },
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 2 }]
+  },
+  {
+    "key": "workers-datascientists",
+    "name": "Data Scientists",
+    "description": "They teach machines to find one interesting event in a billion.",
+    "cost_increase": 1.18e0,
+    "state": {
+      "cost": 2e8,
+      "rate": 8e6
+    },
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 3 }]
+  },
+  {
+    "key": "workers-theorists",
+    "name": "Theorists",
+    "description": "They explain your results, ideally before you get them.",
+    "cost_increase": 1.15e0,
+    "state": {
+      "cost": 4e9,
+      "rate": 1.5e8
+    },
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 5 }]
+  },
+  {
+    "key": "workers-selves",
+    "name": "Parallel Selves",
+    "description": "Other versions of you, from the universes next door. They already know the tricks.",
+    "cost_increase": 1.3e0,
+    "state": {
+      "cost": 2e4,
+      "rate": 300
+    },
+    "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 1 }]
+  },
+  {
+    "key": "workers-brains",
+    "name": "Boltzmann Brains",
+    "description": "Minds that fluctuated out of pure noise. Surprisingly good at data analysis.",
+    "cost_increase": 1.13e0,
+    "state": {
+      "cost": 5e10,
+      "rate": 2e9
+    },
+    "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 2 }]
+  },
+  {
+    "key": "workers-builders",
+    "name": "Universe Builders",
+    "description": "They choose the laws of physics for new universes, and test them in yours.",
+    "cost_increase": 1.1e0,
+    "state": {
+      "cost": 1e15,
+      "rate": 3e13
+    },
+    "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 3 }]
   }
 ]

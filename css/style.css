@@ -307,6 +307,7 @@ h1 br {
 #level-hud .progress {
   flex: 1;
   -webkit-flex: 1;
+  min-width: 40px;
   height: 12px;
   margin: 0 8px;
 }
@@ -399,6 +400,71 @@ h1 br {
   font-size: 18px;
 }
 
+/** Equation */
+.equation {
+  font-family: 'Latin Modern Roman', 'Cambria Math', Cambria, 'Times New Roman', 'Liberation Serif', Georgia, serif;
+  font-size: 24px;
+  line-height: 1.9;
+  text-align: center;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  background: #fbfbfd;
+  word-wrap: break-word;
+}
+
+.equation .eq-lhs {
+  margin-right: 4px;
+}
+
+.equation .eq-term {
+  display: inline-block;
+  white-space: nowrap;
+  margin: 0 3px;
+}
+
+.equation sub,
+.equation sup {
+  font-size: 60%;
+}
+
+/* ψ̄ and D̸, drawn with CSS because combining accents often miss the letter. */
+.equation .bar {
+  text-decoration: overline;
+}
+
+.equation .slash {
+  position: relative;
+  display: inline-block;
+}
+
+.equation .slash:after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 12%;
+  bottom: 8%;
+  border-left: 1px solid;
+  transform: rotate(22deg);
+  -webkit-transform: rotate(22deg);
+}
+
+.equation-preview {
+  font-size: 22px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0 0 5px;
+}
+
+.next-term {
+  margin: 15px 0 20px;
+}
+
+.term-list .list-group-item {
+  padding: 6px 12px;
+}
+
 /** Particle skins */
 .skins .skin {
   text-align: center;
@@ -489,6 +555,14 @@ h1 br {
     font-size: 16px;
   }
 
+  .navbar-nav > li > a {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1299px) {
+  /* Room for all the top bar items on one line. */
   .navbar-nav > li > a {
     padding-left: 10px;
     padding-right: 10px;
@@ -790,6 +864,15 @@ html.theme-dark {
 
 .theme-dark .skin-preview {
   border-color: #3a3c42;
+}
+
+.theme-dark .equation {
+  background: #1b1c1f;
+  border-color: #3a3c42;
+}
+
+.theme-dark .equation-preview {
+  background: transparent;
 }
 
 .theme-dark .skin.in-use .skin-preview {

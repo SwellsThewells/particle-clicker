@@ -38,6 +38,25 @@ var GameObjects = (function() {
   GameObject.prototype.loadState =
       function(state) { $.extend(this.state, state); };
 
+  /** Whether the object's requirements ({key, property, threshold}, e.g. a
+   * research level or the universe the lab is in) are met. Objects without
+   * requirements always meet them. */
+  GameObject.prototype.meetsRequirements = function(allObjects) {
+    if (!this.requirements) {
+      return true;
+    }
+    if (!allObjects) {
+      return false;
+    }
+    for (var i = 0; i < this.requirements.length; i++) {
+      var req = this.requirements[i];
+      if (allObjects[req.key].state[req.property] < req.threshold) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   /** @class Lab
    */
   var Lab = function() {
@@ -134,23 +153,24 @@ var GameObjects = (function() {
 
   Research.prototype.constructor = Research;
 
-  Research.prototype.isVisible = function(lab) {
-    if (!lab) {
+  Research.prototype.isVisible = function(lab, allObjects) {
+    if (!lab || !this.meetsRequirements(allObjects)) {
       return false;
     }
     return this.state.level > 0 ||
            lab.state.data >= this.state.cost * GLOBAL_VISIBILITY_THRESHOLD;
   };
 
-  Research.prototype.isAvailable = function(lab) {
-    if (!lab) {
+  Research.prototype.isAvailable = function(lab, allObjects) {
+    if (!lab || !this.meetsRequirements(allObjects)) {
       return false;
     }
     return lab.state.data >= this.state.cost;
   };
 
-  Research.prototype.research = function(lab) {
-    if (lab && lab.research(this.state.cost, this.state.reputation)) {
+  Research.prototype.research = function(lab, allObjects) {
+    if (lab && this.meetsRequirements(allObjects) &&
+        lab.research(this.state.cost, this.state.reputation)) {
       this.state.level++;
       if (this.state.info_levels.length > 0 &&
           this.state.level === this.state.info_levels[0]) {
@@ -192,23 +212,23 @@ var GameObjects = (function() {
 
   Worker.prototype.constructor = Worker;
 
-  Worker.prototype.isVisible = function(lab) {
-    if (!lab) {
+  Worker.prototype.isVisible = function(lab, allObjects) {
+    if (!lab || !this.meetsRequirements(allObjects)) {
       return false;
     }
     return this.state.hired > 0 ||
            lab.state.money >= this.state.cost * GLOBAL_VISIBILITY_THRESHOLD;
   };
 
-  Worker.prototype.isAvailable = function(lab) {
-    if (!lab) {
+  Worker.prototype.isAvailable = function(lab, allObjects) {
+    if (!lab || !this.meetsRequirements(allObjects)) {
       return false;
     }
     return lab.state.money >= this.state.cost;
   };
 
-  Worker.prototype.hire = function(lab) {
-    if (lab && lab.buy(this.state.cost)) {
+  Worker.prototype.hire = function(lab, allObjects) {
+    if (lab && this.meetsRequirements(allObjects) && lab.buy(this.state.cost)) {
       this.state.hired++;
       var cost = this.state.cost;
       this.state.cost = Math.floor(cost * this.cost_increase);
@@ -239,19 +259,6 @@ var GameObjects = (function() {
   Upgrade.prototype = Object.create(GameObject.prototype);
 
   Upgrade.prototype.constructor = Upgrade;
-
-  Upgrade.prototype.meetsRequirements = function(allObjects) {
-    if (!allObjects) {
-      return false;
-    }
-    for (var i = 0; i < this.requirements.length; i++) {
-      var req = this.requirements[i];
-      if (allObjects[req.key].state[req.property] < req.threshold) {
-        return false;
-      }
-    }
-    return true;
-  };
 
   Upgrade.prototype.isAvailable = function(lab, allObjects) {
     if (!lab || !allObjects) {

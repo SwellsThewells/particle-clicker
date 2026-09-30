@@ -1,0 +1,100 @@
+[
+  {
+    "key": "mv-worlds",
+    "name": "Many Worlds",
+    "description": "Every new multiverse starts in universe 2.",
+    "icon": "fa-code-fork",
+    "cost": 1,
+    "effects": [{ "type": "startUniverse", "amount": 1 }]
+  },
+  {
+    "key": "mv-vibrations",
+    "name": "String Vibrations",
+    "description": "Clicking the detector gives three times as much data.",
+    "icon": "fa-hand-o-up",
+    "cost": 1,
+    "effects": [{ "type": "click", "amount": 2 }]
+  },
+  {
+    "key": "mv-inflation",
+    "name": "Eternal Inflation",
+    "description": "Earn 50% more dark matter.",
+    "icon": "fa-expand",
+    "cost": 2,
+    "effects": [{ "type": "darkMatterGain", "amount": 5e-1 }]
+  },
+  {
+    "key": "mv-memory",
+    "name": "Brane Memory",
+    "description": "Keep your dark matter upgrades when you enter a new multiverse.",
+    "icon": "fa-archive",
+    "cost": 3,
+    "effects": [{ "type": "keepDarkMatterUpgrades", "amount": 1 }]
+  },
+  {
+    "key": "mv-foam",
+    "name": "Quantum Foam",
+    "description": "Equation terms cost 25% fewer clicks.",
+    "icon": "fa-superscript",
+    "cost": 4,
+    "effects": [{ "type": "equationCost", "amount": 2.5e-1 }]
+  },
+  {
+    "key": "mv-holography",
+    "name": "Holographic Principle",
+    "description": "Each dark matter gives +5% more production.",
+    "icon": "fa-adjust",
+    "cost": 6,
+    "effects": [{ "type": "darkMatterBonus", "amount": 5e-2 }]
+  },
+  {
+    "key": "mv-wormholes",
+    "name": "Wormholes",
+    "description": "The detector records 25 events per second by itself.",
+    "icon": "fa-circle-o-notch",
+    "cost": 8,
+    "effects": [{ "type": "autoClicks", "amount": 25 }]
+  },
+  {
+    "key": "mv-anthropic",
+    "name": "Anthropic Principle",
+    "description": "Anomalies appear twice as often.",
+    "icon": "fa-certificate",
+    "cost": 12,
+    "effects": [{ "type": "anomalyRate", "amount": 1 }]
+  },
+  {
+    "key": "mv-landscape",
+    "name": "String Landscape",
+    "description": "Every new multiverse starts in universe 4.",
+    "icon": "fa-sitemap",
+    "cost": 20,
+    "requires": "mv-worlds",
+    "effects": [{ "type": "startUniverse", "amount": 2 }]
+  },
+  {
+    "key": "mv-inflation2",
+    "name": "Chaotic Inflation",
+    "description": "Earn twice as much dark matter.",
+    "icon": "fa-arrows-alt",
+    "cost": 30,
+    "requires": "mv-inflation",
+    "effects": [{ "type": "darkMatterGain", "amount": 5e-1 }]
+  },
+  {
+    "key": "mv-bounce",
+    "name": "Big Bounce",
+    "description": "Reputation from research is doubled.",
+    "icon": "fa-refresh",
+    "cost": 60,
+    "effects": [{ "type": "reputation", "amount": 1 }]
+  },
+  {
+    "key": "mv-gut",
+    "name": "Grand Unification",
+    "description": "Triples all data and funding.",
+    "icon": "fa-magic",
+    "cost": 150,
+    "effects": [{ "type": "all", "amount": 2 }]
+  }
+]

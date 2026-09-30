@@ -976,7 +976,14 @@
       { "key": "research-qgp", "property": "reputation" },
       { "key": "research-antihydrogen", "property": "reputation" },
       { "key": "research-tetraquark", "property": "reputation" },
-      { "key": "research-pentaquark", "property": "reputation" }
+      { "key": "research-pentaquark", "property": "reputation" },
+      { "key": "research-antigravity", "property": "reputation" },
+      { "key": "research-monopole", "property": "reputation" },
+      { "key": "research-gminus2", "property": "reputation" },
+      { "key": "research-glueball", "property": "reputation" },
+      { "key": "research-susy", "property": "reputation" },
+      { "key": "research-extradim", "property": "reputation" },
+      { "key": "research-strings", "property": "reputation" }
     ],
     "requirements": [
       { "key": "research-neutrino", "property": "level", "threshold": 1 },
@@ -1225,7 +1232,14 @@
       { "key": "research-qgp", "property": "reputation" },
       { "key": "research-antihydrogen", "property": "reputation" },
       { "key": "research-tetraquark", "property": "reputation" },
-      { "key": "research-pentaquark", "property": "reputation" }
+      { "key": "research-pentaquark", "property": "reputation" },
+      { "key": "research-antigravity", "property": "reputation" },
+      { "key": "research-monopole", "property": "reputation" },
+      { "key": "research-gminus2", "property": "reputation" },
+      { "key": "research-glueball", "property": "reputation" },
+      { "key": "research-susy", "property": "reputation" },
+      { "key": "research-extradim", "property": "reputation" },
+      { "key": "research-strings", "property": "reputation" }
     ],
     "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 2 }],
     "factor": 2
@@ -1288,7 +1302,13 @@
       { "key": "workers-summies", "property": "rate" },
       { "key": "workers-citizens", "property": "rate" },
       { "key": "workers-spokespersons", "property": "rate" },
-      { "key": "workers-directors", "property": "rate" }
+      { "key": "workers-directors", "property": "rate" },
+      { "key": "workers-engineers", "property": "rate" },
+      { "key": "workers-datascientists", "property": "rate" },
+      { "key": "workers-theorists", "property": "rate" },
+      { "key": "workers-selves", "property": "rate" },
+      { "key": "workers-brains", "property": "rate" },
+      { "key": "workers-builders", "property": "rate" }
     ],
     "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 5 }],
     "factor": 2
@@ -1549,7 +1569,14 @@
       { "key": "research-qgp", "property": "reputation" },
       { "key": "research-antihydrogen", "property": "reputation" },
       { "key": "research-tetraquark", "property": "reputation" },
-      { "key": "research-pentaquark", "property": "reputation" }
+      { "key": "research-pentaquark", "property": "reputation" },
+      { "key": "research-antigravity", "property": "reputation" },
+      { "key": "research-monopole", "property": "reputation" },
+      { "key": "research-gminus2", "property": "reputation" },
+      { "key": "research-glueball", "property": "reputation" },
+      { "key": "research-susy", "property": "reputation" },
+      { "key": "research-extradim", "property": "reputation" },
+      { "key": "research-strings", "property": "reputation" }
     ],
     "requirements": [{ "key": "player", "property": "level", "threshold": 30 }],
     "factor": 1.25e0
@@ -1572,7 +1599,13 @@
       { "key": "workers-summies", "property": "rate" },
       { "key": "workers-citizens", "property": "rate" },
       { "key": "workers-spokespersons", "property": "rate" },
-      { "key": "workers-directors", "property": "rate" }
+      { "key": "workers-directors", "property": "rate" },
+      { "key": "workers-engineers", "property": "rate" },
+      { "key": "workers-datascientists", "property": "rate" },
+      { "key": "workers-theorists", "property": "rate" },
+      { "key": "workers-selves", "property": "rate" },
+      { "key": "workers-brains", "property": "rate" },
+      { "key": "workers-builders", "property": "rate" }
     ],
     "requirements": [{ "key": "player", "property": "level", "threshold": 50 }],
     "factor": 1.5e0
@@ -1807,7 +1840,13 @@
       { "key": "workers-summies", "property": "rate" },
       { "key": "workers-citizens", "property": "rate" },
       { "key": "workers-spokespersons", "property": "rate" },
-      { "key": "workers-directors", "property": "rate" }
+      { "key": "workers-directors", "property": "rate" },
+      { "key": "workers-engineers", "property": "rate" },
+      { "key": "workers-datascientists", "property": "rate" },
+      { "key": "workers-theorists", "property": "rate" },
+      { "key": "workers-selves", "property": "rate" },
+      { "key": "workers-brains", "property": "rate" },
+      { "key": "workers-builders", "property": "rate" }
     ],
     "requirements": [
       { "key": "workers-masterstudents", "property": "hired", "threshold": 25 },
@@ -1839,7 +1878,13 @@
       { "key": "workers-summies", "property": "rate" },
       { "key": "workers-citizens", "property": "rate" },
       { "key": "workers-spokespersons", "property": "rate" },
-      { "key": "workers-directors", "property": "rate" }
+      { "key": "workers-directors", "property": "rate" },
+      { "key": "workers-engineers", "property": "rate" },
+      { "key": "workers-datascientists", "property": "rate" },
+      { "key": "workers-theorists", "property": "rate" },
+      { "key": "workers-selves", "property": "rate" },
+      { "key": "workers-brains", "property": "rate" },
+      { "key": "workers-builders", "property": "rate" }
     ],
     "requirements": [
       { "key": "upgrade-coffee", "property": "used", "threshold": 1 },
@@ -1848,5 +1893,605 @@
       { "key": "workers-directors", "property": "hired", "threshold": 10 }
     ],
     "factor": 1.5e0
+  },
+  {
+    "key": "upgrade-alphag",
+    "name": "ALPHA-g",
+    "description": "A tall trap that lets go of antihydrogen atoms to see which way they fall.",
+    "effect": "Future antimatter gravity research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 2e8,
+    "targets": [{ "key": "research-antigravity", "property": "reputation" }],
+    "requirements": [{ "key": "research-antigravity", "property": "level", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-elena",
+    "name": "ELENA",
+    "description": "A small ring that slows antiprotons down even further.",
+    "effect": "Future antimatter gravity research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 2e10,
+    "targets": [{ "key": "research-antigravity", "property": "reputation" }],
+    "requirements": [{ "key": "research-antigravity", "property": "level", "threshold": 10 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-moedal",
+    "name": "MoEDAL",
+    "description": "Plastic sheets around LHCb, waiting for a monopole to punch a hole in them.",
+    "effect": "Future monopole research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 1.5e9,
+    "targets": [{ "key": "research-monopole", "property": "reputation" }],
+    "requirements": [{ "key": "research-monopole", "property": "level", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-mmt",
+    "name": "Monopole Trapper",
+    "description": "Blocks of aluminium near the collisions, in case a monopole gets stuck inside.",
+    "effect": "Future monopole research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 1.5e11,
+    "targets": [{ "key": "research-monopole", "property": "reputation" }],
+    "requirements": [{ "key": "research-monopole", "property": "level", "threshold": 10 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-storagering",
+    "name": "Storage Ring",
+    "description": "Muons circle a 14-metre magnet at exactly the right speed.",
+    "effect": "Future muon g−2 research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 1e10,
+    "targets": [{ "key": "research-gminus2", "property": "reputation" }],
+    "requirements": [{ "key": "research-gminus2", "property": "level", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-lattice",
+    "name": "Lattice QCD",
+    "description": "Supercomputers work out what the Standard Model really predicts.",
+    "effect": "Future muon g−2 research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 1e12,
+    "targets": [{ "key": "research-gminus2", "property": "reputation" }],
+    "requirements": [{ "key": "research-gminus2", "property": "level", "threshold": 10 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-besiii",
+    "name": "BESIII",
+    "description": "An experiment in Beijing that sees decays into glueball candidates.",
+    "effect": "Future glueball research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 8e10,
+    "targets": [{ "key": "research-glueball", "property": "reputation" }],
+    "requirements": [{ "key": "research-glueball", "property": "level", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-glue",
+    "name": "Glue Spectroscopy",
+    "description": "Map every state made of pure glue.",
+    "effect": "Future glueball research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 8e12,
+    "targets": [{ "key": "research-glueball", "property": "reputation" }],
+    "requirements": [{ "key": "research-glueball", "property": "level", "threshold": 10 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-squarks",
+    "name": "Squark Search",
+    "description": "Look for the heavy partners of the quarks in every collision.",
+    "effect": "Future supersymmetry research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 3e12,
+    "targets": [{ "key": "research-susy", "property": "reputation" }],
+    "requirements": [{ "key": "research-susy", "property": "level", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-neutralino",
+    "name": "Neutralino Hunt",
+    "description": "The lightest superpartner could be the dark matter.",
+    "effect": "Future supersymmetry research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 3e14,
+    "targets": [{ "key": "research-susy", "property": "reputation" }],
+    "requirements": [{ "key": "research-susy", "property": "level", "threshold": 10 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-gravitons",
+    "name": "Graviton Search",
+    "description": "Gravitons that escape into extra dimensions leave missing energy behind.",
+    "effect": "Future research on extra dimensions gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 1e15,
+    "targets": [{ "key": "research-extradim", "property": "reputation" }],
+    "requirements": [{ "key": "research-extradim", "property": "level", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-blackholes",
+    "name": "Black Hole Factory",
+    "description": "Tiny black holes, if gravity gets strong at short distances. They would evaporate at once.",
+    "effect": "Future research on extra dimensions gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 1e17,
+    "targets": [{ "key": "research-extradim", "property": "reputation" }],
+    "requirements": [{ "key": "research-extradim", "property": "level", "threshold": 10 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-calabiyau",
+    "name": "Calabi–Yau Shapes",
+    "description": "Six extra dimensions, curled up into beautiful shapes.",
+    "effect": "Future string theory research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 1e18,
+    "targets": [{ "key": "research-strings", "property": "reputation" }],
+    "requirements": [{ "key": "research-strings", "property": "level", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-adscft",
+    "name": "AdS/CFT",
+    "description": "A universe with gravity, described by a theory without it.",
+    "effect": "Future string theory research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 1e20,
+    "targets": [{ "key": "research-strings", "property": "reputation" }],
+    "requirements": [{ "key": "research-strings", "property": "level", "threshold": 10 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-engineers1",
+    "name": "Cryogenics",
+    "description": "Superfluid helium at 1.9 kelvin, by the tonne.",
+    "effect": "Engineers produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e8,
+    "targets": [{ "key": "workers-engineers", "property": "rate" }],
+    "requirements": [{ "key": "workers-engineers", "property": "hired", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-engineers2",
+    "name": "Magnet Training",
+    "description": "New magnets are quenched until they behave.",
+    "effect": "Engineers produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e9,
+    "targets": [{ "key": "workers-engineers", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-engineers", "property": "hired", "threshold": 10 },
+      { "key": "upgrade-engineers1", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-engineers3",
+    "name": "Beam Commissioning",
+    "description": "The first beam goes round on the first try.",
+    "effect": "Engineers produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e10,
+    "targets": [{ "key": "workers-engineers", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-engineers", "property": "hired", "threshold": 25 },
+      { "key": "upgrade-engineers2", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-datascientists1",
+    "name": "GPU Cluster",
+    "description": "Thousands of graphics cards, and none of them for games.",
+    "effect": "Data Scientists produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 2e9,
+    "targets": [{ "key": "workers-datascientists", "property": "rate" }],
+    "requirements": [{ "key": "workers-datascientists", "property": "hired", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-datascientists2",
+    "name": "Deep Learning",
+    "description": "Neural networks that sort collisions faster than any human.",
+    "effect": "Data Scientists produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 2e10,
+    "targets": [{ "key": "workers-datascientists", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-datascientists", "property": "hired", "threshold": 10 },
+      { "key": "upgrade-datascientists1", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-datascientists3",
+    "name": "Real-Time Analysis",
+    "description": "The analysis is done before the data is even stored.",
+    "effect": "Data Scientists produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 2e11,
+    "targets": [{ "key": "workers-datascientists", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-datascientists", "property": "hired", "threshold": 25 },
+      { "key": "upgrade-datascientists2", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-theorists1",
+    "name": "Blackboards",
+    "description": "Chalk dust everywhere, and equations up to the ceiling.",
+    "effect": "Theorists produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 4e10,
+    "targets": [{ "key": "workers-theorists", "property": "rate" }],
+    "requirements": [{ "key": "workers-theorists", "property": "hired", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-theorists2",
+    "name": "Coffee into Theorems",
+    "description": "A theorist is a machine for turning coffee into theorems.",
+    "effect": "Theorists produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 4e11,
+    "targets": [{ "key": "workers-theorists", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-theorists", "property": "hired", "threshold": 10 },
+      { "key": "upgrade-theorists1", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-theorists3",
+    "name": "Effective Field Theory",
+    "description": "Ignore what you cannot see, and calculate what you can.",
+    "effect": "Theorists produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 4e12,
+    "targets": [{ "key": "workers-theorists", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-theorists", "property": "hired", "threshold": 25 },
+      { "key": "upgrade-theorists2", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-selves1",
+    "name": "Mirror Meetings",
+    "description": "You finally agree with yourself.",
+    "effect": "Parallel Selves produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 2e5,
+    "targets": [{ "key": "workers-selves", "property": "rate" }],
+    "requirements": [{ "key": "workers-selves", "property": "hired", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-selves2",
+    "name": "Entangled Minds",
+    "description": "When one of you has an idea, all of you have it.",
+    "effect": "Parallel Selves produce three times as much data per second.",
+    "icon": "fa-group",
+    "cost": 2e7,
+    "targets": [{ "key": "workers-selves", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-selves", "property": "hired", "threshold": 10 },
+      { "key": "upgrade-selves1", "property": "used", "threshold": 1 }
+    ],
+    "factor": 3
+  },
+  {
+    "key": "upgrade-selves3",
+    "name": "Superposition",
+    "description": "Each of you works in several places at once.",
+    "effect": "Parallel Selves produce three times as much data per second.",
+    "icon": "fa-group",
+    "cost": 2e9,
+    "targets": [{ "key": "workers-selves", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-selves", "property": "hired", "threshold": 25 },
+      { "key": "upgrade-selves2", "property": "used", "threshold": 1 }
+    ],
+    "factor": 3
+  },
+  {
+    "key": "upgrade-brains1",
+    "name": "Thermal Noise",
+    "description": "A little more noise, a few more brains.",
+    "effect": "Boltzmann Brains produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 5e11,
+    "targets": [{ "key": "workers-brains", "property": "rate" }],
+    "requirements": [{ "key": "workers-brains", "property": "hired", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-brains2",
+    "name": "Fluctuation Theorem",
+    "description": "Unlikely thoughts are more likely than you think.",
+    "effect": "Boltzmann Brains produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 5e12,
+    "targets": [{ "key": "workers-brains", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-brains", "property": "hired", "threshold": 10 },
+      { "key": "upgrade-brains1", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-brains3",
+    "name": "Heat Bath",
+    "description": "Keep them warm and they keep thinking.",
+    "effect": "Boltzmann Brains produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 5e13,
+    "targets": [{ "key": "workers-brains", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-brains", "property": "hired", "threshold": 25 },
+      { "key": "upgrade-brains2", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-builders1",
+    "name": "Blueprints",
+    "description": "Plans for a universe, drawn to scale.",
+    "effect": "Universe Builders produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e16,
+    "targets": [{ "key": "workers-builders", "property": "rate" }],
+    "requirements": [{ "key": "workers-builders", "property": "hired", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-builders2",
+    "name": "Fine-Tuning",
+    "description": "The constants of nature, adjusted to taste.",
+    "effect": "Universe Builders produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e17,
+    "targets": [{ "key": "workers-builders", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-builders", "property": "hired", "threshold": 10 },
+      { "key": "upgrade-builders1", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-builders3",
+    "name": "Big Bang Workshop",
+    "description": "A fresh universe every afternoon.",
+    "effect": "Universe Builders produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e18,
+    "targets": [{ "key": "workers-builders", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-builders", "property": "hired", "threshold": 25 },
+      { "key": "upgrade-builders2", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-rubin",
+    "name": "Rubin Observatory",
+    "description": "A camera the size of a car films the whole southern sky every few nights.",
+    "effect": "Five times the amount of data per click.",
+    "icon": "fa-camera",
+    "cost": 1e8,
+    "targets": [{ "key": "lab", "property": "detector" }],
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 6 }],
+    "factor": 5
+  },
+  {
+    "key": "upgrade-euclid",
+    "name": "Euclid",
+    "description": "A space telescope that maps where the dark matter is.",
+    "effect": "All staff produce 50% more data per second.",
+    "icon": "fa-rocket",
+    "cost": 1e10,
+    "targets": [
+      { "key": "workers-masterstudents", "property": "rate" },
+      { "key": "workers-phdstudents", "property": "rate" },
+      { "key": "workers-postdocs", "property": "rate" },
+      { "key": "workers-fellows", "property": "rate" },
+      { "key": "workers-permanent", "property": "rate" },
+      { "key": "workers-profs", "property": "rate" },
+      { "key": "workers-nobel", "property": "rate" },
+      { "key": "workers-summies", "property": "rate" },
+      { "key": "workers-citizens", "property": "rate" },
+      { "key": "workers-spokespersons", "property": "rate" },
+      { "key": "workers-directors", "property": "rate" },
+      { "key": "workers-engineers", "property": "rate" },
+      { "key": "workers-datascientists", "property": "rate" },
+      { "key": "workers-theorists", "property": "rate" },
+      { "key": "workers-selves", "property": "rate" },
+      { "key": "workers-brains", "property": "rate" },
+      { "key": "workers-builders", "property": "rate" }
+    ],
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 7 }],
+    "factor": 1.5e0
+  },
+  {
+    "key": "upgrade-hubbletension",
+    "name": "Hubble Tension",
+    "description": "The universe expands at two different speeds, depending on who you ask.",
+    "effect": "Reputation brings in twice as much funding.",
+    "icon": "fa-arrows-h",
+    "cost": 1e12,
+    "targets": [{ "key": "lab", "property": "factor" }],
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 9 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-cosmicweb",
+    "name": "Cosmic Web",
+    "description": "Galaxies strung along threads of dark matter.",
+    "effect": "Double the reputation for all future research.",
+    "icon": "fa-share-alt",
+    "cost": 1e14,
+    "targets": [
+      { "key": "research-cpv", "property": "reputation" },
+      { "key": "research-jpsi", "property": "reputation" },
+      { "key": "research-tau", "property": "reputation" },
+      { "key": "research-beauty", "property": "reputation" },
+      { "key": "research-gluons", "property": "reputation" },
+      { "key": "research-weak", "property": "reputation" },
+      { "key": "research-top", "property": "reputation" },
+      { "key": "research-boscillations", "property": "reputation" },
+      { "key": "research-higgs", "property": "reputation" },
+      { "key": "research-dstars", "property": "reputation" },
+      { "key": "research-xib", "property": "reputation" },
+      { "key": "research-neutrino", "property": "reputation" },
+      { "key": "research-qgp", "property": "reputation" },
+      { "key": "research-antihydrogen", "property": "reputation" },
+      { "key": "research-tetraquark", "property": "reputation" },
+      { "key": "research-pentaquark", "property": "reputation" },
+      { "key": "research-antigravity", "property": "reputation" },
+      { "key": "research-monopole", "property": "reputation" },
+      { "key": "research-gminus2", "property": "reputation" },
+      { "key": "research-glueball", "property": "reputation" },
+      { "key": "research-susy", "property": "reputation" },
+      { "key": "research-extradim", "property": "reputation" },
+      { "key": "research-strings", "property": "reputation" }
+    ],
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 11 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-heatdeath",
+    "name": "Heat Death Insurance",
+    "description": "Just in case.",
+    "effect": "All staff produce twice as much data per second.",
+    "icon": "fa-umbrella",
+    "cost": 1e16,
+    "targets": [
+      { "key": "workers-masterstudents", "property": "rate" },
+      { "key": "workers-phdstudents", "property": "rate" },
+      { "key": "workers-postdocs", "property": "rate" },
+      { "key": "workers-fellows", "property": "rate" },
+      { "key": "workers-permanent", "property": "rate" },
+      { "key": "workers-profs", "property": "rate" },
+      { "key": "workers-nobel", "property": "rate" },
+      { "key": "workers-summies", "property": "rate" },
+      { "key": "workers-citizens", "property": "rate" },
+      { "key": "workers-spokespersons", "property": "rate" },
+      { "key": "workers-directors", "property": "rate" },
+      { "key": "workers-engineers", "property": "rate" },
+      { "key": "workers-datascientists", "property": "rate" },
+      { "key": "workers-theorists", "property": "rate" },
+      { "key": "workers-selves", "property": "rate" },
+      { "key": "workers-brains", "property": "rate" },
+      { "key": "workers-builders", "property": "rate" }
+    ],
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 14 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-bigcrunch",
+    "name": "Big Crunch Drills",
+    "description": "Everyone practises what to do if the universe collapses.",
+    "effect": "Ten times the amount of data per click.",
+    "icon": "fa-compress",
+    "cost": 1e18,
+    "targets": [{ "key": "lab", "property": "detector" }],
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 16 }],
+    "factor": 10
+  },
+  {
+    "key": "upgrade-manyworlds",
+    "name": "Many-Worlds Seminar",
+    "description": "Every possible outcome happens somewhere. Some of them are good for your lab.",
+    "effect": "All staff produce twice as much data per second.",
+    "icon": "fa-code-fork",
+    "cost": 1e6,
+    "targets": [
+      { "key": "workers-masterstudents", "property": "rate" },
+      { "key": "workers-phdstudents", "property": "rate" },
+      { "key": "workers-postdocs", "property": "rate" },
+      { "key": "workers-fellows", "property": "rate" },
+      { "key": "workers-permanent", "property": "rate" },
+      { "key": "workers-profs", "property": "rate" },
+      { "key": "workers-nobel", "property": "rate" },
+      { "key": "workers-summies", "property": "rate" },
+      { "key": "workers-citizens", "property": "rate" },
+      { "key": "workers-spokespersons", "property": "rate" },
+      { "key": "workers-directors", "property": "rate" },
+      { "key": "workers-engineers", "property": "rate" },
+      { "key": "workers-datascientists", "property": "rate" },
+      { "key": "workers-theorists", "property": "rate" },
+      { "key": "workers-selves", "property": "rate" },
+      { "key": "workers-brains", "property": "rate" },
+      { "key": "workers-builders", "property": "rate" }
+    ],
+    "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-branedetector",
+    "name": "Brane Detector",
+    "description": "Look for a neighbouring universe, a millimetre away in a fifth dimension.",
+    "effect": "Ten times the amount of data per click.",
+    "icon": "fa-bullseye",
+    "cost": 1e9,
+    "targets": [{ "key": "lab", "property": "detector" }],
+    "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 2 }],
+    "factor": 10
+  },
+  {
+    "key": "upgrade-intergrants",
+    "name": "Inter-Universe Grants",
+    "description": "Funding agencies from other universes, in other currencies.",
+    "effect": "Reputation brings in three times as much funding.",
+    "icon": "fa-exchange",
+    "cost": 1e13,
+    "targets": [{ "key": "lab", "property": "factor" }],
+    "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 3 }],
+    "factor": 3
+  },
+  {
+    "key": "upgrade-multiversetheory",
+    "name": "Theory of Multiverses",
+    "description": "Finally, a theory for all of them.",
+    "effect": "Triple the reputation for all future research.",
+    "icon": "fa-book",
+    "cost": 1e17,
+    "targets": [
+      { "key": "research-cpv", "property": "reputation" },
+      { "key": "research-jpsi", "property": "reputation" },
+      { "key": "research-tau", "property": "reputation" },
+      { "key": "research-beauty", "property": "reputation" },
+      { "key": "research-gluons", "property": "reputation" },
+      { "key": "research-weak", "property": "reputation" },
+      { "key": "research-top", "property": "reputation" },
+      { "key": "research-boscillations", "property": "reputation" },
+      { "key": "research-higgs", "property": "reputation" },
+      { "key": "research-dstars", "property": "reputation" },
+      { "key": "research-xib", "property": "reputation" },
+      { "key": "research-neutrino", "property": "reputation" },
+      { "key": "research-qgp", "property": "reputation" },
+      { "key": "research-antihydrogen", "property": "reputation" },
+      { "key": "research-tetraquark", "property": "reputation" },
+      { "key": "research-pentaquark", "property": "reputation" },
+      { "key": "research-antigravity", "property": "reputation" },
+      { "key": "research-monopole", "property": "reputation" },
+      { "key": "research-gminus2", "property": "reputation" },
+      { "key": "research-glueball", "property": "reputation" },
+      { "key": "research-susy", "property": "reputation" },
+      { "key": "research-extradim", "property": "reputation" },
+      { "key": "research-strings", "property": "reputation" }
+    ],
+    "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 5 }],
+    "factor": 3
   }
 ]

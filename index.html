@@ -55,7 +55,8 @@
           <ul class="nav navbar-nav navbar-left">
             <li><a href="#" data-toggle="modal" data-target="#achievements-modal" title="Achievements"><i class="fa fa-trophy"></i><span class="hidden-sm"> Achievements</span></a></li>
             <li ng-controller="SkinsController"><a href="#" data-toggle="modal" data-target="#skins-modal" title="Particle skins"><i class="fa fa-paint-brush"></i><span class="hidden-sm"> Skins</span> <span class="label label-danger" ng-show="skinsNew()" ng-cloak>New</span></a></li>
-            <li><a href="#" data-toggle="modal" data-target="#stats-modal" title="Statistics"><i class="fa fa-bar-chart"></i><span class="hidden-sm"> Statistics</span></a></li>
+            <li ng-controller="EquationController"><a href="#" data-toggle="modal" data-target="#equation-modal" title="Equation"><i class="fa fa-superscript"></i><span class="hidden-sm"> Equation</span> <span class="label label-success" ng-show="canBuy()" ng-cloak title="You can add a term">+1</span></a></li>
+            <li><a href="#" data-toggle="modal" data-target="#stats-modal" title="Statistics"><i class="fa fa-bar-chart"></i><span class="hidden-sm hidden-md"> Statistics</span></a></li>
             <li class="dropdown" ng-controller="SaveController">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-floppy-o"></i> Saved: <span ng-cloak>{{ lastSaved | date : 'H:mm' }}</span> <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -305,8 +306,11 @@
             <ul class="list-group stats-list">
               <li class="list-group-item"><i class="fa fa-clock-o fa-fw"></i> Time played <strong class="pull-right">{{ playTime() | niceTime }}</strong></li>
               <li class="list-group-item"><i class="fa fa-level-up fa-fw"></i> Level <strong class="pull-right">{{ player.level }} ({{ player.totalXp | niceNumber }} XP in total)</strong></li>
-              <li class="list-group-item"><i class="fa fa-expand fa-fw"></i> Universes expanded <strong class="pull-right">{{ prestige.expansions }}</strong></li>
-              <li class="list-group-item"><i class="fa fa-adjust fa-fw"></i> Dark matter <strong class="pull-right">{{ prestige.darkMatterTotal | niceNumber }}</strong></li>
+              <li class="list-group-item"><i class="fa fa-globe fa-fw"></i> Universe <strong class="pull-right">{{ universe() }}<span ng-show="multiverse.jumps > 0"> of multiverse {{ multiverse.jumps + 1 }}</span></strong></li>
+              <li class="list-group-item"><i class="fa fa-expand fa-fw"></i> Universes expanded <strong class="pull-right">{{ prestige.lifetimeExpansions | niceNumber }}</strong></li>
+              <li class="list-group-item"><i class="fa fa-adjust fa-fw"></i> Dark matter <strong class="pull-right">{{ prestige.darkMatterTotal | niceNumber }}<span ng-show="multiverse.jumps > 0"> ({{ prestige.lifetimeDarkMatter | niceNumber }} in all multiverses)</span></strong></li>
+              <li class="list-group-item" ng-show="multiverse.jumps > 0"><i class="fa fa-code-fork fa-fw"></i> Strings <strong class="pull-right">{{ multiverse.stringsTotal | niceNumber }}</strong></li>
+              <li class="list-group-item"><i class="fa fa-superscript fa-fw"></i> Equation <strong class="pull-right">{{ equation.terms }} terms, {{ equationSize() }} symbols</strong></li>
               <li class="list-group-item"><i class="fa fa-location-arrow fa-fw"></i> Detector clicks <strong class="pull-right">{{ lab.state.clicks | niceNumber }}</strong></li>
               <li class="list-group-item"><i class="fa fa-tachometer fa-fw"></i> Data per second <strong class="pull-right">{{ dataRate() | niceNumber }}</strong></li>
               <li class="list-group-item"><i class="fa fa-line-chart fa-fw"></i> Funding per second <strong class="pull-right">{{ lab.getGrantRate() | currency }}</strong></li>
@@ -372,6 +376,7 @@
       <span class="xp-text small">{{ floor(player.xp) | niceNumber }} / {{ needed() | niceNumber }} XP</span>
       <button type="button" class="btn btn-primary btn-xs hud-boost" ng-show="player.points > 0" data-toggle="modal" data-target="#boost-modal" title="Choose a boost"><i class="fa fa-star"></i><span class="hud-label"> Boost</span> <span class="badge">{{ player.points }}</span></button>
       <button type="button" class="btn btn-xs hud-expand" ng-class="canExpand() ? 'btn-primary' : 'btn-default'" ng-show="showExpansion()" data-toggle="modal" data-target="#expansion-modal" title="Particle Expansion"><i class="fa fa-expand"></i><span class="hud-label"> Expand</span></button>
+      <button type="button" class="btn btn-xs hud-multiverse" ng-class="canEnterMultiverse() ? 'btn-primary' : 'btn-default'" ng-show="showMultiverse()" data-toggle="modal" data-target="#multiverse-modal" title="Multiverse"><i class="fa fa-code-fork"></i><span class="hud-label"> Multiverse</span></button>
     </div>
 
     <div class="modal fade" id="boost-modal" tabindex="-1" role="dialog" aria-labelledby="boost-label" aria-hidden="true" ng-controller="LevelController">
@@ -408,12 +413,12 @@
             <h4 class="modal-title" id="expansion-label"><i class="fa fa-expand"></i> Particle Expansion</h4>
           </div>
           <div class="modal-body">
-            <p>Collecting data earns you <strong>dark matter</strong>: the first at 1T data, 10 at 1P and 100 at 1E, counting every universe. Expand the universe to claim it. Your data, funding, reputation, staff, research and upgrades start over. You keep your achievements, your level and boosts, and all of your dark matter. Each dark matter makes you produce {{ percent(1) }}% more, forever, and expanding unlocks new upgrades.</p>
+            <p>Collecting data earns you <strong>dark matter</strong>: the first at {{ at(1) | niceNumber }} data, 10 at {{ at(10) | niceNumber }} and 100 at {{ at(100) | niceNumber }}, counting every universe<span ng-show="multiverse.jumps > 0"> of this multiverse</span>. Expand the universe to claim it. Your data, funding, reputation, staff, research and upgrades start over. You keep your achievements, your level and boosts, and all of your dark matter. Each dark matter makes you produce {{ percent(1) }}% more, and new universes bring new research, staff and upgrades. From universe 5 on, you can also enter a new multiverse.</p>
             <ul class="list-group stats-list">
               <li class="list-group-item"><i class="fa fa-adjust fa-fw"></i> Dark matter <strong class="pull-right">{{ prestige.darkMatter | niceNumber }} to spend, {{ prestige.darkMatterTotal | niceNumber }} in total</strong></li>
               <li class="list-group-item"><i class="fa fa-line-chart fa-fw"></i> Production bonus <strong class="pull-right">+{{ percent(prestige.darkMatterTotal) | niceNumber }}%</strong></li>
-              <li class="list-group-item"><i class="fa fa-expand fa-fw"></i> Universes expanded <strong class="pull-right">{{ prestige.expansions }}</strong></li>
-              <li class="list-group-item"><i class="fa fa-database fa-fw"></i> Data collected in all universes <strong class="pull-right">{{ collected() | niceNumber }}</strong></li>
+              <li class="list-group-item"><i class="fa fa-globe fa-fw"></i> You are in <strong class="pull-right">universe {{ universe() }}<span ng-show="multiverse.jumps > 0"> of multiverse {{ multiverse.jumps + 1 }}</span></strong></li>
+              <li class="list-group-item"><i class="fa fa-database fa-fw"></i> Data collected in {{ multiverse.jumps > 0 ? 'this multiverse' : 'all universes' }} <strong class="pull-right">{{ collected() | niceNumber }}</strong></li>
             </ul>
             <div class="expand-now text-center">
               <p ng-show="gain() >= 1">Expanding now gives <strong>+{{ gain() | niceNumber }} dark matter</strong>, for +{{ percent(prestige.darkMatterTotal + gain()) | niceNumber }}% production in total. <span class="text-muted">The next one comes at {{ nextAt() | niceNumber }} data collected.</span></p>
@@ -437,6 +442,87 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="multiverse-modal" tabindex="-1" role="dialog" aria-labelledby="multiverse-label" aria-hidden="true" ng-controller="MultiverseController">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="multiverse-label"><i class="fa fa-code-fork"></i> Multiverse</h4>
+          </div>
+          <div class="modal-body">
+            <p>From universe 5 on, you can leave your universes behind and enter a new multiverse. Your dark matter turns into <strong>strings</strong>: 1 for {{ at(1) }} dark matter, 2 for {{ at(2) }}, 3 for {{ at(3) }} and 10 for {{ at(10) | niceNumber }}. Each string makes you produce {{ percent(1) }}% more, forever, and strings buy multiverse upgrades. Your universes, dark matter and dark matter upgrades start over, along with everything an expansion resets. You keep your achievements, your level and boosts, your strings and your equation, and new multiverses bring new research, staff and upgrades.</p>
+            <ul class="list-group stats-list">
+              <li class="list-group-item"><i class="fa fa-code-fork fa-fw"></i> Strings <strong class="pull-right">{{ multiverse.strings | niceNumber }} to spend, {{ multiverse.stringsTotal | niceNumber }} in total</strong></li>
+              <li class="list-group-item"><i class="fa fa-line-chart fa-fw"></i> Production bonus <strong class="pull-right">+{{ percent(multiverse.stringsTotal) | niceNumber }}%</strong></li>
+              <li class="list-group-item"><i class="fa fa-globe fa-fw"></i> You are in <strong class="pull-right">universe {{ universe() }} of multiverse {{ multiverse.jumps + 1 }}</strong></li>
+              <li class="list-group-item"><i class="fa fa-adjust fa-fw"></i> Dark matter in this multiverse <strong class="pull-right">{{ prestige.darkMatterTotal | niceNumber }}</strong></li>
+            </ul>
+            <div class="expand-now text-center">
+              <p ng-hide="open()" class="text-muted">The multiverse opens in universe 5. Expand the universe {{ 5 - universe() }} more {{ universe() === 4 ? 'time' : 'times' }} to get there.</p>
+              <p ng-show="open() && gain() >= 1">Entering a new multiverse now gives <strong>+{{ gain() | niceNumber }} {{ gain() === 1 ? 'string' : 'strings' }}</strong>, for +{{ percent(multiverse.stringsTotal + gain()) | niceNumber }}% production in total. Your dark matter, now +{{ darkMatterPercent() | niceNumber }}%, starts over. <span class="text-muted">The next string comes at {{ nextAt() | niceNumber }} dark matter.</span></p>
+              <p ng-show="open() && gain() < 1" class="text-muted">Collect {{ nextAt() - prestige.darkMatterTotal | niceNumber }} more dark matter to earn your first string.</p>
+              <button type="button" class="btn btn-primary btn-lg" ng-disabled="gain() < 1 || entering" ng-click="enter()"><i class="fa fa-code-fork"></i> Enter a new multiverse</button>
+            </div>
+            <h5>Multiverse upgrades</h5>
+            <p class="small text-muted">Bought with strings. They last forever.</p>
+            <div class="row dm-upgrades">
+              <div class="col-sm-6" ng-repeat="u in upgrades">
+                <div class="media dm-upgrade" ng-class="{bought: bought(u)}">
+                  <div class="media-body">
+                    <h4 class="media-heading"><i class="fa {{ u.icon }} fa-fw"></i> {{ u.name }}</h4>
+                    <p>{{ u.description }}</p>
+                    <button type="button" class="btn" ng-class="bought(u) ? 'btn-success' : 'btn-primary'" ng-disabled="!canBuy(u)" ng-click="buy(u)">
+                      <span ng-show="bought(u)"><i class="fa fa-check"></i> Bought</span>
+                      <span ng-hide="bought(u)"><i class="fa fa-code-fork"></i> <small>{{ u.cost }} {{ u.cost === 1 ? 'string' : 'strings' }}</small></span>
+                    </button>
+                    <span class="small text-muted" ng-show="locked(u) && !bought(u)">Needs {{ requiredName(u) }} first.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="equation-modal" tabindex="-1" role="dialog" aria-labelledby="equation-label" aria-hidden="true" ng-controller="EquationController">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="equation-label"><i class="fa fa-superscript"></i> Equation</h4>
+          </div>
+          <div class="modal-body">
+            <p>Every click on the detector gives you a click to spend here. Build the equation of everything, one term at a time. The bigger it gets, the more data and funding you make: +{{ perSymbol() }}% for each symbol. Your equation stays with you when the universe expands, and in every multiverse.</p>
+            <div class="equation" title="Your equation">
+              <span class="eq-lhs">ℒ =</span><span class="eq-term" ng-repeat="t in bought()" term-html="t.html" title="{{ t.name }}"></span><span ng-hide="equation.terms > 0"> 0</span>
+            </div>
+            <ul class="list-group stats-list">
+              <li class="list-group-item"><i class="fa fa-hand-o-up fa-fw"></i> Clicks to spend <strong class="pull-right">{{ clicks() | niceNumber }}</strong></li>
+              <li class="list-group-item"><i class="fa fa-superscript fa-fw"></i> Size <strong class="pull-right">{{ equation.terms }} of {{ terms.length }} terms, {{ size() }} symbols</strong></li>
+              <li class="list-group-item"><i class="fa fa-line-chart fa-fw"></i> Bonus <strong class="pull-right">+{{ percent() }}% data and funding</strong></li>
+            </ul>
+            <div class="next-term text-center" ng-show="next()">
+              <h5>Next term: <strong>{{ next().name }}</strong></h5>
+              <div class="equation equation-preview" term-html="next().html"></div>
+              <p>{{ next().description }} <span class="text-muted">+{{ next().size }} symbols</span></p>
+              <button type="button" class="btn btn-primary btn-lg" ng-disabled="!canBuy()" ng-click="buy()"><i class="fa fa-plus"></i> Add it for {{ cost(next()) | niceNumber }} clicks</button>
+              <p class="small text-muted" ng-hide="canBuy()">Click the detector {{ cost(next()) - clicks() | niceNumber }} more times.</p>
+            </div>
+            <p class="text-center next-term" ng-hide="next()"><strong>Your equation is complete.</strong> It describes everything, as far as anyone knows.</p>
+            <h5>All terms</h5>
+            <ul class="list-group term-list">
+              <li class="list-group-item" ng-repeat="t in terms" ng-class="{'text-muted': $index >= equation.terms}">
+                <span class="badge">{{ $index < equation.terms ? '+' + t.size + ' symbols' : (cost(t) | niceNumber) + ' clicks' }}</span>
+                <i class="fa fa-fw" ng-class="$index < equation.terms ? 'fa-check' : 'fa-lock'"></i>
+                {{ $index <= equation.terms ? t.name : '?????' }}
+              </li>
+            </ul>
           </div>
         </div>
       </div>

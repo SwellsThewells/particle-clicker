@@ -206,5 +206,103 @@
       "cost": 1.5e17,
       "info_levels": [ 1, 5 ]
     }
+  },
+  {
+    "key": "research-antigravity",
+    "name": "Antimatter gravity",
+    "description": "Does antimatter fall up or down? Drop some and find out.",
+    "cost_increase": 1.3e0,
+    "image": "assets/icons/png/gbar.png",
+    "info": "html/gbar.html",
+    "state": {
+      "reputation": 2e3,
+      "cost": 2e7,
+      "info_levels": [ 1, 5 ]
+    },
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 1 }]
+  },
+  {
+    "key": "research-monopole",
+    "name": "Magnetic monopoles",
+    "description": "A magnet with only a north pole. Theory says they could exist.",
+    "cost_increase": 1.28e0,
+    "image": "assets/icons/png/monopole.png",
+    "info": "html/monopole.html",
+    "state": {
+      "reputation": 1.2e4,
+      "cost": 1.5e8,
+      "info_levels": [ 1, 5 ]
+    },
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 2 }]
+  },
+  {
+    "key": "research-gminus2",
+    "name": "Muon g−2",
+    "description": "The muon's magnetism is a tiny bit off. New particles, or tricky maths?",
+    "cost_increase": 1.25e0,
+    "image": "assets/icons/png/g-2.png",
+    "info": "html/g-2.html",
+    "state": {
+      "reputation": 7e4,
+      "cost": 1e9,
+      "info_levels": [ 1, 5 ]
+    },
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 3 }]
+  },
+  {
+    "key": "research-glueball",
+    "name": "Glueballs",
+    "description": "Particles made of nothing but gluons.",
+    "cost_increase": 1.22e0,
+    "image": "assets/icons/png/glueball.png",
+    "info": "html/glueball.html",
+    "state": {
+      "reputation": 4e5,
+      "cost": 8e9,
+      "info_levels": [ 1, 5 ]
+    },
+    "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 4 }]
+  },
+  {
+    "key": "research-susy",
+    "name": "Supersymmetry",
+    "description": "A heavier partner for every particle, if they exist.",
+    "cost_increase": 1.18e0,
+    "image": "assets/icons/png/susy.png",
+    "info": "html/susy.html",
+    "state": {
+      "reputation": 1.5e7,
+      "cost": 3e11,
+      "info_levels": [ 1, 5 ]
+    },
+    "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 1 }]
+  },
+  {
+    "key": "research-extradim",
+    "name": "Extra dimensions",
+    "description": "Space might have more directions than the three we know.",
+    "cost_increase": 1.16e0,
+    "image": "assets/icons/png/extradim.png",
+    "info": "html/extradim.html",
+    "state": {
+      "reputation": 3e9,
+      "cost": 1e14,
+      "info_levels": [ 1, 5 ]
+    },
+    "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 2 }]
+  },
+  {
+    "key": "research-strings",
+    "name": "String theory",
+    "description": "Everything might be made of tiny vibrating strings.",
+    "cost_increase": 1.15e0,
+    "image": "assets/icons/png/strings.png",
+    "info": "html/strings.html",
+    "state": {
+      "reputation": 2e12,
+      "cost": 1e17,
+      "info_levels": [ 1, 5 ]
+    },
+    "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 3 }]
   }
 ]
