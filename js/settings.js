@@ -9,9 +9,10 @@ var Settings = (function() {
     return window.matchMedia ? window.matchMedia(query) : null;
   };
   var systemDark = media('(prefers-color-scheme: dark)');
+  var root = document.documentElement;
   var systemReducedMotion = media('(prefers-reduced-motion: reduce)');
   var defaults = {
-    theme: 'light',        // 'light', 'dark' or 'system'
+    theme: 'system',       // 'light', 'dark' or 'system'
     numbers: 'short',      // 'short' (1.2M) or 'scientific' (1.2e6)
     effects: 'full',       // 'full', 'reduced' or 'minimal'
     floatingNumbers: true, // the +123 that float up from the counters
@@ -32,9 +33,19 @@ var Settings = (function() {
     }
   }
 
+  /** Whether the surroundings are dark. When the game runs as a claude.ai
+   * artifact, the viewer's own theme choice is set as data-theme on the
+   * root element; otherwise the system setting decides. */
+  var systemIsDark = function() {
+    var viewer = root.getAttribute('data-theme');
+    if (viewer === 'dark' || viewer === 'light') {
+      return viewer === 'dark';
+    }
+    return !!systemDark && systemDark.matches;
+  };
+
   var isDark = function() {
-    return values.theme === 'dark' ||
-        (values.theme === 'system' && !!systemDark && systemDark.matches);
+    return values.theme === 'dark' || (values.theme === 'system' && systemIsDark());
   };
 
   var apply = function() {
@@ -55,12 +66,16 @@ var Settings = (function() {
     apply();
   };
 
+  var systemChanged = function() {
+    if (values.theme === 'system') {
+      apply();
+    }
+  };
   if (systemDark && systemDark.addListener) {
-    systemDark.addListener(function() {
-      if (values.theme === 'system') {
-        apply();
-      }
-    });
+    systemDark.addListener(systemChanged);
+  }
+  if (window.MutationObserver) {
+    new MutationObserver(systemChanged).observe(root, {attributes: true, attributeFilter: ['data-theme']});
   }
   apply();
 

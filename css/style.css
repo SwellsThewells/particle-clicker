@@ -2,6 +2,11 @@ body {
   padding-top: 40px;
 }
 
+/* On phones the top bar and the level bar keep clear of the system bars. */
+.navbar-fixed-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
 * {
   border-radius: 0 !important;
 }
@@ -89,22 +94,6 @@ h1 br {
 
 #messages-container .btn {
   float:right; font-weight: bold;
-}
-
-#mobile-orientation-container {
-  position: fixed; top: 0; bottom: 0; left: 0; right: 0;
-  background: #fff;
-  display: none;
-  padding-top: 50%;
-  z-index: 100;
-}
-
-#mobile-orientation-message {
-  text-align: center;
-  margin: auto auto;
-  color: #777;
-  font-size: 18px;
-  padding: 15px;
 }
 
 .status strong {
@@ -255,8 +244,15 @@ h1 br {
   user-select: none;
 }
 
-[ng\:cloak], [ng-cloak], .ng-cloak {
+/* AngularJS adds these rules itself, except under a strict content security
+ * policy (as in a claude.ai artifact), where it runs without them. */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak,
+.ng-hide:not(.ng-animate) {
   display: none !important;
+}
+
+ng\:form {
+  display: block;
 }
 
 
@@ -285,6 +281,7 @@ h1 br {
 #level-hud {
   position: fixed;
   bottom: 8px;
+  bottom: calc(8px + env(safe-area-inset-bottom, 0px));
   left: 50%;
   width: 420px;
   height: 34px;
@@ -339,6 +336,17 @@ h1 br {
 .dm-upgrades .media {
   margin-top: 0;
   margin-bottom: 15px;
+}
+
+/** Confirmations inside a window, for actions that reset progress. */
+.confirm-box {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.confirm-box .btn + .btn {
+  margin-left: 6px;
 }
 
 /** Particle Expansion */
@@ -520,14 +528,15 @@ h1 br {
 }
 
 /** Responsive **/
-@media screen and (orientation:portrait) and (max-width: 767px) {
-  #mobile-orientation-container {
-    display: block;
-  }
+
+/* Phones held upright and narrow windows: the tabs go under the detector. */
+.layout-stacked #column-lab,
+.layout-stacked #column-tabs {
+  width: 100%;
 }
 
-@media screen and (orientation:landscape) and (max-width: 767px) {
-  
+.layout-stacked .tab-content {
+  border-left: 0;
 }
 
 @media screen and (min-width: 768px) {
@@ -660,8 +669,7 @@ html.theme-dark {
 
 .theme-dark .text-muted,
 .theme-dark .status .rate,
-.theme-dark .bulk-toggle .small,
-.theme-dark #mobile-orientation-message {
+.theme-dark .bulk-toggle .small {
   color: #a1a1aa;
 }
 
@@ -838,10 +846,6 @@ html.theme-dark {
 
 .theme-dark .alert .alert-link {
   color: inherit;
-}
-
-.theme-dark #mobile-orientation-container {
-  background: #16171a;
 }
 
 .theme-dark #level-hud .level-label {

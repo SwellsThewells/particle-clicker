@@ -13,7 +13,11 @@ var UI = (function () {
     var rateHeight = 17;  // height of the per-second rate line under the status
     var hudHeight = 46;   // the level bar and the gap around it
     var resize = function() {
-      var h = $(window).height();
+      var w = $(window).width(), h = $(window).height();
+      // Phones held upright and narrow windows (or a narrow side panel) put
+      // the tabs under the detector instead of next to it.
+      var stacked = w < 768 && h > w;
+      $(document.documentElement).toggleClass('layout-stacked', stacked);
       var offset = 111;
       if ($(window).width() < 992) {
         offset = 112;
@@ -36,7 +40,7 @@ var UI = (function () {
         }
       }
 
-      if ($(window).width() < 600) {
+      if ($(window).width() < 600 && !stacked) {
         var newWidth = Math.max($(window).width() - ($(window).height() - 90 + 10), 300);
         $('#column-lab').width($(window).width() - newWidth);
         $('#column-tabs').width(newWidth);
@@ -52,8 +56,12 @@ var UI = (function () {
                            width: hudWidth + 'px'});
       fitHud();
 
-      var w = $(window).width(), h = $(window).height(), size;
-      if (w < 768 && h - 90 - rateHeight - hudHeight < 300) {
+      var size;
+      if (stacked) {
+        // About half of the height for the detector, the rest for the tabs.
+        var navbar = $('.navbar').outerHeight() || 50;
+        size = Math.max(160, Math.min(w - 32, Math.floor((h - navbar) * 0.45)));
+      } else if (w < 768 && h - 90 - rateHeight - hudHeight < 300) {
         // Leave room below the detector for the status bar, its rates and
         // the level bar.
         size = w - Math.max(w - (h - 90 + 10), 300) - 10 - rateHeight - hudHeight;
@@ -65,12 +73,18 @@ var UI = (function () {
           var top = $('#detector').offset().top;
           var status = $('.status');
           var below = status.offset().top + status.outerHeight() - top - $('#detector').height();
-          size = Math.max(200, Math.min(size, Math.floor(h - top - below - hudHeight)));
+          size = Math.max(140, Math.min(size, Math.floor(h - top - below - hudHeight)));
         }
       }
       if (detector.width != size) {
         $('#detector').width(size).height(size);
         detector.init(size);
+      }
+      if (stacked) {
+        // The tabs fill the space between the status bar and the level bar.
+        var tabs = $('#TabContent');
+        $('#TabContent > .scrollable').outerHeight(
+            Math.max(140, h - tabs.offset().top - hudHeight));
       }
     }
     
@@ -208,7 +222,15 @@ var UI = (function () {
     showMessage('fa-clock-o', text).addClass('offline-progress');
   };
 
-  if (typeof $.cookie('cookielaw') === 'undefined') {
+  var cookie = function(name, value) {
+    try {
+      return value === undefined ? $.cookie(name) : $.cookie(name, value, { expires: 365 });
+    } catch (e) {
+      return 'blocked';  // without cookies, don't show the notices at all
+    }
+  };
+
+  if (typeof cookie('cookielaw') === 'undefined') {
     var alert = '<div id="cookielaw" class="alert alert-info" role="alert">';
     alert += '<button type="button" class="btn btn-primary">OK</button>';
     alert += '<i class="fa fa-info-circle alert-glyph"></i> <span class="alert-text">The Particle Simulation uses local storage to store your current progress.</span>';
@@ -216,23 +238,8 @@ var UI = (function () {
     alert = $(alert);
     alert.find('button').click(function ()
     {
-      $.cookie('cookielaw', 'informed', { expires: 365 });
+      cookie('cookielaw', 'informed');
       $('#cookielaw').slideUp(300, function() { $('#cookielaw').remove(); });
-    })
-
-    $('#messages-container').append(alert);
-  }
-
-  if (typeof $.cookie('cern60') === 'undefined') {
-    var alert = '<div id="cern60" class="alert alert-info" role="alert">';
-    alert += '<button type="button" class="btn btn-primary">Close</button>';
-    alert += '<i class="fa fa-area-chart alert-glyph"></i> <span class="alert-text"><a class="alert-link" href="http://home.web.cern.ch/about/updates/2014/12/take-part-cern-60-public-computing-challenge" target="_blank">Join the CERN 60 computing challenge!</a></span>';
-    alert += '</div>';
-    alert = $(alert);
-    alert.find('button').click(function ()
-    {
-      $.cookie('cern60', 'closed', { expires: 365 });
-      $('#cern60').slideUp(300, function() { $('#cern60').remove(); });
     })
 
     $('#messages-container').append(alert);

@@ -152,7 +152,7 @@
   Settings.onChange(function(values) {
     detector.quality = values.effects;
     detector.setTheme(Settings.isDark());
-    if (Settings.isDark()) {
+    if (values.theme === 'dark') {
       secrets.darkSide = 1;
     }
     if (values.theme !== lastTheme) {
@@ -479,21 +479,6 @@
       saveGame();
       $scope.lastSaved = lastSaved;
     };
-    $scope.restart = function() {
-      if (window.confirm(
-        'Do you really want to restart the game? All progress will be lost.'
-      )) {
-        savingEnabled = false;
-        var settings = ObjectStorage.load(Settings.KEY);
-        ObjectStorage.clear();
-        ObjectStorage.save('saveVersion', Helpers.saveVersion);
-        ObjectStorage.save('updatesSeen', updatesSeen);
-        if (settings) {
-          ObjectStorage.save(Settings.KEY, settings);
-        }
-        window.location.reload(true);
-      }
-    };
     $interval($scope.saveNow, 10000);
     // Ctrl+S (Cmd+S on a Mac) saves the game instead of the web page.
     document.addEventListener('keydown', function(e) {
@@ -507,6 +492,21 @@
     window.addEventListener('pagehide', saveGame);
   }]);
 
+  /** The Restart window: wipes the progress but keeps the settings. */
+  app.controller('RestartController', ['$scope', function($scope) {
+    $scope.restart = function() {
+      savingEnabled = false;
+      var settings = ObjectStorage.load(Settings.KEY);
+      ObjectStorage.clear();
+      ObjectStorage.save('saveVersion', Helpers.saveVersion);
+      ObjectStorage.save('updatesSeen', updatesSeen);
+      if (settings) {
+        ObjectStorage.save(Settings.KEY, settings);
+      }
+      window.location.reload(true);
+    };
+  }]);
+
   app.controller('TransferController', ['$scope', function($scope) {
     var reset = function() {
       saveGame();
@@ -514,6 +514,7 @@
       $scope.importCode = '';
       $scope.error = '';
       $scope.copied = false;
+      $scope.confirming = false;
     };
     reset();
     $('#transfer-modal').on('show.bs.modal', function() {
@@ -535,17 +536,18 @@
         done();
       }
     };
+    /** Loading asks first, inside the window, because it replaces the
+     * current progress. */
     $scope.load = function() {
       $scope.error = '';
       if (!$scope.importCode || !$scope.importCode.trim()) {
         $scope.error = 'Paste a save code first.';
         return;
       }
-      if (!window.confirm(
-        'Loading this save replaces your current progress. Continue?'
-      )) {
-        return;
-      }
+      $scope.confirming = true;
+    };
+    $scope.loadNow = function() {
+      $scope.confirming = false;
       try {
         game.importSave($scope.importCode);
       } catch (e) {
@@ -707,8 +709,17 @@
     };
   }]);
 
-  app.controller('ExpansionController', ['$scope', function($scope) {
+  /** Closing a window cancels a confirmation that was waiting in it. */
+  var cancelOnClose = function($scope, $element) {
+    $element.on('hidden.bs.modal', function() {
+      $scope.$evalAsync(function() { $scope.confirming = false; });
+    });
+  };
+
+  app.controller('ExpansionController', ['$scope', '$element', function($scope, $element) {
     $scope.prestige = prestige;
+    $scope.confirming = false;
+    cancelOnClose($scope, $element);
     $scope.bonus = game.bonus;
     $scope.upgrades = game.darkMatterUpgrades;
     $scope.gain = function() {
@@ -750,11 +761,7 @@
     };
     $scope.expanding = false;
     $scope.expand = function() {
-      if ($scope.expanding || game.darkMatterGain() < 1 || !window.confirm(
-        'Expand the universe? Your data, funding, reputation, staff, research ' +
-        'and upgrades start over. You keep your achievements, level, boosts, ' +
-        'dark matter, strings and equation.'
-      )) {
+      if ($scope.expanding || game.darkMatterGain() < 1) {
         return;
       }
       $scope.expanding = true;
@@ -769,8 +776,10 @@
     };
   }]);
 
-  app.controller('MultiverseController', ['$scope', function($scope) {
+  app.controller('MultiverseController', ['$scope', '$element', function($scope, $element) {
     $scope.multiverse = game.multiverse.state;
+    $scope.confirming = false;
+    cancelOnClose($scope, $element);
     $scope.prestige = prestige;
     $scope.upgrades = game.multiverseUpgrades;
     $scope.universe = function() {
@@ -815,13 +824,7 @@
     };
     $scope.entering = false;
     $scope.enter = function() {
-      var gain = game.stringGain();
-      if ($scope.entering || gain < 1 || !window.confirm(
-        'Enter a new multiverse for ' + gain + (gain === 1 ? ' string' : ' strings') +
-        '? Your universes, dark matter and dark matter upgrades start over, ' +
-        'as well as your data, funding, reputation, staff, research and ' +
-        'upgrades. You keep your achievements, level, boosts, strings and equation.'
-      )) {
+      if ($scope.entering || game.stringGain() < 1) {
         return;
       }
       $scope.entering = true;
@@ -919,6 +922,38 @@
       return achievements.filter(function(a) { return a.isAchieved(); }).length;
     };
     $scope.achievementCount = achievements.length;
+  });
+
+  // Without local storage (a private window, blocked site data), progress
+  // only lasts until the page is closed.
+  if (!ObjectStorage.persistent) {
+    $(function() {
+      UI.showMessage('fa-exclamation-triangle', 'This browser is not keeping saves for ' +
+          'this page, so your progress is lost when you close it. To keep it, use ' +
+          '<strong>Saved &rsaquo; Export / import save</strong>.');
+    });
+  }
+
+  // Start Angular once the page is ready. As a claude.ai artifact, the viewer
+  // can swap in a new version of the page while it is open: save first, and
+  // start through its hook. The game itself lives in local storage.
+  var hot = window.claude && window.claude.hot;
+  if (hot && hot.snapshot) {
+    hot.snapshot(function() {
+      saveGame();
+      return {};
+    });
+  }
+  var start = function() {
+    angular.bootstrap(document.documentElement, ['particleClicker']);
+    $(window).trigger('resize');  // measure the layout with its contents shown
+  };
+  $(function() {
+    if (hot && hot.ready) {
+      hot.ready(start);
+    } else {
+      start();
+    }
   });
 
   analytics.init();
