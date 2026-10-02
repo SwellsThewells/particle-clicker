@@ -145,6 +145,7 @@ var GameObjects = (function() {
    */
   var Research = function(obj) {
     GameObject.apply(this, [obj]);
+    this.baseCost = this.state.cost;  // the price of the first level
     this.state.level = 0;
     this.state.interesting = false;
   };
@@ -205,6 +206,7 @@ var GameObjects = (function() {
    */
   var Worker = function(obj) {
     GameObject.apply(this, [obj]);
+    this.baseCost = this.state.cost;  // the price of the first hire
     this.state.hired = 0;
   };
 

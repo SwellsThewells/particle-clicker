@@ -1,5 +1,16 @@
 [
   {
+    "version": "1.8.1",
+    "date": "2026-10-02",
+    "title": "Tidier lists, and phones",
+    "changes": [
+      "Research, staff and upgrades are listed from the cheapest to the most expensive, so new research such as antimatter gravity sits among research of a similar price instead of at the bottom.",
+      "The game works on phones held upright and in narrow windows: the detector is at the top and the tabs are below it.",
+      "Expanding the universe, entering a new multiverse, loading a save and restarting ask inside their own window.",
+      "The game follows your device's light or dark mode until you choose a theme in Settings."
+    ]
+  },
+  {
     "version": "1.8",
     "date": "2026-09-30",
     "title": "Multiverses and the equation",

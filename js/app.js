@@ -23,6 +23,16 @@
     return new Date().getTime() < boostUntil ? lab.state.boostFactor : 1;
   };
 
+  /** The research, staff and upgrades lists go from the cheapest to the most
+   * expensive. Research and staff are sorted by their first price, so the
+   * lists don't reshuffle as prices rise; items with the same price keep the
+   * order of the JSON files. */
+  var cheapestFirst = function(items, price) {
+    return items.map(function(item, i) { return {item: item, i: i}; })
+        .sort(function(a, b) { return price(a.item) - price(b.item) || a.i - b.i; })
+        .map(function(x) { return x.item; });
+  };
+
   /** Shared state for the x1 / x10 / Max toggles. getBudget returns what the
    * items are paid with; items implement getCost(n) and getAffordable(). */
   var BulkBuyer = function(getBudget) {
@@ -343,7 +353,7 @@
   }]);
 
   app.controller('ResearchController', ['$compile', function($compile) {
-    this.research = research;
+    this.research = cheapestFirst(research, function(r) { return r.baseCost; });
     this.bulk = new BulkBuyer(function() { return lab.state.data; });
     this.isVisible = function(item) {
       return item.isVisible(lab, allObjects);
@@ -385,7 +395,7 @@
   }]);
 
   app.controller('HRController', function() {
-    this.workers = workers;
+    this.workers = cheapestFirst(workers, function(w) { return w.baseCost; });
     this.bulk = new BulkBuyer(function() { return lab.state.money; });
     this.isVisible = function(worker) {
       return worker.isVisible(lab, allObjects);
@@ -413,7 +423,7 @@
   });
 
   app.controller('UpgradesController', function() {
-    this.upgrades = upgrades;
+    this.upgrades = cheapestFirst(upgrades, function(u) { return u.cost; });
     this.isVisible = function(upgrade) {
       return upgrade.isVisible(lab, allObjects);
     };
