@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <circle cx="32" cy="32" r="30" style="fill:#fbc02d"/>
+  <text x="32" y="40" text-anchor="middle" style="font-family:'TeX Gyre Pagella','Palatino Linotype',Palatino,'Liberation Serif',Georgia,serif;font-size:32px;fill:#4e342e;font-style:italic">γγ</text>
+</svg>

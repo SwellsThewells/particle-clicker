@@ -1,5 +1,16 @@
 [
   {
+    "version": "1.9",
+    "date": "2026-10-02",
+    "title": "New staff and research",
+    "changes": [
+      "4 new kinds of staff after Summer Students: Shift Crew, Technicians, Accelerator Operators and Astronauts. There is always someone new to hire on the way to the Citizen Scientists.",
+      "4 new research topics after the Ξb'- and Ξb*-, each with its own info page: the rare Bs⁰ → μ⁺μ⁻ decay, the doubly charmed Ξcc⁺⁺ baryon, light-by-light scattering and entangled top quarks.",
+      "29 new upgrades for them, including the Morning Meeting for all four new kinds of staff. Upgrades for all staff or all research now include the new ones too.",
+      "40 new achievements for hiring the new staff and discovering the new research."
+    ]
+  },
+  {
     "version": "1.8.1",
     "date": "2026-10-02",
     "title": "Tidier lists, and phones",

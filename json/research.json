@@ -304,5 +304,57 @@
       "info_levels": [ 1, 5 ]
     },
     "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 3 }]
+  },
+  {
+    "key": "research-bsmumu",
+    "name": "Bs⁰ → μ⁺μ⁻",
+    "description": "A decay so rare that only a few Bs mesons in a billion do it.",
+    "cost_increase": 1.15e0,
+    "image": "assets/icons/png/Bsmumu.png",
+    "info": "html/Bsmumu.html",
+    "state": {
+      "reputation": 4.5e7,
+      "cost": 4e11,
+      "info_levels": [ 1, 5 ]
+    }
+  },
+  {
+    "key": "research-xicc",
+    "name": "Ξcc⁺⁺",
+    "description": "Two heavy charm quarks in one baryon, like a double star.",
+    "cost_increase": 1.15e0,
+    "image": "assets/icons/png/Xi_cc.png",
+    "info": "html/Xi_cc.html",
+    "state": {
+      "reputation": 9e7,
+      "cost": 2e12,
+      "info_levels": [ 1, 5 ]
+    }
+  },
+  {
+    "key": "research-lightbylight",
+    "name": "Light-by-light scattering",
+    "description": "Two photons bounce off each other. Classical light never does that.",
+    "cost_increase": 1.15e0,
+    "image": "assets/icons/png/gammagamma.png",
+    "info": "html/gammagamma.html",
+    "state": {
+      "reputation": 1.4e8,
+      "cost": 8e12,
+      "info_levels": [ 1, 5 ]
+    }
+  },
+  {
+    "key": "research-entanglement",
+    "name": "Entangled top quarks",
+    "description": "Top quark pairs that stay entangled, at the highest energies ever tested.",
+    "cost_increase": 1.15e0,
+    "image": "assets/icons/png/ttbar.png",
+    "info": "html/ttbar.html",
+    "state": {
+      "reputation": 2.2e8,
+      "cost": 3e13,
+      "info_levels": [ 1, 5 ]
+    }
   }
 ]

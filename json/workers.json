@@ -174,5 +174,45 @@
       "rate": 3e13
     },
     "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 3 }]
+  },
+  {
+    "key": "workers-shifters",
+    "name": "Shift Crew",
+    "description": "They watch the detector around the clock, so you can sleep.",
+    "cost_increase": 1.15e0,
+    "state": {
+      "cost": 1e9,
+      "rate": 8e7
+    }
+  },
+  {
+    "key": "workers-technicians",
+    "name": "Technicians",
+    "description": "They know where every one of the detector's hundred thousand cables goes.",
+    "cost_increase": 1.14e0,
+    "state": {
+      "cost": 9e9,
+      "rate": 3e8
+    }
+  },
+  {
+    "key": "workers-operators",
+    "name": "Accelerator Operators",
+    "description": "From the CERN Control Centre, they steer the beams around the ring.",
+    "cost_increase": 1.13e0,
+    "state": {
+      "cost": 7e10,
+      "rate": 1.2e9
+    }
+  },
+  {
+    "key": "workers-astronauts",
+    "name": "Astronauts",
+    "description": "They service your particle detector on the International Space Station.",
+    "cost_increase": 1.12e0,
+    "state": {
+      "cost": 6e11,
+      "rate": 5e9
+    }
   }
 ]

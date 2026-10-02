@@ -2616,5 +2616,325 @@
     "targetProperty": "terms",
     "targetKey": "equation",
     "threshold": 20
+  },
+  {
+    "description": "Bs\u2070 \u2192 \u03bc\u207a\u03bc\u207b discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-bsmumu-1",
+    "targetProperty": "level",
+    "targetKey": "research-bsmumu",
+    "threshold": 1
+  },
+  {
+    "description": "Bs\u2070 \u2192 \u03bc\u207a\u03bc\u207b research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-bsmumu-5",
+    "targetProperty": "level",
+    "targetKey": "research-bsmumu",
+    "threshold": 5
+  },
+  {
+    "description": "Bs\u2070 \u2192 \u03bc\u207a\u03bc\u207b research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-bsmumu-25",
+    "targetProperty": "level",
+    "targetKey": "research-bsmumu",
+    "threshold": 25
+  },
+  {
+    "description": "Bs\u2070 \u2192 \u03bc\u207a\u03bc\u207b research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-bsmumu-50",
+    "targetProperty": "level",
+    "targetKey": "research-bsmumu",
+    "threshold": 50
+  },
+  {
+    "description": "Bs\u2070 \u2192 \u03bc\u207a\u03bc\u207b research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-bsmumu-100",
+    "targetProperty": "level",
+    "targetKey": "research-bsmumu",
+    "threshold": 100
+  },
+  {
+    "description": "\u039ecc\u207a\u207a discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-xicc-1",
+    "targetProperty": "level",
+    "targetKey": "research-xicc",
+    "threshold": 1
+  },
+  {
+    "description": "\u039ecc\u207a\u207a research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-xicc-5",
+    "targetProperty": "level",
+    "targetKey": "research-xicc",
+    "threshold": 5
+  },
+  {
+    "description": "\u039ecc\u207a\u207a research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-xicc-25",
+    "targetProperty": "level",
+    "targetKey": "research-xicc",
+    "threshold": 25
+  },
+  {
+    "description": "\u039ecc\u207a\u207a research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-xicc-50",
+    "targetProperty": "level",
+    "targetKey": "research-xicc",
+    "threshold": 50
+  },
+  {
+    "description": "\u039ecc\u207a\u207a research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-xicc-100",
+    "targetProperty": "level",
+    "targetKey": "research-xicc",
+    "threshold": 100
+  },
+  {
+    "description": "Light-by-light scattering discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-lightbylight-1",
+    "targetProperty": "level",
+    "targetKey": "research-lightbylight",
+    "threshold": 1
+  },
+  {
+    "description": "Light-by-light scattering research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-lightbylight-5",
+    "targetProperty": "level",
+    "targetKey": "research-lightbylight",
+    "threshold": 5
+  },
+  {
+    "description": "Light-by-light scattering research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-lightbylight-25",
+    "targetProperty": "level",
+    "targetKey": "research-lightbylight",
+    "threshold": 25
+  },
+  {
+    "description": "Light-by-light scattering research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-lightbylight-50",
+    "targetProperty": "level",
+    "targetKey": "research-lightbylight",
+    "threshold": 50
+  },
+  {
+    "description": "Light-by-light scattering research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-lightbylight-100",
+    "targetProperty": "level",
+    "targetKey": "research-lightbylight",
+    "threshold": 100
+  },
+  {
+    "description": "Entangled top quarks discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-entanglement-1",
+    "targetProperty": "level",
+    "targetKey": "research-entanglement",
+    "threshold": 1
+  },
+  {
+    "description": "Entangled top quarks research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-entanglement-5",
+    "targetProperty": "level",
+    "targetKey": "research-entanglement",
+    "threshold": 5
+  },
+  {
+    "description": "Entangled top quarks research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-entanglement-25",
+    "targetProperty": "level",
+    "targetKey": "research-entanglement",
+    "threshold": 25
+  },
+  {
+    "description": "Entangled top quarks research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-entanglement-50",
+    "targetProperty": "level",
+    "targetKey": "research-entanglement",
+    "threshold": 50
+  },
+  {
+    "description": "Entangled top quarks research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-entanglement-100",
+    "targetProperty": "level",
+    "targetKey": "research-entanglement",
+    "threshold": 100
+  },
+  {
+    "description": "The first Shift Crew hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-shifters-1",
+    "targetProperty": "hired",
+    "targetKey": "workers-shifters",
+    "threshold": 1
+  },
+  {
+    "description": "5 Shift Crew working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-shifters-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-shifters",
+    "threshold": 5
+  },
+  {
+    "description": "25 Shift Crew working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-shifters-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-shifters",
+    "threshold": 25
+  },
+  {
+    "description": "50 Shift Crew working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-shifters-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-shifters",
+    "threshold": 50
+  },
+  {
+    "description": "100 Shift Crew working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-shifters-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-shifters",
+    "threshold": 100
+  },
+  {
+    "description": "The first Technicians hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-technicians-1",
+    "targetProperty": "hired",
+    "targetKey": "workers-technicians",
+    "threshold": 1
+  },
+  {
+    "description": "5 Technicians working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-technicians-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-technicians",
+    "threshold": 5
+  },
+  {
+    "description": "25 Technicians working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-technicians-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-technicians",
+    "threshold": 25
+  },
+  {
+    "description": "50 Technicians working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-technicians-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-technicians",
+    "threshold": 50
+  },
+  {
+    "description": "100 Technicians working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-technicians-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-technicians",
+    "threshold": 100
+  },
+  {
+    "description": "The first Accelerator Operators hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-operators-1",
+    "targetProperty": "hired",
+    "targetKey": "workers-operators",
+    "threshold": 1
+  },
+  {
+    "description": "5 Accelerator Operators working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-operators-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-operators",
+    "threshold": 5
+  },
+  {
+    "description": "25 Accelerator Operators working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-operators-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-operators",
+    "threshold": 25
+  },
+  {
+    "description": "50 Accelerator Operators working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-operators-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-operators",
+    "threshold": 50
+  },
+  {
+    "description": "100 Accelerator Operators working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-operators-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-operators",
+    "threshold": 100
+  },
+  {
+    "description": "The first Astronauts hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-astronauts-1",
+    "targetProperty": "hired",
+    "targetKey": "workers-astronauts",
+    "threshold": 1
+  },
+  {
+    "description": "5 Astronauts working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-astronauts-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-astronauts",
+    "threshold": 5
+  },
+  {
+    "description": "25 Astronauts working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-astronauts-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-astronauts",
+    "threshold": 25
+  },
+  {
+    "description": "50 Astronauts working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-astronauts-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-astronauts",
+    "threshold": 50
+  },
+  {
+    "description": "100 Astronauts working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-astronauts-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-astronauts",
+    "threshold": 100
   }
 ]

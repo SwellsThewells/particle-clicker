@@ -983,7 +983,11 @@
       { "key": "research-glueball", "property": "reputation" },
       { "key": "research-susy", "property": "reputation" },
       { "key": "research-extradim", "property": "reputation" },
-      { "key": "research-strings", "property": "reputation" }
+      { "key": "research-strings", "property": "reputation" },
+      { "key": "research-bsmumu", "property": "reputation" },
+      { "key": "research-xicc", "property": "reputation" },
+      { "key": "research-lightbylight", "property": "reputation" },
+      { "key": "research-entanglement", "property": "reputation" }
     ],
     "requirements": [
       { "key": "research-neutrino", "property": "level", "threshold": 1 },
@@ -1239,7 +1243,11 @@
       { "key": "research-glueball", "property": "reputation" },
       { "key": "research-susy", "property": "reputation" },
       { "key": "research-extradim", "property": "reputation" },
-      { "key": "research-strings", "property": "reputation" }
+      { "key": "research-strings", "property": "reputation" },
+      { "key": "research-bsmumu", "property": "reputation" },
+      { "key": "research-xicc", "property": "reputation" },
+      { "key": "research-lightbylight", "property": "reputation" },
+      { "key": "research-entanglement", "property": "reputation" }
     ],
     "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 2 }],
     "factor": 2
@@ -1308,7 +1316,11 @@
       { "key": "workers-theorists", "property": "rate" },
       { "key": "workers-selves", "property": "rate" },
       { "key": "workers-brains", "property": "rate" },
-      { "key": "workers-builders", "property": "rate" }
+      { "key": "workers-builders", "property": "rate" },
+      { "key": "workers-shifters", "property": "rate" },
+      { "key": "workers-technicians", "property": "rate" },
+      { "key": "workers-operators", "property": "rate" },
+      { "key": "workers-astronauts", "property": "rate" }
     ],
     "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 5 }],
     "factor": 2
@@ -1576,7 +1588,11 @@
       { "key": "research-glueball", "property": "reputation" },
       { "key": "research-susy", "property": "reputation" },
       { "key": "research-extradim", "property": "reputation" },
-      { "key": "research-strings", "property": "reputation" }
+      { "key": "research-strings", "property": "reputation" },
+      { "key": "research-bsmumu", "property": "reputation" },
+      { "key": "research-xicc", "property": "reputation" },
+      { "key": "research-lightbylight", "property": "reputation" },
+      { "key": "research-entanglement", "property": "reputation" }
     ],
     "requirements": [{ "key": "player", "property": "level", "threshold": 30 }],
     "factor": 1.25e0
@@ -1605,7 +1621,11 @@
       { "key": "workers-theorists", "property": "rate" },
       { "key": "workers-selves", "property": "rate" },
       { "key": "workers-brains", "property": "rate" },
-      { "key": "workers-builders", "property": "rate" }
+      { "key": "workers-builders", "property": "rate" },
+      { "key": "workers-shifters", "property": "rate" },
+      { "key": "workers-technicians", "property": "rate" },
+      { "key": "workers-operators", "property": "rate" },
+      { "key": "workers-astronauts", "property": "rate" }
     ],
     "requirements": [{ "key": "player", "property": "level", "threshold": 50 }],
     "factor": 1.5e0
@@ -1846,7 +1866,11 @@
       { "key": "workers-theorists", "property": "rate" },
       { "key": "workers-selves", "property": "rate" },
       { "key": "workers-brains", "property": "rate" },
-      { "key": "workers-builders", "property": "rate" }
+      { "key": "workers-builders", "property": "rate" },
+      { "key": "workers-shifters", "property": "rate" },
+      { "key": "workers-technicians", "property": "rate" },
+      { "key": "workers-operators", "property": "rate" },
+      { "key": "workers-astronauts", "property": "rate" }
     ],
     "requirements": [
       { "key": "workers-masterstudents", "property": "hired", "threshold": 25 },
@@ -1884,7 +1908,11 @@
       { "key": "workers-theorists", "property": "rate" },
       { "key": "workers-selves", "property": "rate" },
       { "key": "workers-brains", "property": "rate" },
-      { "key": "workers-builders", "property": "rate" }
+      { "key": "workers-builders", "property": "rate" },
+      { "key": "workers-shifters", "property": "rate" },
+      { "key": "workers-technicians", "property": "rate" },
+      { "key": "workers-operators", "property": "rate" },
+      { "key": "workers-astronauts", "property": "rate" }
     ],
     "requirements": [
       { "key": "upgrade-coffee", "property": "used", "threshold": 1 },
@@ -2317,7 +2345,11 @@
       { "key": "workers-theorists", "property": "rate" },
       { "key": "workers-selves", "property": "rate" },
       { "key": "workers-brains", "property": "rate" },
-      { "key": "workers-builders", "property": "rate" }
+      { "key": "workers-builders", "property": "rate" },
+      { "key": "workers-shifters", "property": "rate" },
+      { "key": "workers-technicians", "property": "rate" },
+      { "key": "workers-operators", "property": "rate" },
+      { "key": "workers-astronauts", "property": "rate" }
     ],
     "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 7 }],
     "factor": 1.5e0
@@ -2363,7 +2395,11 @@
       { "key": "research-glueball", "property": "reputation" },
       { "key": "research-susy", "property": "reputation" },
       { "key": "research-extradim", "property": "reputation" },
-      { "key": "research-strings", "property": "reputation" }
+      { "key": "research-strings", "property": "reputation" },
+      { "key": "research-bsmumu", "property": "reputation" },
+      { "key": "research-xicc", "property": "reputation" },
+      { "key": "research-lightbylight", "property": "reputation" },
+      { "key": "research-entanglement", "property": "reputation" }
     ],
     "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 11 }],
     "factor": 2
@@ -2392,7 +2428,11 @@
       { "key": "workers-theorists", "property": "rate" },
       { "key": "workers-selves", "property": "rate" },
       { "key": "workers-brains", "property": "rate" },
-      { "key": "workers-builders", "property": "rate" }
+      { "key": "workers-builders", "property": "rate" },
+      { "key": "workers-shifters", "property": "rate" },
+      { "key": "workers-technicians", "property": "rate" },
+      { "key": "workers-operators", "property": "rate" },
+      { "key": "workers-astronauts", "property": "rate" }
     ],
     "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 14 }],
     "factor": 2
@@ -2432,7 +2472,11 @@
       { "key": "workers-theorists", "property": "rate" },
       { "key": "workers-selves", "property": "rate" },
       { "key": "workers-brains", "property": "rate" },
-      { "key": "workers-builders", "property": "rate" }
+      { "key": "workers-builders", "property": "rate" },
+      { "key": "workers-shifters", "property": "rate" },
+      { "key": "workers-technicians", "property": "rate" },
+      { "key": "workers-operators", "property": "rate" },
+      { "key": "workers-astronauts", "property": "rate" }
     ],
     "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 1 }],
     "factor": 2
@@ -2489,9 +2533,354 @@
       { "key": "research-glueball", "property": "reputation" },
       { "key": "research-susy", "property": "reputation" },
       { "key": "research-extradim", "property": "reputation" },
-      { "key": "research-strings", "property": "reputation" }
+      { "key": "research-strings", "property": "reputation" },
+      { "key": "research-bsmumu", "property": "reputation" },
+      { "key": "research-xicc", "property": "reputation" },
+      { "key": "research-lightbylight", "property": "reputation" },
+      { "key": "research-entanglement", "property": "reputation" }
     ],
     "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 5 }],
     "factor": 3
+  },
+  {
+    "key": "upgrade-shifters1",
+    "name": "Shift Handover",
+    "description": "Notes for the next shift, so nothing gets lost.",
+    "effect": "Shift Crew produce +160M data per second.",
+    "icon": "fa-group",
+    "cost": 1e10,
+    "targets": [{ "key": "workers-shifters", "property": "rate" }],
+    "requirements": [{ "key": "workers-shifters", "property": "hired", "threshold": 5 }],
+    "constant": 1.6e8
+  },
+  {
+    "key": "upgrade-shifters2",
+    "name": "Wall of Screens",
+    "description": "One screen for every part of the detector.",
+    "effect": "Shift Crew produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e11,
+    "targets": [{ "key": "workers-shifters", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-shifters1", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-shifters3",
+    "name": "Night Shift Pizza",
+    "description": "Delivered to the control room at three in the morning.",
+    "effect": "Shift Crew produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e12,
+    "targets": [{ "key": "workers-shifters", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-shifters2", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-shifters4",
+    "name": "Electronic Logbook",
+    "description": "Every alarm, every fix and every joke, written down.",
+    "effect": "Shift Crew produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e13,
+    "targets": [{ "key": "workers-shifters", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-shifters3", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-shifters5",
+    "name": "Run Coordinator",
+    "description": "Someone in charge of all the shifts, at last.",
+    "effect": "Shift Crew produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e14,
+    "targets": [{ "key": "workers-shifters", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-shifters", "property": "hired", "threshold": 50 },
+      { "key": "upgrade-shifters4", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-technicians1",
+    "name": "Toolboxes",
+    "description": "The right spanner, every time.",
+    "effect": "Technicians produce +600M data per second.",
+    "icon": "fa-group",
+    "cost": 9e10,
+    "targets": [{ "key": "workers-technicians", "property": "rate" }],
+    "requirements": [{ "key": "workers-technicians", "property": "hired", "threshold": 5 }],
+    "constant": 6e8
+  },
+  {
+    "key": "upgrade-technicians2",
+    "name": "Clean Room",
+    "description": "Silicon sensors are built in rooms cleaner than an operating theatre.",
+    "effect": "Technicians produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 9e11,
+    "targets": [{ "key": "workers-technicians", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-technicians1", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-technicians3",
+    "name": "Cable Labels",
+    "description": "A hundred thousand cables, and every one of them labelled.",
+    "effect": "Technicians produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 9e12,
+    "targets": [{ "key": "workers-technicians", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-technicians2", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-technicians4",
+    "name": "Survey Team",
+    "description": "They line up the magnets to a fraction of a millimetre.",
+    "effect": "Technicians produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 9e13,
+    "targets": [{ "key": "workers-technicians", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-technicians3", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-technicians5",
+    "name": "Main Workshop",
+    "description": "A workshop that can make anything, from a screw to a detector.",
+    "effect": "Technicians produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 9e14,
+    "targets": [{ "key": "workers-technicians", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-technicians", "property": "hired", "threshold": 50 },
+      { "key": "upgrade-technicians4", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-operators1",
+    "name": "Beam Instrumentation",
+    "description": "Thousands of monitors show where the beam is.",
+    "effect": "Accelerator Operators produce +2.4B data per second.",
+    "icon": "fa-group",
+    "cost": 7e11,
+    "targets": [{ "key": "workers-operators", "property": "rate" }],
+    "requirements": [{ "key": "workers-operators", "property": "hired", "threshold": 5 }],
+    "constant": 2.4e9
+  },
+  {
+    "key": "upgrade-operators2",
+    "name": "Machine Protection",
+    "description": "If anything goes wrong, the beam is dumped in a fraction of a second.",
+    "effect": "Accelerator Operators produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 7e12,
+    "targets": [{ "key": "workers-operators", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-operators1", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-operators3",
+    "name": "Injector Chain",
+    "description": "Linac, Booster, PS and SPS, all in step.",
+    "effect": "Accelerator Operators produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 7e13,
+    "targets": [{ "key": "workers-operators", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-operators2", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-operators4",
+    "name": "Luminosity Levelling",
+    "description": "The collision rate stays steady for hours.",
+    "effect": "Accelerator Operators produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 7e14,
+    "targets": [{ "key": "workers-operators", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-operators3", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-operators5",
+    "name": "Record Fill",
+    "description": "One fill that lasts all night and breaks every record.",
+    "effect": "Accelerator Operators produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 7e15,
+    "targets": [{ "key": "workers-operators", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-operators", "property": "hired", "threshold": 50 },
+      { "key": "upgrade-operators4", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-astronauts1",
+    "name": "Spacewalk Training",
+    "description": "First, practise in a very big swimming pool.",
+    "effect": "Astronauts produce +10B data per second.",
+    "icon": "fa-group",
+    "cost": 6e12,
+    "targets": [{ "key": "workers-astronauts", "property": "rate" }],
+    "requirements": [{ "key": "workers-astronauts", "property": "hired", "threshold": 5 }],
+    "constant": 1e10
+  },
+  {
+    "key": "upgrade-astronauts2",
+    "name": "Cooling Repair",
+    "description": "A new cooling system for the detector, fitted in four spacewalks.",
+    "effect": "Astronauts produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 6e13,
+    "targets": [{ "key": "workers-astronauts", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-astronauts1", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-astronauts3",
+    "name": "Mission Control",
+    "description": "A control centre on the ground, at CERN.",
+    "effect": "Astronauts produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 6e14,
+    "targets": [{ "key": "workers-astronauts", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-astronauts2", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-astronauts4",
+    "name": "Cosmic Antimatter",
+    "description": "Above the atmosphere, every cosmic ray arrives untouched.",
+    "effect": "Astronauts produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 6e15,
+    "targets": [{ "key": "workers-astronauts", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-astronauts3", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-astronauts5",
+    "name": "Moon Base",
+    "description": "Next stop: a detector on the Moon.",
+    "effect": "Astronauts produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 6e16,
+    "targets": [{ "key": "workers-astronauts", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-astronauts", "property": "hired", "threshold": 50 },
+      { "key": "upgrade-astronauts4", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-morningmeeting",
+    "name": "Morning Meeting",
+    "description": "Every morning, everyone who keeps the lab running meets for ten minutes.",
+    "effect": "Shift Crew, Technicians, Accelerator Operators and Astronauts produce twice as much data per second.",
+    "icon": "fa-clock-o",
+    "cost": 3e13,
+    "targets": [
+      { "key": "workers-shifters", "property": "rate" },
+      { "key": "workers-technicians", "property": "rate" },
+      { "key": "workers-operators", "property": "rate" },
+      { "key": "workers-astronauts", "property": "rate" }
+    ],
+    "requirements": [
+      { "key": "workers-shifters", "property": "hired", "threshold": 1 },
+      { "key": "workers-technicians", "property": "hired", "threshold": 1 },
+      { "key": "workers-operators", "property": "hired", "threshold": 1 },
+      { "key": "workers-astronauts", "property": "hired", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-combined",
+    "name": "Combined Analysis",
+    "description": "CMS and LHCb put their data together to see the decay.",
+    "effect": "Future research on rare B decays gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 4e12,
+    "targets": [{ "key": "research-bsmumu", "property": "reputation" }],
+    "requirements": [{ "key": "research-bsmumu", "property": "level", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-dimuon",
+    "name": "Dimuon Trigger",
+    "description": "A trigger that never lets a pair of muons slip by.",
+    "effect": "Future research on rare B decays gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 4e14,
+    "targets": [{ "key": "research-bsmumu", "property": "reputation" }],
+    "requirements": [{ "key": "research-bsmumu", "property": "level", "threshold": 10 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-velo",
+    "name": "Vertex Locator",
+    "description": "Silicon sensors a few millimetres from the beam see exactly where a particle decays.",
+    "effect": "Future research on the Ξcc⁺⁺ gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 2e13,
+    "targets": [{ "key": "research-xicc", "property": "reputation" }],
+    "requirements": [{ "key": "research-xicc", "property": "level", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-doublecharm",
+    "name": "Double Charm",
+    "description": "A whole family of baryons with two heavy quarks to find.",
+    "effect": "Future research on the Ξcc⁺⁺ gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 2e15,
+    "targets": [{ "key": "research-xicc", "property": "reputation" }],
+    "requirements": [{ "key": "research-xicc", "property": "level", "threshold": 10 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-upc",
+    "name": "Ultra-Peripheral Collisions",
+    "description": "Lead ions that just miss each other, so only their light collides.",
+    "effect": "Future light-by-light research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 8e13,
+    "targets": [{ "key": "research-lightbylight", "property": "reputation" }],
+    "requirements": [{ "key": "research-lightbylight", "property": "level", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-photoncollider",
+    "name": "Photon Collider",
+    "description": "A collider for nothing but light.",
+    "effect": "Future light-by-light research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 8e15,
+    "targets": [{ "key": "research-lightbylight", "property": "reputation" }],
+    "requirements": [{ "key": "research-lightbylight", "property": "level", "threshold": 10 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-spin",
+    "name": "Spin Correlations",
+    "description": "The directions of the decay products show how the spins are linked.",
+    "effect": "Future entanglement research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 3e14,
+    "targets": [{ "key": "research-entanglement", "property": "reputation" }],
+    "requirements": [{ "key": "research-entanglement", "property": "level", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-bell",
+    "name": "Bell Test",
+    "description": "Spooky action at a distance, at the energy frontier.",
+    "effect": "Future entanglement research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 3e16,
+    "targets": [{ "key": "research-entanglement", "property": "reputation" }],
+    "requirements": [{ "key": "research-entanglement", "property": "level", "threshold": 10 }],
+    "factor": 2
   }
 ]
