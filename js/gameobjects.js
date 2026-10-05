@@ -83,7 +83,9 @@ var GameObjects = (function() {
                                anomalyReward: 1,     // factor on bursts and windfalls
                                boostFactor: 2,       // data multiplier of a beam boost
                                boostDuration: 30,    // seconds
-                               offlineHours: 24      // cap on progress while away
+                               offlineHours: 24,     // cap on progress while away
+                               experimentSpeed: 1,   // factor on how long experiments take
+                               experimentReward: 1   // factor on what they give
                              }
                            }]);
   };

@@ -40,6 +40,14 @@
     "effects": [{ "type": "data", "amount": 0.25 }]
   },
   {
+    "key": "dm-personnel",
+    "name": "Personnel Office",
+    "description": "Hires staff by itself whenever one costs at most a tenth of your funding. Switch it on and off in the HR list.",
+    "icon": "fa-briefcase",
+    "cost": 6,
+    "effects": [{ "type": "autoHire", "amount": 1 }]
+  },
+  {
     "key": "dm-energy",
     "name": "Dark Energy",
     "description": "Reputation brings in 25% more funding.",
@@ -64,12 +72,30 @@
     "effects": [{ "type": "offlineHours", "amount": 24 }]
   },
   {
+    "key": "dm-committee",
+    "name": "Research Committee",
+    "description": "Does research by itself whenever it costs at most a tenth of your data. Switch it on and off in the Research list.",
+    "icon": "fa-gavel",
+    "cost": 10,
+    "requires": "dm-personnel",
+    "effects": [{ "type": "autoResearch", "amount": 1 }]
+  },
+  {
     "key": "dm-bbn",
     "name": "Big Bang Nucleosynthesis",
     "description": "Earn 50% more XP.",
     "icon": "fa-lightbulb-o",
     "cost": 15,
     "effects": [{ "type": "xp", "amount": 0.5 }]
+  },
+  {
+    "key": "dm-purchasing",
+    "name": "Purchasing Office",
+    "description": "Buys upgrades by itself as soon as you can afford them. Switch it on and off in the Upgrades list.",
+    "icon": "fa-shopping-cart",
+    "cost": 16,
+    "requires": "dm-committee",
+    "effects": [{ "type": "autoUpgrade", "amount": 1 }]
   },
   {
     "key": "dm-trigger2",

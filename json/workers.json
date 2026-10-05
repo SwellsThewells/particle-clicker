@@ -214,5 +214,67 @@
       "cost": 6e11,
       "rate": 5e9
     }
+  },
+  {
+    "key": "workers-communicators",
+    "name": "Science Communicators",
+    "description": "They tell the whole world about your discoveries, in words everyone understands.",
+    "cost_increase": 1.08e0,
+    "state": {
+      "cost": 1e16,
+      "rate": 2e13
+    }
+  },
+  {
+    "key": "workers-robots",
+    "name": "Tunnel Robots",
+    "description": "They ride a rail around the 27-kilometre tunnel and never ask for a break.",
+    "cost_increase": 1.08e0,
+    "state": {
+      "cost": 1.3e17,
+      "rate": 2e14
+    }
+  },
+  {
+    "key": "workers-industry",
+    "name": "Industrial Partners",
+    "description": "Companies that build your magnets, detectors and computers, and learn a lot doing it.",
+    "cost_increase": 1.08e0,
+    "state": {
+      "cost": 1.7e18,
+      "rate": 2e15
+    }
+  },
+  {
+    "key": "workers-fccplanners",
+    "name": "FCC Planners",
+    "description": "They are planning a 91-kilometre ring for the next big collider.",
+    "cost_increase": 1.08e0,
+    "state": {
+      "cost": 2.2e19,
+      "rate": 2e16
+    }
+  },
+  {
+    "key": "workers-timetravellers",
+    "name": "Time Travellers",
+    "description": "They bring back next year's results, and sometimes a newspaper.",
+    "cost_increase": 1.1e0,
+    "state": {
+      "cost": 1e18,
+      "rate": 1e15
+    },
+    "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 4 }]
+  },
+  {
+    "key": "workers-aliens",
+    "name": "Alien Collaborators",
+    "description": "Physicists from another galaxy. Their coffee machine is very strange.",
+    "cost_increase": 1.1e0,
+    "state": {
+      "cost": 1e21,
+      "rate": 3e16
+    },
+    "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 5 }]
   }
 ]

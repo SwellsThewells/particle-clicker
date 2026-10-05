@@ -356,5 +356,85 @@
       "cost": 3e13,
       "info_levels": [ 1, 5 ]
     }
+  },
+  {
+    "key": "research-colliderneutrinos",
+    "name": "Collider neutrinos",
+    "description": "Neutrinos from LHC collisions, caught by a small detector far down the tunnel.",
+    "cost_increase": 1.15e0,
+    "image": "assets/icons/png/nu_LHC.png",
+    "info": "html/nu_LHC.html",
+    "state": {
+      "reputation": 6e11,
+      "cost": 1e18,
+      "info_levels": [ 1, 5 ]
+    }
+  },
+  {
+    "key": "research-baryoncpv",
+    "name": "CP violation in baryons",
+    "description": "Baryons and antibaryons that decay differently, a clue to why matter won.",
+    "cost_increase": 1.15e0,
+    "image": "assets/icons/png/Lambda_b.png",
+    "info": "html/Lambda_b.html",
+    "state": {
+      "reputation": 2.5e12,
+      "cost": 7e18,
+      "info_levels": [ 1, 5 ]
+    }
+  },
+  {
+    "key": "research-toponium",
+    "name": "Toponium",
+    "description": "A top quark and its antiquark, together for a very short moment.",
+    "cost_increase": 1.15e0,
+    "image": "assets/icons/png/eta_t.png",
+    "info": "html/eta_t.html",
+    "state": {
+      "reputation": 1e13,
+      "cost": 5e19,
+      "info_levels": [ 1, 5 ]
+    }
+  },
+  {
+    "key": "research-selfcoupling",
+    "name": "Higgs self-coupling",
+    "description": "How the Higgs boson interacts with itself, and so the shape of the Higgs field.",
+    "cost_increase": 1.15e0,
+    "image": "assets/icons/png/HH.png",
+    "info": "html/HH.html",
+    "state": {
+      "reputation": 4e13,
+      "cost": 4e20,
+      "info_levels": [ 1, 5 ]
+    }
+  },
+  {
+    "key": "research-darkmatter",
+    "name": "Dark matter particles",
+    "description": "At last, a particle of dark matter, caught in your detector.",
+    "cost_increase": 1.15e0,
+    "image": "assets/icons/png/chi.png",
+    "info": "html/chi.html",
+    "state": {
+      "reputation": 2e15,
+      "cost": 1e20,
+      "info_levels": [ 1, 5 ]
+    },
+    "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 4 }]
+  },
+  {
+    "key": "research-quantumgravity",
+    "name": "Quantum gravity",
+    "description": "Gravity and quantum physics, finally in one theory.",
+    "cost_increase": 1.15e0,
+    "image": "assets/icons/png/l_P.png",
+    "info": "html/l_P.html",
+    "state": {
+      "reputation": 2e18,
+      "cost": 1e23,
+      "info_levels": [ 1, 5 ]
+    },
+    "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 5 }]
   }
 ]

@@ -1,5 +1,20 @@
 [
   {
+    "version": "2.0",
+    "date": "2026-10-05",
+    "title": "Experiments, the Lab Manager and the news",
+    "changes": [
+      "Experiments, a new window in the top bar: run one at a time, for free, from a one-minute Cosmic Ray Watch to an eight-hour Long Physics Run. Each pays out minutes or hours of your lab's production when it ends, even while the game is closed. 8 experiments unlock as your lab grows, and 3 new upgrades make them faster and better.",
+      "The Lab Manager: 3 new dark matter upgrades that hire staff, do research and buy upgrades by themselves. Switch each one on and off in its list.",
+      "A news ticker under your lab's name, with headlines about what happens in your lab, and a few hints. You can hide it in Settings.",
+      "Buy all: buy every upgrade you can afford with one click.",
+      "6 new kinds of staff: Science Communicators, Tunnel Robots, Industrial Partners and FCC Planners after Directors-General, and Time Travellers and Alien Collaborators in multiverses 5 and 6.",
+      "6 new research topics, each with its own info page: collider neutrinos, CP violation in baryons, toponium and the Higgs self-coupling after Pentaquarks, and dark matter particles and quantum gravity in multiverses 5 and 6.",
+      "42 new upgrades and 65 new achievements for all of the above.",
+      "The new staff and research reach further than the old ones, so the late game grows faster than before."
+    ]
+  },
+  {
     "version": "1.9",
     "date": "2026-10-02",
     "title": "New staff and research",

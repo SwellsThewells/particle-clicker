@@ -25,7 +25,8 @@ var Game = (function() {
       level: 1, xp: 0, totalXp: 0, points: 0, boostsChosen: 0,
       offerA: -1, offerB: -1, offerC: -1,
       // Lifetime totals, for achievements.
-      upgradesBought: 0, staffHired: 0, researchLevels: 0, totalsCounted: 0
+      upgradesBought: 0, staffHired: 0, researchLevels: 0, totalsCounted: 0,
+      experimentsDone: 0
     });
     // Universes and dark matter of the current multiverse, and lifetime
     // totals for the achievements.
@@ -41,6 +42,11 @@ var Game = (function() {
     });
     // The equation, built from detector clicks. Kept forever too.
     this.equation = new GameObjects.Record('equation', {terms: 0, spent: 0});
+    // The experiment that is running, if any. Like the rest of the lab, it
+    // stops when the universe expands.
+    this.experiment = new GameObjects.Record('experiment', {
+      running: '', startedAt: 0, endsAt: 0
+    });
     this.secrets = new GameObjects.Record('secrets', {
       konami: 0, nightOwl: 0, homeSweetHome: 0, reflexes: 0, missed: 0,
       darkSide: 0, speedOfLight: 0, infoPages: 0, curious: 0,
@@ -56,9 +62,11 @@ var Game = (function() {
     this.darkMatterUpgrades = null;
     this.multiverseUpgrades = null;
     this.terms = null;
+    this.experiments = null;
     this.allObjects = {lab: this.lab, player: this.player,
                        prestige: this.prestige, multiverse: this.multiverse,
-                       equation: this.equation, secrets: this.secrets};
+                       equation: this.equation, secrets: this.secrets,
+                       experiment: this.experiment};
     this.initialStates = {};
     this.bonus = {};
     this.lab.bonus = this.bonus;
@@ -82,6 +90,7 @@ var Game = (function() {
     this.darkMatterUpgrades = Helpers.loadFile('json/prestige.json');
     this.multiverseUpgrades = Helpers.loadFile('json/multiverse.json');
     this.terms = Helpers.loadFile('json/equation.json');
+    this.experiments = Helpers.loadFile('json/experiments.json');
     var player = this.player.state, prestige = this.prestige.state;
     var multiverse = this.multiverse.state;
     this.boosts.forEach(function(b) { player[b.key] = 0; });
@@ -134,7 +143,8 @@ var Game = (function() {
                  'anomalyLifetime', 'offlineHours', 'autoClicks',
                  'darkMatterBonus', 'everything', 'startMoney', 'startData',
                  'startStaff', 'startUniverse', 'darkMatterGain',
-                 'keepDarkMatterUpgrades', 'equationCost', 'all'];
+                 'keepDarkMatterUpgrades', 'equationCost', 'all',
+                 'autoHire', 'autoResearch', 'autoUpgrade'];
     var fromLevels = {}, fromDarkMatter = {}, fromStrings = {};
     types.forEach(function(t) {
       fromLevels[t] = 0; fromDarkMatter[t] = 0; fromStrings[t] = 0;
@@ -186,6 +196,10 @@ var Game = (function() {
     b.startUniverse = 1 + fromStrings.startUniverse;
     b.keepDarkMatterUpgrades = fromStrings.keepDarkMatterUpgrades > 0;
     b.equationCost = 1 - fromStrings.equationCost;
+    // The Lab Manager: dark matter upgrades that hire, research and buy.
+    b.autoHire = fromDarkMatter.autoHire > 0;
+    b.autoResearch = fromDarkMatter.autoResearch > 0;
+    b.autoUpgrade = fromDarkMatter.autoUpgrade > 0;
   };
 
   /** Data produced per second by all hired workers. */
@@ -205,10 +219,11 @@ var Game = (function() {
     return Math.floor(50 * Math.pow(level, 1.5)) + 50;
   };
 
-  /** Add XP (before bonuses). Returns the number of levels gained. */
-  Game.prototype.addXp = function(amount) {
+  /** Add XP (before bonuses, unless exact). Returns the number of levels
+   * gained. */
+  Game.prototype.addXp = function(amount, exact) {
     var p = this.player.state, levels = 0;
-    var gain = amount * this.bonus.xp;
+    var gain = exact ? amount : amount * this.bonus.xp;
     p.xp += gain;
     p.totalXp += gain;
     while (p.xp >= this.xpForLevel(p.level)) {
@@ -491,6 +506,90 @@ var Game = (function() {
     eq.terms += 1;
     this.updateBonuses();
     return true;
+  };
+
+  /** Whether requirements ({key, property, threshold}) are met. */
+  Game.prototype.meets = function(requirements) {
+    var all = this.allObjects;
+    return (requirements || []).every(function(r) {
+      return all[r.key].state[r.property] >= r.threshold;
+    });
+  };
+
+  /** The data or funding the lab makes per second, for experiments. */
+  Game.prototype.experimentRate = function(type) {
+    return type === 'data' ? this.getDataRate() + this.getAutoRate() : this.lab.getGrantRate();
+  };
+
+  /** Seconds an experiment takes, after upgrades. */
+  Game.prototype.experimentDuration = function(e) {
+    return e.duration * this.lab.state.experimentSpeed;
+  };
+
+  /** What the experiment gives if it ends now. Data and funding are some
+   * seconds of the lab's rate when it ends (with a small minimum early on),
+   * so the reward keeps up with a lab that grows while it runs; XP is a part
+   * of what the next level needs. */
+  Game.prototype.experimentReward = function(e) {
+    var r = e.reward, amount;
+    if (r.type === 'xp') {
+      amount = r.amount * this.xpForLevel(this.player.state.level);
+    } else if (r.type === 'data') {
+      amount = r.seconds * Math.max(this.experimentRate('data'),
+                                    0.5 * this.lab.state.detector * this.bonus.click);
+    } else {
+      amount = r.seconds * Math.max(this.experimentRate('funding'), 5);
+    }
+    return amount * this.lab.state.experimentReward;
+  };
+
+  Game.prototype.experimentUnlocked = function(e) {
+    return this.meets(e.requirements);
+  };
+
+  /** The experiment that is running (or finished but not yet counted). */
+  Game.prototype.runningExperiment = function() {
+    var key = this.experiment.state.running;
+    return key ? this.experiments.filter(function(e) { return e.key === key; })[0] || null : null;
+  };
+
+  /** Experiments are free; one runs at a time. */
+  Game.prototype.canStartExperiment = function(e) {
+    return !this.runningExperiment() && this.experimentUnlocked(e);
+  };
+
+  Game.prototype.startExperiment = function(key, now) {
+    var e = this.experiments.filter(function(x) { return x.key === key; })[0];
+    if (!e || !this.canStartExperiment(e)) {
+      return false;
+    }
+    var x = this.experiment.state;
+    x.running = e.key;
+    x.startedAt = now;
+    x.endsAt = now + this.experimentDuration(e) * 1000;
+    return true;
+  };
+
+  /** Hand out the reward of a finished experiment. Returns the experiment,
+   * the type of reward and the amount, or null if none has finished. XP is
+   * left to the caller, which shows level-ups. */
+  Game.prototype.finishExperiment = function(now) {
+    var e = this.runningExperiment(), x = this.experiment.state;
+    if (!e || now < x.endsAt) {
+      if (!e) {
+        x.running = '';
+      }
+      return null;
+    }
+    var result = {experiment: e, type: e.reward.type, amount: this.experimentReward(e)};
+    if (result.type === 'data') {
+      this.lab.acquireData(result.amount);
+    } else if (result.type === 'funding') {
+      this.lab.receiveMoney(result.amount);
+    }
+    x.running = '';
+    this.player.state.experimentsDone += 1;
+    return result;
   };
 
   /** Credit the data and funding the lab would have earned while the game

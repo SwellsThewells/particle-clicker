@@ -987,7 +987,13 @@
       { "key": "research-bsmumu", "property": "reputation" },
       { "key": "research-xicc", "property": "reputation" },
       { "key": "research-lightbylight", "property": "reputation" },
-      { "key": "research-entanglement", "property": "reputation" }
+      { "key": "research-entanglement", "property": "reputation" },
+      { "key": "research-colliderneutrinos", "property": "reputation" },
+      { "key": "research-baryoncpv", "property": "reputation" },
+      { "key": "research-toponium", "property": "reputation" },
+      { "key": "research-selfcoupling", "property": "reputation" },
+      { "key": "research-darkmatter", "property": "reputation" },
+      { "key": "research-quantumgravity", "property": "reputation" }
     ],
     "requirements": [
       { "key": "research-neutrino", "property": "level", "threshold": 1 },
@@ -1247,7 +1253,13 @@
       { "key": "research-bsmumu", "property": "reputation" },
       { "key": "research-xicc", "property": "reputation" },
       { "key": "research-lightbylight", "property": "reputation" },
-      { "key": "research-entanglement", "property": "reputation" }
+      { "key": "research-entanglement", "property": "reputation" },
+      { "key": "research-colliderneutrinos", "property": "reputation" },
+      { "key": "research-baryoncpv", "property": "reputation" },
+      { "key": "research-toponium", "property": "reputation" },
+      { "key": "research-selfcoupling", "property": "reputation" },
+      { "key": "research-darkmatter", "property": "reputation" },
+      { "key": "research-quantumgravity", "property": "reputation" }
     ],
     "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 2 }],
     "factor": 2
@@ -1320,7 +1332,13 @@
       { "key": "workers-shifters", "property": "rate" },
       { "key": "workers-technicians", "property": "rate" },
       { "key": "workers-operators", "property": "rate" },
-      { "key": "workers-astronauts", "property": "rate" }
+      { "key": "workers-astronauts", "property": "rate" },
+      { "key": "workers-communicators", "property": "rate" },
+      { "key": "workers-robots", "property": "rate" },
+      { "key": "workers-industry", "property": "rate" },
+      { "key": "workers-fccplanners", "property": "rate" },
+      { "key": "workers-timetravellers", "property": "rate" },
+      { "key": "workers-aliens", "property": "rate" }
     ],
     "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 5 }],
     "factor": 2
@@ -1592,7 +1610,13 @@
       { "key": "research-bsmumu", "property": "reputation" },
       { "key": "research-xicc", "property": "reputation" },
       { "key": "research-lightbylight", "property": "reputation" },
-      { "key": "research-entanglement", "property": "reputation" }
+      { "key": "research-entanglement", "property": "reputation" },
+      { "key": "research-colliderneutrinos", "property": "reputation" },
+      { "key": "research-baryoncpv", "property": "reputation" },
+      { "key": "research-toponium", "property": "reputation" },
+      { "key": "research-selfcoupling", "property": "reputation" },
+      { "key": "research-darkmatter", "property": "reputation" },
+      { "key": "research-quantumgravity", "property": "reputation" }
     ],
     "requirements": [{ "key": "player", "property": "level", "threshold": 30 }],
     "factor": 1.25e0
@@ -1625,7 +1649,13 @@
       { "key": "workers-shifters", "property": "rate" },
       { "key": "workers-technicians", "property": "rate" },
       { "key": "workers-operators", "property": "rate" },
-      { "key": "workers-astronauts", "property": "rate" }
+      { "key": "workers-astronauts", "property": "rate" },
+      { "key": "workers-communicators", "property": "rate" },
+      { "key": "workers-robots", "property": "rate" },
+      { "key": "workers-industry", "property": "rate" },
+      { "key": "workers-fccplanners", "property": "rate" },
+      { "key": "workers-timetravellers", "property": "rate" },
+      { "key": "workers-aliens", "property": "rate" }
     ],
     "requirements": [{ "key": "player", "property": "level", "threshold": 50 }],
     "factor": 1.5e0
@@ -1870,7 +1900,13 @@
       { "key": "workers-shifters", "property": "rate" },
       { "key": "workers-technicians", "property": "rate" },
       { "key": "workers-operators", "property": "rate" },
-      { "key": "workers-astronauts", "property": "rate" }
+      { "key": "workers-astronauts", "property": "rate" },
+      { "key": "workers-communicators", "property": "rate" },
+      { "key": "workers-robots", "property": "rate" },
+      { "key": "workers-industry", "property": "rate" },
+      { "key": "workers-fccplanners", "property": "rate" },
+      { "key": "workers-timetravellers", "property": "rate" },
+      { "key": "workers-aliens", "property": "rate" }
     ],
     "requirements": [
       { "key": "workers-masterstudents", "property": "hired", "threshold": 25 },
@@ -1912,7 +1948,13 @@
       { "key": "workers-shifters", "property": "rate" },
       { "key": "workers-technicians", "property": "rate" },
       { "key": "workers-operators", "property": "rate" },
-      { "key": "workers-astronauts", "property": "rate" }
+      { "key": "workers-astronauts", "property": "rate" },
+      { "key": "workers-communicators", "property": "rate" },
+      { "key": "workers-robots", "property": "rate" },
+      { "key": "workers-industry", "property": "rate" },
+      { "key": "workers-fccplanners", "property": "rate" },
+      { "key": "workers-timetravellers", "property": "rate" },
+      { "key": "workers-aliens", "property": "rate" }
     ],
     "requirements": [
       { "key": "upgrade-coffee", "property": "used", "threshold": 1 },
@@ -2349,7 +2391,13 @@
       { "key": "workers-shifters", "property": "rate" },
       { "key": "workers-technicians", "property": "rate" },
       { "key": "workers-operators", "property": "rate" },
-      { "key": "workers-astronauts", "property": "rate" }
+      { "key": "workers-astronauts", "property": "rate" },
+      { "key": "workers-communicators", "property": "rate" },
+      { "key": "workers-robots", "property": "rate" },
+      { "key": "workers-industry", "property": "rate" },
+      { "key": "workers-fccplanners", "property": "rate" },
+      { "key": "workers-timetravellers", "property": "rate" },
+      { "key": "workers-aliens", "property": "rate" }
     ],
     "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 7 }],
     "factor": 1.5e0
@@ -2399,7 +2447,13 @@
       { "key": "research-bsmumu", "property": "reputation" },
       { "key": "research-xicc", "property": "reputation" },
       { "key": "research-lightbylight", "property": "reputation" },
-      { "key": "research-entanglement", "property": "reputation" }
+      { "key": "research-entanglement", "property": "reputation" },
+      { "key": "research-colliderneutrinos", "property": "reputation" },
+      { "key": "research-baryoncpv", "property": "reputation" },
+      { "key": "research-toponium", "property": "reputation" },
+      { "key": "research-selfcoupling", "property": "reputation" },
+      { "key": "research-darkmatter", "property": "reputation" },
+      { "key": "research-quantumgravity", "property": "reputation" }
     ],
     "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 11 }],
     "factor": 2
@@ -2432,7 +2486,13 @@
       { "key": "workers-shifters", "property": "rate" },
       { "key": "workers-technicians", "property": "rate" },
       { "key": "workers-operators", "property": "rate" },
-      { "key": "workers-astronauts", "property": "rate" }
+      { "key": "workers-astronauts", "property": "rate" },
+      { "key": "workers-communicators", "property": "rate" },
+      { "key": "workers-robots", "property": "rate" },
+      { "key": "workers-industry", "property": "rate" },
+      { "key": "workers-fccplanners", "property": "rate" },
+      { "key": "workers-timetravellers", "property": "rate" },
+      { "key": "workers-aliens", "property": "rate" }
     ],
     "requirements": [{ "key": "prestige", "property": "expansions", "threshold": 14 }],
     "factor": 2
@@ -2476,7 +2536,13 @@
       { "key": "workers-shifters", "property": "rate" },
       { "key": "workers-technicians", "property": "rate" },
       { "key": "workers-operators", "property": "rate" },
-      { "key": "workers-astronauts", "property": "rate" }
+      { "key": "workers-astronauts", "property": "rate" },
+      { "key": "workers-communicators", "property": "rate" },
+      { "key": "workers-robots", "property": "rate" },
+      { "key": "workers-industry", "property": "rate" },
+      { "key": "workers-fccplanners", "property": "rate" },
+      { "key": "workers-timetravellers", "property": "rate" },
+      { "key": "workers-aliens", "property": "rate" }
     ],
     "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 1 }],
     "factor": 2
@@ -2537,7 +2603,13 @@
       { "key": "research-bsmumu", "property": "reputation" },
       { "key": "research-xicc", "property": "reputation" },
       { "key": "research-lightbylight", "property": "reputation" },
-      { "key": "research-entanglement", "property": "reputation" }
+      { "key": "research-entanglement", "property": "reputation" },
+      { "key": "research-colliderneutrinos", "property": "reputation" },
+      { "key": "research-baryoncpv", "property": "reputation" },
+      { "key": "research-toponium", "property": "reputation" },
+      { "key": "research-selfcoupling", "property": "reputation" },
+      { "key": "research-darkmatter", "property": "reputation" },
+      { "key": "research-quantumgravity", "property": "reputation" }
     ],
     "requirements": [{ "key": "multiverse", "property": "jumps", "threshold": 5 }],
     "factor": 3
@@ -2882,5 +2954,501 @@
     "targets": [{ "key": "research-entanglement", "property": "reputation" }],
     "requirements": [{ "key": "research-entanglement", "property": "level", "threshold": 10 }],
     "factor": 2
+  },
+  {
+    "key": "upgrade-communicators1",
+    "name": "Explainer Videos",
+    "description": "Three minutes, one blackboard, a million views.",
+    "effect": "Science Communicators produce +40T data per second.",
+    "icon": "fa-group",
+    "cost": 1e17,
+    "targets": [{ "key": "workers-communicators", "property": "rate" }],
+    "requirements": [{ "key": "workers-communicators", "property": "hired", "threshold": 5 }],
+    "constant": 4e13
+  },
+  {
+    "key": "upgrade-communicators2",
+    "name": "Science Festival",
+    "description": "A whole weekend of experiments for families.",
+    "effect": "Science Communicators produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e18,
+    "targets": [{ "key": "workers-communicators", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-communicators1", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-communicators3",
+    "name": "Museum of the Universe",
+    "description": "A building shaped like a wooden globe, full of physics.",
+    "effect": "Science Communicators produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e19,
+    "targets": [{ "key": "workers-communicators", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-communicators2", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-communicators4",
+    "name": "Ask Me Anything",
+    "description": "Physicists answer questions online, all night long.",
+    "effect": "Science Communicators produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e20,
+    "targets": [{ "key": "workers-communicators", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-communicators3", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-communicators5",
+    "name": "Documentary",
+    "description": "A film crew follows your lab for a whole year.",
+    "effect": "Science Communicators produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e21,
+    "targets": [{ "key": "workers-communicators", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-communicators", "property": "hired", "threshold": 50 },
+      { "key": "upgrade-communicators4", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-robots1",
+    "name": "Monorail",
+    "description": "A rail along the tunnel ceiling, so the robots can go anywhere.",
+    "effect": "Tunnel Robots produce +400T data per second.",
+    "icon": "fa-group",
+    "cost": 1.3e18,
+    "targets": [{ "key": "workers-robots", "property": "rate" }],
+    "requirements": [{ "key": "workers-robots", "property": "hired", "threshold": 5 }],
+    "constant": 4e14
+  },
+  {
+    "key": "upgrade-robots2",
+    "name": "Radiation Sensors",
+    "description": "They measure where it is safe for people to go.",
+    "effect": "Tunnel Robots produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1.3e19,
+    "targets": [{ "key": "workers-robots", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-robots1", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-robots3",
+    "name": "Robot Arms",
+    "description": "Fixing things without anyone going into the tunnel.",
+    "effect": "Tunnel Robots produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1.3e20,
+    "targets": [{ "key": "workers-robots", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-robots2", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-robots4",
+    "name": "Self-Charging",
+    "description": "They plug themselves in when their batteries run low.",
+    "effect": "Tunnel Robots produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1.3e21,
+    "targets": [{ "key": "workers-robots", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-robots3", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-robots5",
+    "name": "Robot Swarm",
+    "description": "A whole fleet, working together.",
+    "effect": "Tunnel Robots produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1.3e22,
+    "targets": [{ "key": "workers-robots", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-robots", "property": "hired", "threshold": 50 },
+      { "key": "upgrade-robots4", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-industry1",
+    "name": "Technology Transfer",
+    "description": "Your ideas become products, and the products pay for more ideas.",
+    "effect": "Industrial Partners produce +4P data per second.",
+    "icon": "fa-group",
+    "cost": 1.7e19,
+    "targets": [{ "key": "workers-industry", "property": "rate" }],
+    "requirements": [{ "key": "workers-industry", "property": "hired", "threshold": 5 }],
+    "constant": 4e15
+  },
+  {
+    "key": "upgrade-industry2",
+    "name": "Superconducting Wire",
+    "description": "Thousands of kilometres of it, ordered by the drum.",
+    "effect": "Industrial Partners produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1.7e20,
+    "targets": [{ "key": "workers-industry", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-industry1", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-industry3",
+    "name": "Medical Spin-Offs",
+    "description": "Detector technology finds its way into hospital scanners.",
+    "effect": "Industrial Partners produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1.7e21,
+    "targets": [{ "key": "workers-industry", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-industry2", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-industry4",
+    "name": "Start-Up Incubator",
+    "description": "Young companies built on your inventions.",
+    "effect": "Industrial Partners produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1.7e22,
+    "targets": [{ "key": "workers-industry", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-industry3", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-industry5",
+    "name": "Global Supply Chain",
+    "description": "Parts from every continent, arriving just in time.",
+    "effect": "Industrial Partners produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1.7e23,
+    "targets": [{ "key": "workers-industry", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-industry", "property": "hired", "threshold": 50 },
+      { "key": "upgrade-industry4", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-fccplanners1",
+    "name": "Feasibility Study",
+    "description": "Twelve volumes on whether the tunnel can be built. It can.",
+    "effect": "FCC Planners produce +40P data per second.",
+    "icon": "fa-group",
+    "cost": 2.2e20,
+    "targets": [{ "key": "workers-fccplanners", "property": "rate" }],
+    "requirements": [{ "key": "workers-fccplanners", "property": "hired", "threshold": 5 }],
+    "constant": 4e16
+  },
+  {
+    "key": "upgrade-fccplanners2",
+    "name": "Geological Survey",
+    "description": "Drill cores from under Lake Geneva and the mountains.",
+    "effect": "FCC Planners produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 2.2e21,
+    "targets": [{ "key": "workers-fccplanners", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-fccplanners1", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-fccplanners3",
+    "name": "Tunnel Boring Machines",
+    "description": "Giant drills that dig a few metres an hour, day and night.",
+    "effect": "FCC Planners produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 2.2e22,
+    "targets": [{ "key": "workers-fccplanners", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-fccplanners2", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-fccplanners4",
+    "name": "Electron Ring First",
+    "description": "Collide electrons and positrons first, then protons.",
+    "effect": "FCC Planners produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 2.2e23,
+    "targets": [{ "key": "workers-fccplanners", "property": "rate" }],
+    "requirements": [{ "key": "upgrade-fccplanners3", "property": "used", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-fccplanners5",
+    "name": "Groundbreaking",
+    "description": "A shovel, a ribbon and a lot of speeches.",
+    "effect": "FCC Planners produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 2.2e24,
+    "targets": [{ "key": "workers-fccplanners", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-fccplanners", "property": "hired", "threshold": 50 },
+      { "key": "upgrade-fccplanners4", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-timetravellers1",
+    "name": "Paradox Insurance",
+    "description": "Covers any damage to your own grandparents.",
+    "effect": "Time Travellers produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e19,
+    "targets": [{ "key": "workers-timetravellers", "property": "rate" }],
+    "requirements": [{ "key": "workers-timetravellers", "property": "hired", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-timetravellers2",
+    "name": "Closed Timelike Curves",
+    "description": "The shortest commute in the universe.",
+    "effect": "Time Travellers produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e20,
+    "targets": [{ "key": "workers-timetravellers", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-timetravellers", "property": "hired", "threshold": 10 },
+      { "key": "upgrade-timetravellers1", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-timetravellers3",
+    "name": "Yesterday's Results Today",
+    "description": "Every paper is accepted before it is written.",
+    "effect": "Time Travellers produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e21,
+    "targets": [{ "key": "workers-timetravellers", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-timetravellers", "property": "hired", "threshold": 25 },
+      { "key": "upgrade-timetravellers2", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-aliens1",
+    "name": "Universal Translator",
+    "description": "At last you understand their jokes. They are about neutrinos.",
+    "effect": "Alien Collaborators produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e22,
+    "targets": [{ "key": "workers-aliens", "property": "rate" }],
+    "requirements": [{ "key": "workers-aliens", "property": "hired", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-aliens2",
+    "name": "First Contact Meeting",
+    "description": "Mostly about who gets to be first author.",
+    "effect": "Alien Collaborators produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e23,
+    "targets": [{ "key": "workers-aliens", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-aliens", "property": "hired", "threshold": 10 },
+      { "key": "upgrade-aliens1", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-aliens3",
+    "name": "Galactic Collaboration",
+    "description": "A collaboration of a billion physicists on a thousand worlds.",
+    "effect": "Alien Collaborators produce twice as much data per second.",
+    "icon": "fa-group",
+    "cost": 1e24,
+    "targets": [{ "key": "workers-aliens", "property": "rate" }],
+    "requirements": [
+      { "key": "workers-aliens", "property": "hired", "threshold": 25 },
+      { "key": "upgrade-aliens2", "property": "used", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-opendays",
+    "name": "Open Days",
+    "description": "Every few years the lab opens its tunnels, and tens of thousands of visitors come.",
+    "effect": "Science Communicators, Tunnel Robots, Industrial Partners and FCC Planners produce twice as much data per second.",
+    "icon": "fa-ticket",
+    "cost": 5e20,
+    "targets": [
+      { "key": "workers-communicators", "property": "rate" },
+      { "key": "workers-robots", "property": "rate" },
+      { "key": "workers-industry", "property": "rate" },
+      { "key": "workers-fccplanners", "property": "rate" }
+    ],
+    "requirements": [
+      { "key": "workers-communicators", "property": "hired", "threshold": 1 },
+      { "key": "workers-robots", "property": "hired", "threshold": 1 },
+      { "key": "workers-industry", "property": "hired", "threshold": 1 },
+      { "key": "workers-fccplanners", "property": "hired", "threshold": 1 }
+    ],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-faser",
+    "name": "FASER",
+    "description": "A small detector in an old tunnel, 480 metres from the collisions.",
+    "effect": "Future collider neutrino research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 1e19,
+    "targets": [{ "key": "research-colliderneutrinos", "property": "reputation" }],
+    "requirements": [{ "key": "research-colliderneutrinos", "property": "level", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-tungsten",
+    "name": "Tungsten Emulsion",
+    "description": "Thin films between tungsten plates record every neutrino track.",
+    "effect": "Future collider neutrino research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 1e21,
+    "targets": [{ "key": "research-colliderneutrinos", "property": "reputation" }],
+    "requirements": [{ "key": "research-colliderneutrinos", "property": "level", "threshold": 10 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-lambdab",
+    "name": "Lambda-b Factory",
+    "description": "Billions of beauty baryons, made in proton collisions.",
+    "effect": "Future research on CP violation in baryons gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 7e19,
+    "targets": [{ "key": "research-baryoncpv", "property": "reputation" }],
+    "requirements": [{ "key": "research-baryoncpv", "property": "level", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-baryogenesis",
+    "name": "Baryogenesis",
+    "description": "How did the early universe end up with more matter than antimatter?",
+    "effect": "Future research on CP violation in baryons gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 7e21,
+    "targets": [{ "key": "research-baryoncpv", "property": "reputation" }],
+    "requirements": [{ "key": "research-baryoncpv", "property": "level", "threshold": 10 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-threshold",
+    "name": "Threshold Scan",
+    "description": "Count top quark pairs made with only just enough energy.",
+    "effect": "Future toponium research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 5e20,
+    "targets": [{ "key": "research-toponium", "property": "reputation" }],
+    "requirements": [{ "key": "research-toponium", "property": "level", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-topfactory",
+    "name": "Top Factory",
+    "description": "A collider built to make top quark pairs and nothing else.",
+    "effect": "Future toponium research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 5e22,
+    "targets": [{ "key": "research-toponium", "property": "reputation" }],
+    "requirements": [{ "key": "research-toponium", "property": "level", "threshold": 10 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-dihiggs",
+    "name": "Di-Higgs Search",
+    "description": "Look for collisions that make two Higgs bosons at once.",
+    "effect": "Future research on the Higgs self-coupling gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 4e21,
+    "targets": [{ "key": "research-selfcoupling", "property": "reputation" }],
+    "requirements": [{ "key": "research-selfcoupling", "property": "level", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-higgsfactory",
+    "name": "Higgs Factory",
+    "description": "A collider that makes millions of Higgs bosons.",
+    "effect": "Future research on the Higgs self-coupling gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 4e23,
+    "targets": [{ "key": "research-selfcoupling", "property": "reputation" }],
+    "requirements": [{ "key": "research-selfcoupling", "property": "level", "threshold": 10 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-wimpcatcher",
+    "name": "WIMP Catcher",
+    "description": "A detector that waits for dark matter to bump into it.",
+    "effect": "Future dark matter research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 1e21,
+    "targets": [{ "key": "research-darkmatter", "property": "reputation" }],
+    "requirements": [{ "key": "research-darkmatter", "property": "level", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-darksector2",
+    "name": "Hidden Valley",
+    "description": "A whole family of dark particles, with their own forces.",
+    "effect": "Future dark matter research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 1e23,
+    "targets": [{ "key": "research-darkmatter", "property": "reputation" }],
+    "requirements": [{ "key": "research-darkmatter", "property": "level", "threshold": 10 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-planck",
+    "name": "Planck Scale",
+    "description": "Probe distances a hundred billion billion times smaller than a proton.",
+    "effect": "Future quantum gravity research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 1e24,
+    "targets": [{ "key": "research-quantumgravity", "property": "reputation" }],
+    "requirements": [{ "key": "research-quantumgravity", "property": "level", "threshold": 1 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-spinfoam",
+    "name": "Spin Foam",
+    "description": "Space and time, made of tiny pieces.",
+    "effect": "Future quantum gravity research gives double the amount of reputation.",
+    "icon": "fa-newspaper-o",
+    "cost": 1e26,
+    "targets": [{ "key": "research-quantumgravity", "property": "reputation" }],
+    "requirements": [{ "key": "research-quantumgravity", "property": "level", "threshold": 10 }],
+    "factor": 2
+  },
+  {
+    "key": "upgrade-kickers",
+    "name": "Fast Kicker Magnets",
+    "description": "Magnets that switch in a fraction of a microsecond to fill the ring faster.",
+    "effect": "Experiments take 25% less time.",
+    "icon": "fa-bolt",
+    "cost": 1e6,
+    "targets": [{ "key": "lab", "property": "experimentSpeed" }],
+    "requirements": [{ "key": "player", "property": "experimentsDone", "threshold": 5 }],
+    "factor": 7.5e-1
+  },
+  {
+    "key": "upgrade-beamtime",
+    "name": "Beam Time Committee",
+    "description": "A committee that shares out the beam fairly, and quickly.",
+    "effect": "Experiments give 25% more.",
+    "icon": "fa-calendar",
+    "cost": 1e9,
+    "targets": [{ "key": "lab", "property": "experimentReward" }],
+    "requirements": [{ "key": "player", "property": "experimentsDone", "threshold": 20 }],
+    "factor": 1.25e0
+  },
+  {
+    "key": "upgrade-daq",
+    "name": "Data Acquisition Upgrade",
+    "description": "Faster electronics that keep up with every collision.",
+    "effect": "Experiments give 25% more.",
+    "icon": "fa-hdd-o",
+    "cost": 1e12,
+    "targets": [{ "key": "lab", "property": "experimentReward" }],
+    "requirements": [{ "key": "player", "property": "experimentsDone", "threshold": 100 }],
+    "factor": 1.25e0
   }
 ]

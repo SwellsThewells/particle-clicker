@@ -1,0 +1,74 @@
+[
+  {
+    "key": "exp-cosmics",
+    "name": "Cosmic Ray Watch",
+    "description": "Cosmic rays rain down on Earth all the time. Leave the detector on and record their muons.",
+    "icon": "fa-sun-o",
+    "duration": 60,
+    "reward": { "type": "data", "seconds": 30 },
+    "requirements": []
+  },
+  {
+    "key": "exp-testbeam",
+    "name": "Test Beam",
+    "description": "Try out new detector parts in a beam of particles from the SPS.",
+    "icon": "fa-crosshairs",
+    "duration": 300,
+    "reward": { "type": "funding", "seconds": 120 },
+    "requirements": [{ "key": "research-jpsi", "property": "level", "threshold": 1 }]
+  },
+  {
+    "key": "exp-school",
+    "name": "Physics School",
+    "description": "Two weeks of lectures in the mountains. Everyone comes back smarter, and with a tan.",
+    "icon": "fa-graduation-cap",
+    "duration": 600,
+    "reward": { "type": "xp", "amount": 0.25 },
+    "requirements": [{ "key": "player", "property": "level", "threshold": 3 }]
+  },
+  {
+    "key": "exp-protons",
+    "name": "Proton Run",
+    "description": "Fill the LHC with protons and collide them for twenty minutes.",
+    "icon": "fa-circle-o-notch",
+    "duration": 1200,
+    "reward": { "type": "data", "seconds": 480 },
+    "requirements": [{ "key": "research-weak", "property": "level", "threshold": 1 }]
+  },
+  {
+    "key": "exp-heavyions",
+    "name": "Heavy-Ion Run",
+    "description": "Collide lead nuclei to make tiny drops of quark-gluon plasma.",
+    "icon": "fa-circle",
+    "duration": 2700,
+    "reward": { "type": "data", "seconds": 1080 },
+    "requirements": [{ "key": "research-gluons", "property": "level", "threshold": 1 }]
+  },
+  {
+    "key": "exp-antimatter",
+    "name": "Antimatter Run",
+    "description": "Slow antiprotons down in the Antiproton Decelerator and trap them.",
+    "icon": "fa-adjust",
+    "duration": 3600,
+    "reward": { "type": "funding", "seconds": 1440 },
+    "requirements": [{ "key": "research-boscillations", "property": "level", "threshold": 1 }]
+  },
+  {
+    "key": "exp-neutrinos",
+    "name": "Neutrino Beam",
+    "description": "Send a beam of neutrinos straight through the Earth to a detector far away.",
+    "icon": "fa-long-arrow-right",
+    "duration": 7200,
+    "reward": { "type": "data", "seconds": 2880 },
+    "requirements": [{ "key": "research-neutrino", "property": "level", "threshold": 1 }]
+  },
+  {
+    "key": "exp-longrun",
+    "name": "Long Physics Run",
+    "description": "Keep the beams colliding all night, and come back in the morning to a mountain of data.",
+    "icon": "fa-moon-o",
+    "duration": 28800,
+    "reward": { "type": "data", "seconds": 14400 },
+    "requirements": [{ "key": "prestige", "property": "lifetimeExpansions", "threshold": 1 }]
+  }
+]

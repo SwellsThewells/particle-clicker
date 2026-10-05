@@ -2936,5 +2936,525 @@
     "targetProperty": "hired",
     "targetKey": "workers-astronauts",
     "threshold": 100
+  },
+  {
+    "description": "Collider neutrinos discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-colliderneutrinos-1",
+    "targetProperty": "level",
+    "targetKey": "research-colliderneutrinos",
+    "threshold": 1
+  },
+  {
+    "description": "Collider neutrinos research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-colliderneutrinos-5",
+    "targetProperty": "level",
+    "targetKey": "research-colliderneutrinos",
+    "threshold": 5
+  },
+  {
+    "description": "Collider neutrinos research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-colliderneutrinos-25",
+    "targetProperty": "level",
+    "targetKey": "research-colliderneutrinos",
+    "threshold": 25
+  },
+  {
+    "description": "Collider neutrinos research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-colliderneutrinos-50",
+    "targetProperty": "level",
+    "targetKey": "research-colliderneutrinos",
+    "threshold": 50
+  },
+  {
+    "description": "Collider neutrinos research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-colliderneutrinos-100",
+    "targetProperty": "level",
+    "targetKey": "research-colliderneutrinos",
+    "threshold": 100
+  },
+  {
+    "description": "CP violation in baryons discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-baryoncpv-1",
+    "targetProperty": "level",
+    "targetKey": "research-baryoncpv",
+    "threshold": 1
+  },
+  {
+    "description": "CP violation in baryons research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-baryoncpv-5",
+    "targetProperty": "level",
+    "targetKey": "research-baryoncpv",
+    "threshold": 5
+  },
+  {
+    "description": "CP violation in baryons research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-baryoncpv-25",
+    "targetProperty": "level",
+    "targetKey": "research-baryoncpv",
+    "threshold": 25
+  },
+  {
+    "description": "CP violation in baryons research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-baryoncpv-50",
+    "targetProperty": "level",
+    "targetKey": "research-baryoncpv",
+    "threshold": 50
+  },
+  {
+    "description": "CP violation in baryons research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-baryoncpv-100",
+    "targetProperty": "level",
+    "targetKey": "research-baryoncpv",
+    "threshold": 100
+  },
+  {
+    "description": "Toponium discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-toponium-1",
+    "targetProperty": "level",
+    "targetKey": "research-toponium",
+    "threshold": 1
+  },
+  {
+    "description": "Toponium research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-toponium-5",
+    "targetProperty": "level",
+    "targetKey": "research-toponium",
+    "threshold": 5
+  },
+  {
+    "description": "Toponium research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-toponium-25",
+    "targetProperty": "level",
+    "targetKey": "research-toponium",
+    "threshold": 25
+  },
+  {
+    "description": "Toponium research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-toponium-50",
+    "targetProperty": "level",
+    "targetKey": "research-toponium",
+    "threshold": 50
+  },
+  {
+    "description": "Toponium research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-toponium-100",
+    "targetProperty": "level",
+    "targetKey": "research-toponium",
+    "threshold": 100
+  },
+  {
+    "description": "Higgs self-coupling discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-selfcoupling-1",
+    "targetProperty": "level",
+    "targetKey": "research-selfcoupling",
+    "threshold": 1
+  },
+  {
+    "description": "Higgs self-coupling research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-selfcoupling-5",
+    "targetProperty": "level",
+    "targetKey": "research-selfcoupling",
+    "threshold": 5
+  },
+  {
+    "description": "Higgs self-coupling research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-selfcoupling-25",
+    "targetProperty": "level",
+    "targetKey": "research-selfcoupling",
+    "threshold": 25
+  },
+  {
+    "description": "Higgs self-coupling research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-selfcoupling-50",
+    "targetProperty": "level",
+    "targetKey": "research-selfcoupling",
+    "threshold": 50
+  },
+  {
+    "description": "Higgs self-coupling research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-selfcoupling-100",
+    "targetProperty": "level",
+    "targetKey": "research-selfcoupling",
+    "threshold": 100
+  },
+  {
+    "description": "Dark matter particles discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-darkmatter-1",
+    "targetProperty": "level",
+    "targetKey": "research-darkmatter",
+    "threshold": 1
+  },
+  {
+    "description": "Dark matter particles research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-darkmatter-5",
+    "targetProperty": "level",
+    "targetKey": "research-darkmatter",
+    "threshold": 5
+  },
+  {
+    "description": "Dark matter particles research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-darkmatter-25",
+    "targetProperty": "level",
+    "targetKey": "research-darkmatter",
+    "threshold": 25
+  },
+  {
+    "description": "Dark matter particles research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-darkmatter-50",
+    "targetProperty": "level",
+    "targetKey": "research-darkmatter",
+    "threshold": 50
+  },
+  {
+    "description": "Dark matter particles research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-darkmatter-100",
+    "targetProperty": "level",
+    "targetKey": "research-darkmatter",
+    "threshold": 100
+  },
+  {
+    "description": "Quantum gravity discovery!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-quantumgravity-1",
+    "targetProperty": "level",
+    "targetKey": "research-quantumgravity",
+    "threshold": 1
+  },
+  {
+    "description": "Quantum gravity research level 5!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-quantumgravity-5",
+    "targetProperty": "level",
+    "targetKey": "research-quantumgravity",
+    "threshold": 5
+  },
+  {
+    "description": "Quantum gravity research level 25!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-quantumgravity-25",
+    "targetProperty": "level",
+    "targetKey": "research-quantumgravity",
+    "threshold": 25
+  },
+  {
+    "description": "Quantum gravity research level 50!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-quantumgravity-50",
+    "targetProperty": "level",
+    "targetKey": "research-quantumgravity",
+    "threshold": 50
+  },
+  {
+    "description": "Quantum gravity research level 100!",
+    "icon": "fa-cogs",
+    "key": "achievement-research-quantumgravity-100",
+    "targetProperty": "level",
+    "targetKey": "research-quantumgravity",
+    "threshold": 100
+  },
+  {
+    "description": "The first Science Communicators hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-communicators-1",
+    "targetProperty": "hired",
+    "targetKey": "workers-communicators",
+    "threshold": 1
+  },
+  {
+    "description": "5 Science Communicators working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-communicators-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-communicators",
+    "threshold": 5
+  },
+  {
+    "description": "25 Science Communicators working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-communicators-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-communicators",
+    "threshold": 25
+  },
+  {
+    "description": "50 Science Communicators working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-communicators-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-communicators",
+    "threshold": 50
+  },
+  {
+    "description": "100 Science Communicators working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-communicators-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-communicators",
+    "threshold": 100
+  },
+  {
+    "description": "The first Tunnel Robots hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-robots-1",
+    "targetProperty": "hired",
+    "targetKey": "workers-robots",
+    "threshold": 1
+  },
+  {
+    "description": "5 Tunnel Robots working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-robots-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-robots",
+    "threshold": 5
+  },
+  {
+    "description": "25 Tunnel Robots working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-robots-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-robots",
+    "threshold": 25
+  },
+  {
+    "description": "50 Tunnel Robots working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-robots-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-robots",
+    "threshold": 50
+  },
+  {
+    "description": "100 Tunnel Robots working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-robots-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-robots",
+    "threshold": 100
+  },
+  {
+    "description": "The first Industrial Partners hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-industry-1",
+    "targetProperty": "hired",
+    "targetKey": "workers-industry",
+    "threshold": 1
+  },
+  {
+    "description": "5 Industrial Partners working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-industry-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-industry",
+    "threshold": 5
+  },
+  {
+    "description": "25 Industrial Partners working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-industry-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-industry",
+    "threshold": 25
+  },
+  {
+    "description": "50 Industrial Partners working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-industry-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-industry",
+    "threshold": 50
+  },
+  {
+    "description": "100 Industrial Partners working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-industry-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-industry",
+    "threshold": 100
+  },
+  {
+    "description": "The first FCC Planners hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-fccplanners-1",
+    "targetProperty": "hired",
+    "targetKey": "workers-fccplanners",
+    "threshold": 1
+  },
+  {
+    "description": "5 FCC Planners working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-fccplanners-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-fccplanners",
+    "threshold": 5
+  },
+  {
+    "description": "25 FCC Planners working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-fccplanners-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-fccplanners",
+    "threshold": 25
+  },
+  {
+    "description": "50 FCC Planners working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-fccplanners-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-fccplanners",
+    "threshold": 50
+  },
+  {
+    "description": "100 FCC Planners working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-fccplanners-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-fccplanners",
+    "threshold": 100
+  },
+  {
+    "description": "The first Time Travellers hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-timetravellers-1",
+    "targetProperty": "hired",
+    "targetKey": "workers-timetravellers",
+    "threshold": 1
+  },
+  {
+    "description": "5 Time Travellers working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-timetravellers-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-timetravellers",
+    "threshold": 5
+  },
+  {
+    "description": "25 Time Travellers working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-timetravellers-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-timetravellers",
+    "threshold": 25
+  },
+  {
+    "description": "50 Time Travellers working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-timetravellers-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-timetravellers",
+    "threshold": 50
+  },
+  {
+    "description": "100 Time Travellers working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-timetravellers-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-timetravellers",
+    "threshold": 100
+  },
+  {
+    "description": "The first Alien Collaborators hired!",
+    "icon": "fa-user",
+    "key": "achievement-workers-aliens-1",
+    "targetProperty": "hired",
+    "targetKey": "workers-aliens",
+    "threshold": 1
+  },
+  {
+    "description": "5 Alien Collaborators working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-aliens-5",
+    "targetProperty": "hired",
+    "targetKey": "workers-aliens",
+    "threshold": 5
+  },
+  {
+    "description": "25 Alien Collaborators working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-aliens-25",
+    "targetProperty": "hired",
+    "targetKey": "workers-aliens",
+    "threshold": 25
+  },
+  {
+    "description": "50 Alien Collaborators working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-aliens-50",
+    "targetProperty": "hired",
+    "targetKey": "workers-aliens",
+    "threshold": 50
+  },
+  {
+    "description": "100 Alien Collaborators working for you!",
+    "icon": "fa-users",
+    "key": "achievement-workers-aliens-100",
+    "targetProperty": "hired",
+    "targetKey": "workers-aliens",
+    "threshold": 100
+  },
+  {
+    "description": "Your first experiment is done!",
+    "icon": "fa-flask",
+    "key": "achievement-experiments-1",
+    "targetProperty": "experimentsDone",
+    "targetKey": "player",
+    "threshold": 1
+  },
+  {
+    "description": "10 experiments done!",
+    "icon": "fa-flask",
+    "key": "achievement-experiments-10",
+    "targetProperty": "experimentsDone",
+    "targetKey": "player",
+    "threshold": 10
+  },
+  {
+    "description": "50 experiments done!",
+    "icon": "fa-flask",
+    "key": "achievement-experiments-50",
+    "targetProperty": "experimentsDone",
+    "targetKey": "player",
+    "threshold": 50
+  },
+  {
+    "description": "250 experiments done!",
+    "icon": "fa-flask",
+    "key": "achievement-experiments-250",
+    "targetProperty": "experimentsDone",
+    "targetKey": "player",
+    "threshold": 250
+  },
+  {
+    "description": "The lab runs itself: the whole Lab Manager!",
+    "icon": "fa-shopping-cart",
+    "key": "achievement-labmanager",
+    "targetProperty": "dm-purchasing",
+    "targetKey": "prestige",
+    "threshold": 1
   }
 ]

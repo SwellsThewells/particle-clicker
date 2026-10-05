@@ -120,11 +120,36 @@
   /** XP for each kind of progress, before bonuses. */
   var XP = {click: 1, hire: 5, research: 10, upgrade: 25, term: 25, anomaly: 30,
             achievement: 50};
-  var gainXp = function(amount) {
-    if (game.addXp(amount) > 0) {
+  /** Add XP, multiplied by the XP bonus unless exact. */
+  var gainXp = function(amount, exact) {
+    if (game.addXp(amount, exact) > 0) {
       UI.showLevelUp(player.level);
     }
   };
+
+  /** Hand out the reward of an experiment that has finished, also one that
+   * finished while the game was closed. */
+  var finishExperiment = function() {
+    var result = game.finishExperiment(new Date().getTime());
+    if (!result) {
+      return;
+    }
+    var amount = Helpers.formatNumberPostfix(result.amount), text;
+    if (result.type === 'xp') {
+      gainXp(result.amount, true);
+      text = amount + ' XP';
+    } else if (result.type === 'data') {
+      UI.showUpdateValue('#update-data', result.amount);
+      text = amount + ' data';
+    } else {
+      UI.showUpdateValue('#update-funding', result.amount);
+      text = 'JTN ' + amount;
+    }
+    UI.showMessage(result.experiment.icon, '<strong>' + result.experiment.name +
+        '</strong> is done! It brought in <strong>' + text + '</strong>.', 8000);
+    saveGame();
+  };
+  finishExperiment();
   GameObjects.Achievement.onUnlock = function() {
     gainXp(XP.achievement);
   };
@@ -255,6 +280,80 @@
       secrets.allIn = 1;
     }
   };
+  /** The Lab Manager (dark matter upgrades), when switched on: hires staff
+   * and does research while they cost at most a tenth of the funding or data,
+   * cheapest first, and buys every upgrade the lab can afford. Runs once a
+   * second. */
+  var AUTO_SHARE = 0.1, AUTO_MAX = 100;
+  var upgradesByPrice = upgrades.slice().sort(function(a, b) { return a.cost - b.cost; });
+  var autoOn = function(kind) {
+    return !!game.bonus[kind] && !!Settings.get(kind);
+  };
+  /** The cheapest of items whose price fits the budget, or null. */
+  var cheapest = function(items, budget) {
+    var best = null;
+    items.forEach(function(item) {
+      if (item.state.cost <= budget && item.meetsRequirements(allObjects) &&
+          (!best || item.state.cost < best.state.cost)) {
+        best = item;
+      }
+    });
+    return best;
+  };
+  var runLabManager = function() {
+    var spent = 0, count = 0, i;
+    if (autoOn('autoUpgrade')) {
+      upgradesByPrice.forEach(function(u) {
+        if (u.isAvailable(lab, allObjects) && u.buy(lab, allObjects) > 0) {
+          spent += u.cost;
+          count++;
+        }
+      });
+      if (count > 0) {
+        player.upgradesBought += count;
+        gainXp(XP.upgrade * count);
+        updateEffects();
+      }
+    }
+    if (autoOn('autoHire')) {
+      for (count = 0, i = 0; i < AUTO_MAX; i++) {
+        var w = cheapest(workers, AUTO_SHARE * lab.state.money);
+        var paid = w ? w.hire(lab, allObjects) : -1;
+        if (paid < 0) {
+          break;
+        }
+        spent += paid;
+        count++;
+      }
+      if (count > 0) {
+        player.staffHired += count;
+        gainXp(XP.hire * count);
+      }
+    }
+    if (spent > 0) {
+      UI.showUpdateValue('#update-funding', -spent);
+    }
+    if (autoOn('autoResearch')) {
+      var used = 0, reputation = lab.state.reputation;
+      for (count = 0, i = 0; i < AUTO_MAX; i++) {
+        var r = cheapest(research, AUTO_SHARE * lab.state.data);
+        var cost = r ? r.research(lab, allObjects) : -1;
+        if (cost < 0) {
+          break;
+        }
+        used += cost;
+        count++;
+      }
+      if (count > 0) {
+        player.researchLevels += count;
+        gainXp(XP.research * count);
+        UI.showUpdateValue('#update-data', -used);
+        UI.showUpdateValue('#update-reputation', lab.state.reputation - reputation);
+        updateEffects();
+      }
+    }
+  };
+
   var KONAMI = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65], konamiAt = 0;
   document.addEventListener('keydown', function(e) {
     konamiAt = e.keyCode === KONAMI[konamiAt] ? konamiAt + 1 : (e.keyCode === KONAMI[0] ? 1 : 0);
@@ -346,15 +445,33 @@
       if (game.bonus.autoClicks > 0 && detector.visible) {
         detector.addEvent();  // the automated trigger at work
       }
+      runLabManager();
+      finishExperiment();
       updateEffects();
       checkSecrets();
       checkSkins();
     }, 1000);
   }]);
 
+  /** The Lab Manager's switch for one kind of purchase, shown in its list
+   * once the dark matter upgrade is bought. */
+  var AutoSwitch = function(kind) {
+    this.kind = kind;
+  };
+  AutoSwitch.prototype.owned = function() {
+    return !!game.bonus[this.kind];
+  };
+  AutoSwitch.prototype.on = function() {
+    return autoOn(this.kind);
+  };
+  AutoSwitch.prototype.toggle = function() {
+    Settings.set(this.kind, !Settings.get(this.kind));
+  };
+
   app.controller('ResearchController', ['$compile', function($compile) {
     this.research = cheapestFirst(research, function(r) { return r.baseCost; });
     this.bulk = new BulkBuyer(function() { return lab.state.data; });
+    this.auto = new AutoSwitch('autoResearch');
     this.isVisible = function(item) {
       return item.isVisible(lab, allObjects);
     };
@@ -386,9 +503,13 @@
     this.showInfo = function(r) {
       UI.showModal(r.name, r.getInfo());
       UI.showLevels(r.state.level);
-      // Secret: read the page of every research topic.
-      secrets.infoPages |= 1 << research.indexOf(r);
-      if (secrets.infoPages === (1 << research.length) - 1) {
+      // Secret: read the page of every research topic. One bit per topic;
+      // with more than 31 topics, JavaScript's 32-bit | and << won't do.
+      var bit = Math.pow(2, research.indexOf(r));
+      if (Math.floor(secrets.infoPages / bit) % 2 === 0) {
+        secrets.infoPages += bit;
+      }
+      if (secrets.infoPages === Math.pow(2, research.length) - 1) {
         secrets.curious = 1;
       }
     };
@@ -397,6 +518,7 @@
   app.controller('HRController', function() {
     this.workers = cheapestFirst(workers, function(w) { return w.baseCost; });
     this.bulk = new BulkBuyer(function() { return lab.state.money; });
+    this.auto = new AutoSwitch('autoHire');
     this.isVisible = function(worker) {
       return worker.isVisible(lab, allObjects);
     };
@@ -424,6 +546,7 @@
 
   app.controller('UpgradesController', function() {
     this.upgrades = cheapestFirst(upgrades, function(u) { return u.cost; });
+    this.auto = new AutoSwitch('autoUpgrade');
     this.isVisible = function(upgrade) {
       return upgrade.isVisible(lab, allObjects);
     };
@@ -439,7 +562,35 @@
         gainXp(XP.upgrade);
         updateEffects();
       }
-    }
+    };
+    /** How many of the upgrades on show the funding buys, cheapest first. */
+    this.affordable = function() {
+      var money = lab.state.money, n = 0;
+      this.upgrades.forEach(function(u) {
+        if (u.cost <= money && u.isVisible(lab, allObjects) && u.isAvailable(lab, allObjects)) {
+          money -= u.cost;
+          n++;
+        }
+      });
+      return n;
+    };
+    /** Buy every upgrade on show that the funding allows, cheapest first. */
+    this.buyAll = function() {
+      var before = lab.state.money, total = 0, n = 0;
+      this.upgrades.forEach(function(u) {
+        if (u.isVisible(lab, allObjects) && u.isAvailable(lab, allObjects) && u.buy(lab, allObjects) > 0) {
+          total += u.cost;
+          n++;
+        }
+      });
+      if (n > 0) {
+        checkAllIn(before, total);
+        UI.showUpdateValue("#update-funding", -total);
+        player.upgradesBought += n;
+        gainXp(XP.upgrade * n);
+        updateEffects();
+      }
+    };
   });
 
   app.controller('AchievementsController', function($scope) {
@@ -728,6 +879,9 @@
 
   app.controller('ExpansionController', ['$scope', '$element', function($scope, $element) {
     $scope.prestige = prestige;
+    $scope.experiment = function() {
+      return game.runningExperiment();
+    };
     $scope.confirming = false;
     cancelOnClose($scope, $element);
     $scope.bonus = game.bonus;
@@ -788,6 +942,9 @@
 
   app.controller('MultiverseController', ['$scope', '$element', function($scope, $element) {
     $scope.multiverse = game.multiverse.state;
+    $scope.experiment = function() {
+      return game.runningExperiment();
+    };
     $scope.confirming = false;
     cancelOnClose($scope, $element);
     $scope.prestige = prestige;
@@ -894,13 +1051,150 @@
     };
   }]);
 
-  app.controller('SettingsController', ['$scope', function($scope) {
-    var keys = ['theme', 'numbers', 'effects', 'floatingNumbers', 'popups', 'reduceMotion'];
+  /** A short time for the top bar: 45s, 12m, 3h (rounded up). */
+  var shortTime = function(ms) {
+    var s = Math.max(0, Math.ceil(ms / 1000));
+    if (s > 3600) {
+      return Math.ceil(s / 3600) + 'h';
+    }
+    return s > 60 ? Math.ceil(s / 60) + 'm' : s + 's';
+  };
+
+  app.controller('ExperimentsController', ['$scope', function($scope) {
+    $scope.experiments = game.experiments;
+    $scope.player = player;
+    $scope.running = function() {
+      return game.runningExperiment();
+    };
+    $scope.isRunning = function(e) {
+      return game.runningExperiment() === e;
+    };
+    $scope.unlocked = function(e) {
+      return game.experimentUnlocked(e);
+    };
+    /** The list shows the unlocked experiments and the next one to come. */
+    $scope.shown = function(e) {
+      if (game.experimentUnlocked(e)) {
+        return true;
+      }
+      var next = game.experiments.filter(function(x) { return !game.experimentUnlocked(x); })[0];
+      return e === next;
+    };
+    $scope.canStart = function(e) {
+      return game.canStartExperiment(e);
+    };
+    /** Whether an experiment could start now: shown as a nudge in the top bar. */
+    $scope.ready = function() {
+      return !game.runningExperiment() && game.experiments.some(function(e) {
+        return game.canStartExperiment(e);
+      });
+    };
+    $scope.start = function(e) {
+      if (game.startExperiment(e.key, new Date().getTime())) {
+        saveGame();
+      }
+    };
+    $scope.duration = function(e) {
+      return game.experimentDuration(e) * 1000;
+    };
+    $scope.left = function() {
+      return Math.max(0, game.experiment.state.endsAt - new Date().getTime());
+    };
+    $scope.shortLeft = function() {
+      return shortTime($scope.left());
+    };
+    $scope.percent = function() {
+      var x = game.experiment.state, total = x.endsAt - x.startedAt;
+      return total > 0 ? Math.min(100, Math.round(100 * (new Date().getTime() - x.startedAt) / total)) : 0;
+    };
+    var amount = function(type, n) {
+      var s = Helpers.formatNumberPostfix(n);
+      return type === 'funding' ? 'JTN ' + s : s + (type === 'xp' ? ' XP' : ' data');
+    };
+    /** What the experiment gives, e.g. "15 min of data": some of the lab's
+     * production when it ends, or part of a level. */
+    $scope.rewardText = function(e) {
+      if (!e) {
+        return '';
+      }
+      var r = e.reward, factor = lab.state.experimentReward;
+      if (r.type === 'xp') {
+        return Math.round(r.amount * factor * 100) + '% of a level';
+      }
+      return Helpers.formatTime(r.seconds * factor * 1000) + ' of ' + r.type;
+    };
+    /** The same in data, funding or XP at today's rates. */
+    $scope.rewardNow = function(e) {
+      return e ? amount(e.reward.type, game.experimentReward(e)) : '';
+    };
+    /** How to unlock an experiment, from its first unmet requirement. */
+    $scope.hint = function(e) {
+      var r = e.requirements.filter(function(r) { return !game.meets([r]); })[0];
+      if (!r) {
+        return '';
+      }
+      if (r.key === 'player') {
+        return 'Unlocks at level ' + r.threshold + '.';
+      }
+      if (r.key === 'prestige') {
+        return 'Unlocks once you have expanded the universe.';
+      }
+      return 'Unlocks with a new research discovery.';
+    };
+  }]);
+
+  /** The news ticker: a headline every few seconds. Headlines about something
+   * new in the lab come first, then a random one that hasn't come up lately. */
+  var news = Helpers.loadFile('json/news.json');
+  app.controller('NewsController', ['$scope', '$interval', '$timeout', function($scope, $interval, $timeout) {
+    var NEWS_SECONDS = 15, recent = [], seen = {};
+    var pick = function() {
+      var open = news.filter(function(n) { return game.meets(n.requirements); });
+      var fresh = open.filter(function(n) { return n.requirements && n.requirements.length && !seen[n.text]; });
+      var pool = open.filter(function(n) { return recent.indexOf(n) < 0; });
+      var n = fresh[0] || pool[Math.floor(Math.random() * pool.length)] || open[0];
+      seen[n.text] = true;
+      recent.push(n);
+      if (recent.length > Math.min(20, open.length - 1)) {
+        recent.shift();
+      }
+      return n;
+    };
+    // Headlines that were already true when the game was opened are old news.
+    news.forEach(function(n) {
+      if (game.meets(n.requirements)) {
+        seen[n.text] = true;
+      }
+    });
+    $scope.enabled = function() {
+      return Settings.get('news');
+    };
+    $scope.headline = pick();
+    $scope.fading = false;
+    $interval(function() {
+      if (!Settings.get('news') || !detector.visible) {
+        return;
+      }
+      $scope.fading = true;
+      $timeout(function() {
+        $scope.headline = pick();
+        $scope.fading = false;
+      }, Settings.get('reduceMotion') ? 0 : 400);
+    }, NEWS_SECONDS * 1000);
+  }]);
+
+  app.controller('SettingsController', ['$scope', '$timeout', function($scope, $timeout) {
+    var keys = ['theme', 'numbers', 'effects', 'floatingNumbers', 'popups', 'reduceMotion', 'news'];
     $scope.s = {};
     keys.forEach(function(k) { $scope.s[k] = Settings.get(k); });
     $scope.set = function(key, value) {
       Settings.set(key, value);
       $scope.s[key] = Settings.get(key);
+      if (key === 'news') {
+        // The ticker takes room above the detector: size the detector again
+        // once it has been shown or hidden.
+        $timeout(function() { $(window).trigger('resize'); });
+      }
     };
   }]);
 

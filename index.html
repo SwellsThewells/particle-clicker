@@ -54,9 +54,10 @@
             <li><a href="#" data-toggle="modal" data-target="#achievements-modal" title="Achievements"><i class="fa fa-trophy"></i><span class="hidden-sm"> Achievements</span></a></li>
             <li ng-controller="SkinsController"><a href="#" data-toggle="modal" data-target="#skins-modal" title="Particle skins"><i class="fa fa-paint-brush"></i><span class="hidden-sm"> Skins</span> <span class="label label-danger" ng-show="skinsNew()" ng-cloak>New</span></a></li>
             <li ng-controller="EquationController"><a href="#" data-toggle="modal" data-target="#equation-modal" title="Equation"><i class="fa fa-superscript"></i><span class="hidden-sm"> Equation</span> <span class="label label-success" ng-show="canBuy()" ng-cloak title="You can add a term">+1</span></a></li>
-            <li><a href="#" data-toggle="modal" data-target="#stats-modal" title="Statistics"><i class="fa fa-bar-chart"></i><span class="hidden-sm hidden-md"> Statistics</span></a></li>
+            <li ng-controller="ExperimentsController"><a href="#" data-toggle="modal" data-target="#experiments-modal" title="Experiments"><i class="fa fa-flask"></i><span class="hidden-sm hidden-md"> Experiments</span> <span class="label label-info nav-timer" ng-show="running()" ng-cloak title="Time left">{{ shortLeft() }}</span><span class="label label-success" ng-show="ready()" ng-cloak title="You can start an experiment">Go</span></a></li>
+            <li><a href="#" data-toggle="modal" data-target="#stats-modal" title="Statistics"><i class="fa fa-bar-chart"></i><span class="hidden-sm hidden-md nav-long"> Statistics</span></a></li>
             <li class="dropdown" ng-controller="SaveController">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-floppy-o"></i> Saved: <span ng-cloak>{{ lastSaved | date : 'H:mm' }}</span> <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-floppy-o"></i><span class="hidden-sm"> Saved:</span> <span ng-cloak>{{ lastSaved | date : 'H:mm' }}</span> <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="#" ng-click="saveNow()"><i class="fa fa-save"></i> Save now</a></li>
                 <li><a href="#" data-toggle="modal" data-target="#transfer-modal"><i class="fa fa-exchange"></i> Export / import save</a></li>
@@ -98,6 +99,7 @@
                 <div class="btn-group btn-group-xs" role="group" aria-label="Number of levels to research at once">
                   <button type="button" class="btn btn-default" ng-repeat="a in rc.bulk.amounts" ng-class="{active: rc.bulk.amount === a}" ng-click="rc.bulk.setAmount(a)">{{ a === 'max' ? 'Max' : '×' + a }}</button>
                 </div>
+                <button type="button" class="btn btn-xs auto-toggle" ng-show="rc.auto.owned()" ng-class="rc.auto.on() ? 'btn-success' : 'btn-default'" ng-click="rc.auto.toggle()" aria-pressed="{{ rc.auto.on() }}" title="Research Committee: research by itself while it costs at most a tenth of your data"><i class="fa fa-gavel"></i> Auto</button>
               </div>
               <ul class="media-list" ng-cloak>
                 <li class="media" ng-repeat="r in rc.research" ng-show="rc.isVisible(r)">
@@ -121,6 +123,9 @@
 
       <div id="column-lab" class="col-xs-6 col-md-5 col-md-5s col-lg-6 col-no-padding-xs" ng-controller="LabController as lc">
         <input class="hidden-xs" id="labname" value="{{ lc.lab.state.name }}" ng-model="lc.lab.state.name" ng-cloak>
+        <div id="news-ticker" class="news-ticker hidden-xs" ng-controller="NewsController" ng-show="enabled()" ng-cloak>
+          <i class="fa fa-newspaper-o" title="Lab news"></i> <span class="news-text" ng-class="{fading: fading}" title="{{ headline.text }}">{{ headline.text }}</span>
+        </div>
         <hr class="hidden-xs">
         <div id="detector-holder">
           <div id="detector" ng-controller="DetectorController as dc">
@@ -171,6 +176,7 @@
                 <div class="btn-group btn-group-xs" role="group" aria-label="Number of people to hire at once">
                   <button type="button" class="btn btn-default" ng-repeat="a in hrc.bulk.amounts" ng-class="{active: hrc.bulk.amount === a}" ng-click="hrc.bulk.setAmount(a)">{{ a === 'max' ? 'Max' : '×' + a }}</button>
                 </div>
+                <button type="button" class="btn btn-xs auto-toggle" ng-show="hrc.auto.owned()" ng-class="hrc.auto.on() ? 'btn-success' : 'btn-default'" ng-click="hrc.auto.toggle()" aria-pressed="{{ hrc.auto.on() }}" title="Personnel Office: hire by itself while staff cost at most a tenth of your funding"><i class="fa fa-briefcase"></i> Auto</button>
               </div>
               <ul class="media-list" ng-cloak>
                 <li class="media" ng-repeat="w in hrc.workers" ng-show="hrc.isVisible(w)">
@@ -196,6 +202,10 @@
           </div>
           <div class="panel-body scrollable large" id="upgradesLarge">
             <div id="upgradesContent" ng-controller="UpgradesController as uc">
+              <div class="bulk-toggle upgrades-toolbar" ng-show="uc.affordable() > 1 || uc.auto.owned()" ng-cloak>
+                <button type="button" class="btn btn-primary btn-xs buy-all" ng-show="uc.affordable() > 1" ng-click="uc.buyAll()" title="Buy every upgrade you can afford, cheapest first"><i class="fa fa-money"></i> Buy all <span class="badge">{{ uc.affordable() }}</span></button>
+                <button type="button" class="btn btn-xs auto-toggle" ng-show="uc.auto.owned()" ng-class="uc.auto.on() ? 'btn-success' : 'btn-default'" ng-click="uc.auto.toggle()" aria-pressed="{{ uc.auto.on() }}" title="Purchasing Office: buy upgrades as soon as you can afford them"><i class="fa fa-shopping-cart"></i> Auto</button>
+              </div>
               <ul class="media-list media-list-no-margin" ng-cloak>
                 <li class="media" ng-show="false"></li>
                 <li class="media" ng-repeat="u in uc.upgrades" ng-show="uc.isVisible(u)">
@@ -317,6 +327,7 @@
               <li class="list-group-item"><i class="fa fa-users fa-fw"></i> Staff hired <strong class="pull-right">{{ staff() | niceNumber }}</strong></li>
               <li class="list-group-item"><i class="fa fa-cogs fa-fw"></i> Research levels <strong class="pull-right">{{ researchLevels() | niceNumber }}</strong></li>
               <li class="list-group-item"><i class="fa fa-certificate fa-fw"></i> Anomalies caught <strong class="pull-right">{{ lab.state.anomalies | niceNumber }}</strong></li>
+              <li class="list-group-item"><i class="fa fa-flask fa-fw"></i> Experiments done <strong class="pull-right">{{ player.experimentsDone | niceNumber }}</strong></li>
               <li class="list-group-item"><i class="fa fa-trophy fa-fw"></i> Achievements <strong class="pull-right">{{ achieved() }} / {{ achievementCount }}</strong></li>
             </ul>
           </div>
@@ -448,6 +459,7 @@
               <button type="button" class="btn btn-primary btn-lg" ng-hide="confirming" ng-disabled="gain() < 1 || expanding" ng-click="confirming = true"><i class="fa fa-expand"></i> Expand the universe</button>
               <div class="confirm-box alert alert-warning" ng-show="confirming" role="alert">
                 <p><strong>Expand the universe?</strong> Your data, funding, reputation, staff, research and upgrades start over. You keep your achievements, level, boosts, dark matter, strings and equation.</p>
+                <p ng-show="experiment()"><i class="fa fa-flask"></i> Your {{ experiment().name }} stops, without its reward.</p>
                 <button type="button" class="btn btn-default" ng-click="confirming = false">Cancel</button>
                 <button type="button" class="btn btn-primary confirm-yes" ng-disabled="gain() < 1 || expanding" ng-click="expand()"><i class="fa fa-expand"></i> Expand now</button>
               </div>
@@ -496,6 +508,7 @@
               <button type="button" class="btn btn-primary btn-lg" ng-hide="confirming" ng-disabled="gain() < 1 || entering" ng-click="confirming = true"><i class="fa fa-code-fork"></i> Enter a new multiverse</button>
               <div class="confirm-box alert alert-warning" ng-show="confirming" role="alert">
                 <p><strong>Enter a new multiverse for +{{ gain() | niceNumber }} {{ gain() === 1 ? 'string' : 'strings' }}?</strong> Your universes, dark matter and dark matter upgrades start over, along with your data, funding, reputation, staff, research and upgrades. You keep your achievements, level, boosts, strings and equation.</p>
+                <p ng-show="experiment()"><i class="fa fa-flask"></i> Your {{ experiment().name }} stops, without its reward.</p>
                 <button type="button" class="btn btn-default" ng-click="confirming = false">Cancel</button>
                 <button type="button" class="btn btn-primary confirm-yes" ng-disabled="gain() < 1 || entering" ng-click="enter()"><i class="fa fa-code-fork"></i> Enter now</button>
               </div>
@@ -560,6 +573,43 @@
       </div>
     </div>
 
+    <div class="modal fade" id="experiments-modal" tabindex="-1" role="dialog" aria-labelledby="experiments-label" aria-hidden="true" ng-controller="ExperimentsController">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="experiments-label"><i class="fa fa-flask"></i> Experiments</h4>
+          </div>
+          <div class="modal-body">
+            <p>Run one experiment at a time, for free. When it ends, even while the game is closed, it pays out some minutes of your lab's production at that moment, so the reward grows with your lab. Longer experiments pay out more. Expanding the universe stops a running experiment.</p>
+            <div class="experiment-running" ng-show="running()">
+              <h5><i class="fa {{ running().icon }} fa-fw"></i> <strong>{{ running().name }}</strong> <span class="pull-right">{{ left() | niceTime }} left</span></h5>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ percent() }}" ng-style="{width: percent() + '%'}"><span class="sr-only">{{ percent() }}% done</span></div>
+              </div>
+              <p class="small">When it is done, it brings in <strong>{{ rewardText(running()) }}</strong>: {{ rewardNow(running()) }} at today's rate.</p>
+            </div>
+            <ul class="list-group experiment-list">
+              <li class="list-group-item" ng-repeat="e in experiments" ng-show="shown(e)" ng-class="{locked: !unlocked(e), running: isRunning(e)}">
+                <div ng-show="unlocked(e)">
+                  <button type="button" class="btn btn-primary btn-sm pull-right" ng-hide="isRunning(e)" ng-disabled="!canStart(e)" ng-click="start(e)"><i class="fa fa-play"></i> Start</button>
+                  <span class="label label-info pull-right" ng-show="isRunning(e)">Running</span>
+                  <h5><i class="fa {{ e.icon }} fa-fw"></i> <strong>{{ e.name }}</strong> <small>{{ duration(e) | niceTime }}</small></h5>
+                  <p class="small">{{ e.description }}</p>
+                  <p class="small exp-trade"><i class="fa fa-gift"></i> Brings in <strong>{{ rewardText(e) }}</strong> <span class="text-muted">({{ rewardNow(e) }} now)</span></p>
+                </div>
+                <div ng-hide="unlocked(e)" class="text-muted">
+                  <h5><i class="fa fa-lock fa-fw"></i> ?????</h5>
+                  <p class="small">{{ hint(e) }} More experiments unlock as your lab grows.</p>
+                </div>
+              </li>
+            </ul>
+            <p class="small text-muted"><i class="fa fa-check"></i> Experiments done: {{ player.experimentsDone | niceNumber }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="modal fade" id="settings-modal" tabindex="-1" role="dialog" aria-labelledby="settings-label" aria-hidden="true" ng-controller="SettingsController">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -594,6 +644,7 @@
             <div class="checkbox"><label><input type="checkbox" ng-model="s.floatingNumbers" ng-change="set('floatingNumbers', s.floatingNumbers)"> Show floating numbers when you earn or spend</label></div>
             <div class="checkbox"><label><input type="checkbox" ng-model="s.popups" ng-change="set('popups', s.popups)"> Show pop-ups for achievements, level-ups and skins</label></div>
             <div class="checkbox"><label><input type="checkbox" ng-model="s.reduceMotion" ng-change="set('reduceMotion', s.reduceMotion)"> Reduce motion: shorter animations and no pulsing</label></div>
+            <div class="checkbox"><label><input type="checkbox" ng-model="s.news" ng-change="set('news', s.news)"> Show the news ticker under your lab's name</label></div>
             <p class="small text-muted">Settings are saved in this browser. Restarting, importing a save or expanding the universe keeps them.</p>
           </div>
         </div>

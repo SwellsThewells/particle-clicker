@@ -19,7 +19,11 @@ var Settings = (function() {
     popups: true,          // pop-ups for achievements, level-ups and skins
     reduceMotion: !!(systemReducedMotion && systemReducedMotion.matches),
     skin: 'classic',       // the particle skin in use (json/skins.json)
-    skinsSeen: 1           // skins unlocked when the Skins tab was last opened
+    skinsSeen: 1,          // skins unlocked when the Skins tab was last opened
+    news: true,            // the news ticker under the lab's name
+    autoHire: true,        // the Lab Manager's switches, once it is bought
+    autoResearch: true,
+    autoUpgrade: true
   };
   var values = $.extend({}, defaults);
   var listeners = [];

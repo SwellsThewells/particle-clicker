@@ -570,11 +570,24 @@ ng\:form {
   }
 }
 
-@media screen and (min-width: 992px) and (max-width: 1299px) {
+@media screen and (min-width: 992px) and (max-width: 1499px) {
   /* Room for all the top bar items on one line. */
   .navbar-nav > li > a {
     padding-left: 10px;
     padding-right: 10px;
+  }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1299px) {
+  .navbar-nav > li > a {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+@media screen and (max-width: 1399px) {
+  .navbar-nav .nav-long {
+    display: none;
   }
 }
 
@@ -657,6 +670,100 @@ html.theme-dark {
 .theme-dark body {
   background: #16171a;
   color: #e4e4e7;
+}
+
+/* The news ticker under the lab's name: room for two lines, so the detector
+   below never moves when the headline changes. */
+.news-ticker {
+  display: flex;
+  align-items: center;
+  margin: 6px 4px 0;
+  height: 36px;
+  font-size: 13px;
+  line-height: 18px;
+  color: #666;
+}
+
+.news-ticker .fa {
+  flex: none;
+  margin-right: 6px;
+  color: #999;
+}
+
+.news-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: opacity 0.4s;
+}
+
+.news-text.fading {
+  opacity: 0;
+}
+
+.reduce-motion .news-text {
+  transition: none;
+}
+
+/* The Lab Manager's switches and Buy all, next to the x1 / x10 / Max toggles. */
+.auto-toggle {
+  margin-left: 6px;
+}
+
+.upgrades-toolbar .buy-all .badge {
+  background: #fff;
+  color: #337ab7;
+  margin-left: 2px;
+}
+
+/* Experiments */
+.nav-timer {
+  font-variant-numeric: tabular-nums;
+}
+
+.experiment-running {
+  margin-bottom: 15px;
+}
+
+.experiment-running .progress {
+  margin-bottom: 6px;
+}
+
+.experiment-list .list-group-item h5 {
+  margin: 4px 0 6px;
+}
+
+.experiment-list .list-group-item p {
+  margin-bottom: 4px;
+}
+
+.experiment-list .list-group-item.running {
+  border-left: 4px solid #5bc0de;
+}
+
+.experiment-list .list-group-item.locked h5,
+.experiment-list .list-group-item.locked p {
+  margin: 2px 0;
+}
+
+.exp-trade .fa {
+  margin: 0 4px;
+  color: #999;
+}
+
+.theme-dark .news-ticker {
+  color: #a1a1aa;
+}
+
+.theme-dark .news-ticker .fa,
+.theme-dark .exp-trade .fa {
+  color: #71717a;
+}
+
+.theme-dark .upgrades-toolbar .buy-all .badge {
+  background: #e4e4e7;
+  color: #1d4f91;
 }
 
 .theme-dark a {

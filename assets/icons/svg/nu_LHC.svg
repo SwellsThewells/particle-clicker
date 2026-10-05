@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <circle cx="32" cy="32" r="30" style="fill:#0277bd"/>
+  <text x="32" y="38" text-anchor="middle" style="font-family:'TeX Gyre Pagella','Palatino Linotype',Palatino,'Liberation Serif',Georgia,serif;font-size:32px;fill:#ffffff">ν</text>
+  <text x="32" y="53" text-anchor="middle" style="font-family:'Liberation Sans',Arial,sans-serif;font-size:10px;font-weight:bold;letter-spacing:1px;fill:#ffffff">LHC</text>
+</svg>
