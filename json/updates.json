@@ -1,5 +1,17 @@
 [
   {
+    "version": "2.1",
+    "date": "2026-10-06",
+    "title": "Things to do while you wait",
+    "changes": [
+      "Lab actions: a row of buttons under the detector, each with its own cooldown. Squeeze the Beam, Night Shift and Trigger Frenzy boost your data or your clicks for a short while, Press Conference and Calibration Run pay out funding or data right away, Anomaly Hunt brings an anomaly, and Lucky Break recharges all the others. They unlock from level 2 to level 25, and their boosts stack.",
+      "Particle ID, a mini-game: name the particle from what it leaves in a slice of the detector. Every right answer out of five makes a one-minute data boost bigger, up to three times as much data, and earns XP.",
+      "Click combos: clicking the detector quickly builds up to twice as much data per click.",
+      "The boost label next to your data rate now shows all your data boosts together.",
+      "2 new upgrades and 10 new achievements, one of them secret."
+    ]
+  },
+  {
     "version": "2.0",
     "date": "2026-10-05",
     "title": "Experiments, the Lab Manager and the news",

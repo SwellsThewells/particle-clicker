@@ -135,17 +135,28 @@
             <canvas ng-click="dc.click()" id="detector-events" width="400" height="400" class="prevent-select">
               Your detector. Click on it to generate events.
             </canvas>
+            <div class="combo-pill" ng-show="dc.comboShown()" ng-cloak title="Click combo: data per click">Combo &times;{{ dc.combo() | number:2 }}</div>
             <div ng-controller="AnomalyController">
               <button type="button" class="anomaly" ng-if="anomaly" ng-style="{left: anomaly.x + 'px', top: anomaly.y + 'px'}" ng-click="catchAnomaly()" title="An anomaly! Click it before it fades." aria-label="Catch the anomaly"><i class="fa fa-certificate"></i></button>
             </div>
           </div>
         </div>
         <button id="detector-info" class="btn btn-info" ng-click="lc.showDetectorInfo()"><i class="fa fa-info"></i></button>
+        <div id="action-bar" ng-controller="ActionsController" ng-cloak>
+          <button type="button" class="action-btn" ng-repeat="a in actions" ng-show="shown(a)" ng-click="use(a)"
+                  ng-class="{locked: !unlocked(a), active: active(a), cooling: !active(a) && cooling(a) > 0}"
+                  title="{{ tooltip(a) }}" aria-label="{{ tooltip(a) }}" aria-disabled="{{ unlocked(a) && !ready(a) }}">
+            <span class="action-fill" ng-style="{height: (active(a) ? 0 : cooling(a)) + '%'}"></span>
+            <i class="fa fa-fw {{ unlocked(a) ? a.icon : 'fa-lock' }}"></i>
+            <span class="action-time" ng-show="time(a)">{{ time(a) }}</span>
+          </button>
+          <button type="button" class="action-btn action-help" data-toggle="modal" data-target="#actions-modal" title="About lab actions" aria-label="About lab actions"><i class="fa fa-question"></i></button>
+        </div>
         <div class="row status" ng-cloak>
           <div class="col-xs-4 text-center col-no-padding-xs">
             <strong>Data</strong><br>
             {{ lc.lab.state.data | niceNumber }}
-            <div class="rate" title="Data produced per second by your staff">+{{ lc.dataRate() | niceNumber }}/s <span class="label label-warning boost" ng-show="lc.boostLeft() > 0" title="Beam boost: all data multiplied">&times;{{ lc.boostFactor() }}<span class="hidden-xs"> {{ lc.boostLeft() }}s</span></span></div>
+            <div class="rate" title="Data produced per second by your staff">+{{ lc.dataRate() | niceNumber }}/s <span class="label label-warning boost" ng-show="lc.boostLeft() > 0" title="Boosts running: all data multiplied">&times;{{ lc.boostFactor() }}<span class="hidden-xs"> {{ lc.boostLeft() }}s</span></span></div>
             <div class="update-value" id="update-data"></div>
           </div>
           <div class="col-xs-4 text-center col-no-padding-xs">
@@ -573,6 +584,74 @@
       </div>
     </div>
 
+    <div class="modal fade" id="particleid-modal" tabindex="-1" role="dialog" aria-labelledby="particleid-label" aria-hidden="true" ng-controller="ParticleIdController">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="particleid-label"><i class="fa fa-eye"></i> Particle ID <small ng-show="round && !round.result">{{ round.n }} of {{ round.total }} &middot; {{ round.right }} right</small></h4>
+          </div>
+          <div class="modal-body" ng-show="round">
+            <div ng-hide="round.result">
+              <p>A particle flew out of the collision on the left. Which one was it?</p>
+              <div class="pid-slice" term-html="round.question.svg"></div>
+              <div class="pid-answers">
+                <button type="button" class="btn" ng-repeat="t in types" ng-click="answer(t)" ng-disabled="round.answer" ng-class="answerClass(t)">
+                  <span class="pid-symbol">{{ t.symbol }}</span> {{ t.name }}</button>
+              </div>
+              <div class="pid-feedback" ng-show="round.answer" role="status">
+                <p><strong>{{ correct() ? 'Right!' : 'Not quite: that was ' + round.question.type.a + '.' }}</strong> {{ round.question.type.why }}</p>
+                <button type="button" class="btn btn-primary" ng-click="next()">{{ round.n < round.total ? 'Next particle' : 'See how you did' }}</button>
+              </div>
+              <p class="small pid-guide-toggle"><a href="#" ng-click="view.legend = !view.legend; $event.preventDefault()"><i class="fa fa-book"></i> How to read a detector slice</a></p>
+              <ul class="small pid-legend" ng-show="view.legend">
+                <li><strong>Tracker:</strong> charged particles leave a track here, curved by the magnet.</li>
+                <li><strong>ECAL</strong> (electromagnetic calorimeter): electrons and photons stop here and leave their energy.</li>
+                <li><strong>HCAL</strong> (hadron calorimeter): hadrons, such as pions, protons and neutrons, stop here.</li>
+                <li><strong>Muon chambers:</strong> only muons get this far.</li>
+                <li><strong>Nothing at all?</strong> Neutrinos escape without a trace.</li>
+              </ul>
+            </div>
+            <div class="pid-result text-center" ng-show="round.result">
+              <h4>{{ round.result.right }} of {{ round.result.total }} right<span ng-show="round.result.right === round.result.total">. Perfect!</span></h4>
+              <p ng-show="round.result.right > 0">All data &times;{{ round.result.factor | number:1 }} for {{ round.result.seconds }} seconds, and {{ round.result.xp | niceNumber }} XP.</p>
+              <p ng-hide="round.result.right > 0">No boost this time. Read <a href="#" ng-click="view.legend = true; $event.preventDefault()">how to read a detector slice</a> and try again soon.</p>
+              <ul class="small pid-legend text-left" ng-show="view.legend && round.result.right === 0">
+                <li><strong>Tracker:</strong> charged particles leave a track here, curved by the magnet.</li>
+                <li><strong>ECAL</strong> (electromagnetic calorimeter): electrons and photons stop here and leave their energy.</li>
+                <li><strong>HCAL</strong> (hadron calorimeter): hadrons, such as pions, protons and neutrons, stop here.</li>
+                <li><strong>Muon chambers:</strong> only muons get this far.</li>
+                <li><strong>Nothing at all?</strong> Neutrinos escape without a trace.</li>
+              </ul>
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Back to the lab</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="actions-modal" tabindex="-1" role="dialog" aria-labelledby="actions-label" aria-hidden="true" ng-controller="ActionsController">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="actions-label"><i class="fa fa-bolt"></i> Lab actions</h4>
+          </div>
+          <div class="modal-body">
+            <p>Lab actions are the buttons under the detector. Each one gives a boost or a reward, then needs time to recharge. Boosts stack, so use several at once for a burst of data. New actions unlock as you level up.</p>
+            <ul class="list-group action-list">
+              <li class="list-group-item" ng-repeat="a in actions" ng-class="{'text-muted': !unlocked(a)}">
+                <span class="badge">{{ unlocked(a) ? 'every ' + cooldownText(a) : 'level ' + a.level }}</span>
+                <h5><i class="fa fa-fw {{ unlocked(a) ? a.icon : 'fa-lock' }}"></i> <strong>{{ a.name }}</strong></h5>
+                <p class="small">{{ a.description }}</p>
+              </li>
+            </ul>
+            <p class="small"><i class="fa fa-hand-o-up"></i> Clicking the detector quickly builds a combo too: up to twice as much data per click.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="modal fade" id="experiments-modal" tabindex="-1" role="dialog" aria-labelledby="experiments-label" aria-hidden="true" ng-controller="ExperimentsController">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -708,6 +787,7 @@
     <script src="js/detector.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/game.js"></script>
+    <script src="js/particleid.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>

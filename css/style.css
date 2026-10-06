@@ -752,6 +752,224 @@ html.theme-dark {
   color: #999;
 }
 
+/* Lab actions: round buttons under the detector. A shade fills a button
+   while it recharges; a green ring shows a boost that is running. */
+#action-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 4px 0 2px;
+}
+
+.action-btn {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  margin: 2px;
+  padding: 0;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #337ab7;
+  font-size: 16px;
+  line-height: 34px;
+  overflow: hidden;
+}
+
+.action-btn:hover,
+.action-btn:focus {
+  border-color: #337ab7;
+  outline: none;
+}
+
+.action-btn .fa {
+  position: relative;
+  z-index: 1;
+}
+
+.action-btn .action-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  background: rgba(0, 0, 0, 0.12);
+  transition: height 1s linear;
+}
+
+.action-btn .action-time {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2px;
+  z-index: 2;
+  font-size: 9px;
+  font-weight: bold;
+  line-height: 10px;
+  color: #555;
+}
+
+.action-btn.cooling {
+  color: #999;
+  cursor: default;
+}
+
+.action-btn.active {
+  border-color: #5cb85c;
+  box-shadow: 0 0 0 3px rgba(92, 184, 92, 0.35);
+  color: #3c763d;
+}
+
+.action-btn.locked {
+  border-style: dashed;
+  color: #bbb;
+}
+
+.action-btn.action-help {
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  line-height: 22px;
+  color: #777;
+}
+
+@media screen and (max-width: 767px) {
+  /* Room for all eight in a narrow column. */
+  .action-btn {
+    width: 32px;
+    height: 32px;
+    margin: 2px 1px;
+    font-size: 14px;
+    line-height: 30px;
+  }
+
+  .action-btn .action-time {
+    font-size: 8px;
+    bottom: 1px;
+  }
+}
+
+.reduce-motion .action-btn .action-fill {
+  transition: none;
+}
+
+.action-list .list-group-item h5 {
+  margin: 2px 0 4px;
+}
+
+.action-list .list-group-item p {
+  margin: 0;
+}
+
+/* The click combo, in the corner of the detector. */
+.combo-pill {
+  position: absolute;
+  z-index: 4;
+  left: 8px;
+  top: 8px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: rgba(240, 173, 78, 0.92);
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+/* Particle ID: a slice through the detector, and the answers. */
+.pid-slice {
+  max-width: 480px;
+  margin: 0 auto 12px;
+}
+
+.pid-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.pid-tracker { fill: #f4f6f8; }
+.pid-layer { stroke: #d5dbe1; stroke-width: 1; }
+.pid-ecal { fill: #cfe8cf; }
+.pid-hcal { fill: #f3dfc1; }
+.pid-magnet { fill: #b0b4ba; }
+.pid-iron { fill: #dcbab7; }
+.pid-chamber { fill: #dbe9f7; }
+.pid-ip { fill: #555; }
+.pid-track { fill: none; stroke: #c62828; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.pid-deposit { fill: #f9a825; fill-opacity: 0.9; stroke: #e65100; stroke-width: 1; }
+.pid-hit { fill: #1565c0; }
+.pid-label { fill: #666; font-size: 11px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+.pid-answers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 -3px 10px;
+}
+
+.pid-answers .btn {
+  flex: 1 1 30%;
+  min-width: 140px;
+  margin: 3px;
+}
+
+.pid-symbol {
+  display: inline-block;
+  min-width: 20px;
+  font-weight: bold;
+}
+
+.pid-feedback {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.pid-legend {
+  padding-left: 18px;
+}
+
+.theme-dark .action-btn {
+  background: #24262b;
+  border-color: #3a3c42;
+  color: #8fb0ff;
+}
+
+.theme-dark .action-btn .action-fill {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.theme-dark .action-btn .action-time {
+  color: #c4c4cc;
+}
+
+.theme-dark .action-btn.cooling {
+  color: #71717a;
+}
+
+.theme-dark .action-btn.locked {
+  color: #52525b;
+}
+
+.theme-dark .action-btn.active {
+  border-color: #4cd964;
+  color: #4cd964;
+}
+
+.theme-dark .pid-tracker { fill: #23262b; }
+.theme-dark .pid-layer { stroke: #353941; }
+.theme-dark .pid-ecal { fill: #1f3a26; }
+.theme-dark .pid-hcal { fill: #3d3021; }
+.theme-dark .pid-magnet { fill: #4a4d55; }
+.theme-dark .pid-iron { fill: #43302e; }
+.theme-dark .pid-chamber { fill: #1d2c3d; }
+.theme-dark .pid-ip { fill: #ccc; }
+.theme-dark .pid-track { stroke: #ff6b6b; }
+.theme-dark .pid-deposit { fill: #fbc02d; stroke: #ffb300; }
+.theme-dark .pid-hit { fill: #64b5f6; }
+.theme-dark .pid-label { fill: #a1a1aa; }
+
 .theme-dark .news-ticker {
   color: #a1a1aa;
 }

@@ -57,14 +57,15 @@ var UI = (function () {
       fitHud();
 
       var size;
+      var actionHeight = $('#action-bar').outerHeight(true) || 0;  // the lab actions
       if (stacked) {
         // About half of the height for the detector, the rest for the tabs.
         var navbar = $('.navbar').outerHeight() || 50;
         size = Math.max(160, Math.min(w - 32, Math.floor((h - navbar) * 0.45)));
-      } else if (w < 768 && h - 90 - rateHeight - hudHeight < 300) {
-        // Leave room below the detector for the status bar, its rates and
-        // the level bar.
-        size = w - Math.max(w - (h - 90 + 10), 300) - 10 - rateHeight - hudHeight;
+      } else if (w < 768 && h - 90 - rateHeight - hudHeight - actionHeight < 300) {
+        // Leave room below the detector for the lab actions, the status bar,
+        // its rates and the level bar.
+        size = w - Math.max(w - (h - 90 + 10), 300) - 10 - rateHeight - hudHeight - actionHeight;
       } else {
         size = w >= 1200 ? 500 : w >= 992 ? 400 : 300;
         if (w >= 768) {

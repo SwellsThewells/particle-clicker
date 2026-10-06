@@ -85,7 +85,9 @@ var GameObjects = (function() {
                                boostDuration: 30,    // seconds
                                offlineHours: 24,     // cap on progress while away
                                experimentSpeed: 1,   // factor on how long experiments take
-                               experimentReward: 1   // factor on what they give
+                               experimentReward: 1,  // factor on what they give
+                               actionCooldown: 1,    // factor on lab action cooldowns
+                               idDuration: 1         // factor on how long Particle ID boosts last
                              }
                            }]);
   };

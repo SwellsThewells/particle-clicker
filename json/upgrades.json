@@ -3450,5 +3450,27 @@
     "targets": [{ "key": "lab", "property": "experimentReward" }],
     "requirements": [{ "key": "player", "property": "experimentsDone", "threshold": 100 }],
     "factor": 1.25e0
+  },
+  {
+    "key": "upgrade-opsmanual",
+    "name": "Operations Manual",
+    "description": "Every procedure written down, so nothing takes longer than it should.",
+    "effect": "Lab actions need 20% less time to recharge.",
+    "icon": "fa-book",
+    "cost": 5e5,
+    "targets": [{ "key": "lab", "property": "actionCooldown" }],
+    "requirements": [{ "key": "player", "property": "actionsUsed", "threshold": 20 }],
+    "factor": 0.8
+  },
+  {
+    "key": "upgrade-pidtraining",
+    "name": "Detector Training",
+    "description": "A week of practice with real event displays.",
+    "effect": "Particle ID boosts last twice as long.",
+    "icon": "fa-eye",
+    "cost": 5e7,
+    "targets": [{ "key": "lab", "property": "idDuration" }],
+    "requirements": [{ "key": "player", "property": "particlesIdentified", "threshold": 25 }],
+    "factor": 2
   }
 ]

@@ -12,6 +12,11 @@ var Game = (function() {
   var STRING_DARK_MATTER = 4;
   var STRING_BONUS = 0.25;      // production per string
   var SYMBOL_BONUS = 0.005;     // data and funding per symbol of the equation
+  // A round of Particle ID: each right answer adds this much to a data boost
+  // that lasts a minute, and 2% of the XP the level needs.
+  var PARTICLE_ID_STEP = 0.4;
+  var PARTICLE_ID_SECONDS = 60;
+  var PARTICLE_ID_XP = 0.02;
   // Lab state that survives an expansion: the name and lifetime totals.
   var LIFETIME_LAB_STATE = ['name', 'clicks', 'time', 'anomalies',
                             'moneyCollected', 'moneySpent', 'dataCollected',
@@ -26,7 +31,8 @@ var Game = (function() {
       offerA: -1, offerB: -1, offerC: -1,
       // Lifetime totals, for achievements.
       upgradesBought: 0, staffHired: 0, researchLevels: 0, totalsCounted: 0,
-      experimentsDone: 0
+      experimentsDone: 0, actionsUsed: 0, particlesIdentified: 0, perfectRounds: 0,
+      bestCombo: 0
     });
     // Universes and dark matter of the current multiverse, and lifetime
     // totals for the achievements.
@@ -47,12 +53,16 @@ var Game = (function() {
     this.experiment = new GameObjects.Record('experiment', {
       running: '', startedAt: 0, endsAt: 0
     });
+    // Lab actions: for each, when it can be used again and until when its
+    // effect lasts, as times, so they carry over reloads and new universes.
+    // Also the data boost from the last round of Particle ID.
+    this.actionState = new GameObjects.Record('actions', {idFactor: 1, idUntil: 0});
     this.secrets = new GameObjects.Record('secrets', {
       konami: 0, nightOwl: 0, homeSweetHome: 0, reflexes: 0, missed: 0,
       darkSide: 0, speedOfLight: 0, infoPages: 0, curious: 0,
       saveShortcut: 0, skinsTried: 0, fashionista: 0,
       namesake: 0, patience: 0, piTime: 0, streak: 0, hotStreak: 0, allIn: 0,
-      themeSwitches: 0, nerd: 0, dejaVu: 0
+      themeSwitches: 0, nerd: 0, dejaVu: 0, stacked: 0
     });
     this.research = null;
     this.workers = null;
@@ -63,10 +73,11 @@ var Game = (function() {
     this.multiverseUpgrades = null;
     this.terms = null;
     this.experiments = null;
+    this.actions = null;
     this.allObjects = {lab: this.lab, player: this.player,
                        prestige: this.prestige, multiverse: this.multiverse,
                        equation: this.equation, secrets: this.secrets,
-                       experiment: this.experiment};
+                       experiment: this.experiment, actions: this.actionState};
     this.initialStates = {};
     this.bonus = {};
     this.lab.bonus = this.bonus;
@@ -91,9 +102,14 @@ var Game = (function() {
     this.multiverseUpgrades = Helpers.loadFile('json/multiverse.json');
     this.terms = Helpers.loadFile('json/equation.json');
     this.experiments = Helpers.loadFile('json/experiments.json');
+    this.actions = Helpers.loadFile('json/actions.json');
     var player = this.player.state, prestige = this.prestige.state;
-    var multiverse = this.multiverse.state;
+    var multiverse = this.multiverse.state, actions = this.actionState.state;
     this.boosts.forEach(function(b) { player[b.key] = 0; });
+    this.actions.forEach(function(a) {
+      actions[a.key] = 0;            // ready again at
+      actions[a.key + 'Until'] = 0;  // effect lasts until
+    });
     this.darkMatterUpgrades.forEach(function(u) { prestige[u.key] = 0; });
     this.multiverseUpgrades.forEach(function(u) { multiverse[u.key] = 0; });
 
@@ -371,7 +387,7 @@ var Game = (function() {
       throw new Error('Not enough data to expand the universe yet.');
     }
     var fresh = this.freshStates({player: true, prestige: true, secrets: true,
-                                  multiverse: true, equation: true}, now);
+                                  multiverse: true, equation: true, actions: true}, now);
     this.giveStartBonuses(fresh);
     var pr = fresh.prestige;
     // Secret: expand twice within ten minutes.
@@ -444,7 +460,7 @@ var Game = (function() {
       throw new Error('The multiverse is not open yet.');
     }
     var fresh = this.freshStates({player: true, secrets: true, multiverse: true,
-                                  equation: true}, now);
+                                  equation: true, actions: true}, now);
     var old = this.prestige.state, pr = fresh.prestige;
     pr.lifetimeExpansions = old.lifetimeExpansions;
     pr.lifetimeDarkMatter = old.lifetimeDarkMatter;
@@ -526,20 +542,24 @@ var Game = (function() {
     return e.duration * this.lab.state.experimentSpeed;
   };
 
-  /** What the experiment gives if it ends now. Data and funding are some
-   * seconds of the lab's rate when it ends (with a small minimum early on),
-   * so the reward keeps up with a lab that grows while it runs; XP is a part
-   * of what the next level needs. */
-  Game.prototype.experimentReward = function(e) {
-    var r = e.reward, amount;
-    if (r.type === 'xp') {
-      amount = r.amount * this.xpForLevel(this.player.state.level);
-    } else if (r.type === 'data') {
-      amount = r.seconds * Math.max(this.experimentRate('data'),
-                                    0.5 * this.lab.state.detector * this.bonus.click);
-    } else {
-      amount = r.seconds * Math.max(this.experimentRate('funding'), 5);
+  /** Some seconds of the lab's data or funding, with a small minimum early
+   * on: as if the detector were clicked every other second, or JTN 5 a
+   * second. */
+  Game.prototype.production = function(type, seconds) {
+    if (type === 'data') {
+      return seconds * Math.max(this.experimentRate('data'),
+                                0.5 * this.lab.state.detector * this.bonus.click);
     }
+    return seconds * Math.max(this.experimentRate('funding'), 5);
+  };
+
+  /** What the experiment gives if it ends now. Data and funding are some
+   * seconds of the lab's rate when it ends, so the reward keeps up with a
+   * lab that grows while it runs; XP is a part of what the next level needs. */
+  Game.prototype.experimentReward = function(e) {
+    var r = e.reward;
+    var amount = r.type === 'xp' ? r.amount * this.xpForLevel(this.player.state.level) :
+        this.production(r.type, r.seconds);
     return amount * this.lab.state.experimentReward;
   };
 
@@ -590,6 +610,108 @@ var Game = (function() {
     x.running = '';
     this.player.state.experimentsDone += 1;
     return result;
+  };
+
+  /** Lab actions unlock with the player's level. */
+  Game.prototype.actionUnlocked = function(a) {
+    return this.player.state.level >= a.level;
+  };
+
+  /** Seconds the action needs to recharge, after upgrades. */
+  Game.prototype.actionCooldown = function(a) {
+    return a.cooldown * this.lab.state.actionCooldown;
+  };
+
+  /** Milliseconds until the action can be used again. */
+  Game.prototype.actionWait = function(a, now) {
+    return Math.max(0, this.actionState.state[a.key] - now);
+  };
+
+  /** Milliseconds that the action's effect still lasts. */
+  Game.prototype.actionLeft = function(a, now) {
+    return Math.max(0, this.actionState.state[a.key + 'Until'] - now);
+  };
+
+  Game.prototype.canUseAction = function(a, now) {
+    return this.actionUnlocked(a) && this.actionWait(a, now) === 0;
+  };
+
+  /** Use a lab action: timed boosts start now, and instant data or funding
+   * is paid out now. Returns the action, its effect type and what it paid
+   * out, or null if it can't be used. Particle ID and anomalies are up to
+   * the caller. */
+  Game.prototype.useAction = function(key, now) {
+    var a = this.actions.filter(function(x) { return x.key === key; })[0];
+    if (!a || !this.canUseAction(a, now)) {
+      return null;
+    }
+    var s = this.actionState.state, e = a.effect;
+    var result = {action: a, type: e.type, amount: 0};
+    s[a.key] = now + this.actionCooldown(a) * 1000;
+    if (e.type === 'data' || e.type === 'click') {
+      s[a.key + 'Until'] = now + e.seconds * 1000;
+    } else if (e.type === 'funding') {
+      result.amount = this.production('funding', e.seconds);
+      this.lab.receiveMoney(result.amount);
+    } else if (e.type === 'dataNow') {
+      result.amount = this.production('data', e.seconds);
+      this.lab.acquireData(result.amount);
+    } else if (e.type === 'reset') {
+      this.actions.forEach(function(x) {
+        if (x !== a) {
+          s[x.key] = Math.min(s[x.key], now);
+        }
+      });
+    }
+    this.player.state.actionsUsed += 1;
+    return result;
+  };
+
+  /** The product of the timed boosts of a type ('data' or 'click') that are
+   * running, including the one from Particle ID for data. */
+  Game.prototype.actionFactor = function(type, now) {
+    var s = this.actionState.state, factor = 1;
+    this.actions.forEach(function(a) {
+      if (a.effect.type === type && s[a.key + 'Until'] > now) {
+        factor *= a.effect.factor;
+      }
+    });
+    if (type === 'data' && s.idUntil > now) {
+      factor *= s.idFactor;
+    }
+    return factor;
+  };
+
+  /** Milliseconds until the first of the running data boosts ends, or 0. */
+  Game.prototype.dataBoostLeft = function(now) {
+    var s = this.actionState.state, left = [];
+    this.actions.forEach(function(a) {
+      if (a.effect.type === 'data' && s[a.key + 'Until'] > now) {
+        left.push(s[a.key + 'Until'] - now);
+      }
+    });
+    if (s.idUntil > now) {
+      left.push(s.idUntil - now);
+    }
+    return left.length ? Math.min.apply(Math, left) : 0;
+  };
+
+  /** End a round of Particle ID with this many right answers out of total:
+   * start its data boost and count the particles. Returns the boost and the
+   * XP it earns, which the caller adds so that level-ups show. */
+  Game.prototype.finishParticleId = function(right, total, now) {
+    var s = this.actionState.state, p = this.player.state;
+    var seconds = PARTICLE_ID_SECONDS * this.lab.state.idDuration;
+    if (right > 0) {
+      s.idFactor = 1 + PARTICLE_ID_STEP * right;
+      s.idUntil = now + seconds * 1000;
+    }
+    p.particlesIdentified += right;
+    if (right === total) {
+      p.perfectRounds += 1;
+    }
+    return {right: right, total: total, factor: 1 + PARTICLE_ID_STEP * right, seconds: seconds,
+            xp: Math.round(right * PARTICLE_ID_XP * this.xpForLevel(p.level))};
   };
 
   /** Credit the data and funding the lab would have earned while the game

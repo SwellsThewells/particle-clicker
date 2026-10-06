@@ -3456,5 +3456,86 @@
     "targetProperty": "dm-purchasing",
     "targetKey": "prestige",
     "threshold": 1
+  },
+  {
+    "description": "10 lab actions used!",
+    "icon": "fa-bolt",
+    "key": "achievement-actions-10",
+    "targetProperty": "actionsUsed",
+    "targetKey": "player",
+    "threshold": 10
+  },
+  {
+    "description": "100 lab actions used!",
+    "icon": "fa-bolt",
+    "key": "achievement-actions-100",
+    "targetProperty": "actionsUsed",
+    "targetKey": "player",
+    "threshold": 100
+  },
+  {
+    "description": "1k lab actions used!",
+    "icon": "fa-bolt",
+    "key": "achievement-actions-1000",
+    "targetProperty": "actionsUsed",
+    "targetKey": "player",
+    "threshold": 1000
+  },
+  {
+    "description": "10 particles identified!",
+    "icon": "fa-eye",
+    "key": "achievement-particleid-10",
+    "targetProperty": "particlesIdentified",
+    "targetKey": "player",
+    "threshold": 10
+  },
+  {
+    "description": "100 particles identified!",
+    "icon": "fa-eye",
+    "key": "achievement-particleid-100",
+    "targetProperty": "particlesIdentified",
+    "targetKey": "player",
+    "threshold": 100
+  },
+  {
+    "description": "500 particles identified!",
+    "icon": "fa-eye",
+    "key": "achievement-particleid-500",
+    "targetProperty": "particlesIdentified",
+    "targetKey": "player",
+    "threshold": 500
+  },
+  {
+    "description": "A perfect round of Particle ID!",
+    "icon": "fa-eye",
+    "key": "achievement-perfect-1",
+    "targetProperty": "perfectRounds",
+    "targetKey": "player",
+    "threshold": 1
+  },
+  {
+    "description": "10 perfect rounds of Particle ID!",
+    "icon": "fa-eye",
+    "key": "achievement-perfect-10",
+    "targetProperty": "perfectRounds",
+    "targetKey": "player",
+    "threshold": 10
+  },
+  {
+    "description": "Full combo: twice the data per click!",
+    "icon": "fa-hand-o-up",
+    "key": "achievement-combo",
+    "targetProperty": "bestCombo",
+    "targetKey": "player",
+    "threshold": 50
+  },
+  {
+    "description": "Stacked: all your data boosted ten times over at once.",
+    "icon": "fa-bolt",
+    "key": "achievement-secret-stacked",
+    "targetProperty": "stacked",
+    "targetKey": "secrets",
+    "threshold": 1,
+    "secret": true
   }
 ]

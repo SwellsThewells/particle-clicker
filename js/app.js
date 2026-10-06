@@ -18,9 +18,20 @@
   var updates = Helpers.loadFile('json/updates.json');
   var updatesSeen = ObjectStorage.load('updatesSeen');
 
-  /** Factor applied to all data while a beam boost is active. */
+  /** Factor applied to all data: the beam boost from an anomaly, times the
+   * lab action and Particle ID boosts that are running. */
   var dataMultiplier = function() {
-    return new Date().getTime() < boostUntil ? lab.state.boostFactor : 1;
+    var now = new Date().getTime();
+    return (now < boostUntil ? lab.state.boostFactor : 1) * game.actionFactor('data', now);
+  };
+
+  /** Clicking the detector quickly builds a combo: each click less than a
+   * second after the one before adds 2% to the data per click, up to twice
+   * as much. */
+  var COMBO_GAP = 1000, COMBO_STEPS = 50, COMBO_STEP = 0.02;
+  var combo = {steps: 0, last: 0};
+  var comboFactor = function() {
+    return new Date().getTime() - combo.last < COMBO_GAP ? 1 + COMBO_STEP * combo.steps : 1;
   };
 
   /** The research, staff and upgrades lists go from the cheapest to the most
@@ -119,11 +130,19 @@
 
   /** XP for each kind of progress, before bonuses. */
   var XP = {click: 1, hire: 5, research: 10, upgrade: 25, term: 25, anomaly: 30,
-            achievement: 50};
-  /** Add XP, multiplied by the XP bonus unless exact. */
+            achievement: 50, action: 10};
+  /** Add XP, multiplied by the XP bonus unless exact. Level-ups can unlock
+   * lab actions, which are announced. */
   var gainXp = function(amount, exact) {
+    var before = player.level;
     if (game.addXp(amount, exact) > 0) {
       UI.showLevelUp(player.level);
+      game.actions.forEach(function(a) {
+        if (a.level > before && a.level <= player.level) {
+          UI.showPopup('alert-info', a.icon, 'New lab action: <strong>' + a.name +
+                       '</strong>. Find it under the detector.', 6000);
+        }
+      });
     }
   };
 
@@ -393,11 +412,15 @@
   app.controller('DetectorController', function() {
     var recentClicks = [];
     this.click = function() {
-      var amount = lab.clickDetector(dataMultiplier());
+      var now = new Date().getTime();
+      combo.steps = now - combo.last < COMBO_GAP ? Math.min(combo.steps + 1, COMBO_STEPS) : 0;
+      combo.last = now;
+      player.bestCombo = Math.max(player.bestCombo, combo.steps);
+      var amount = lab.clickDetector(dataMultiplier() * game.actionFactor('click', now) *
+                                     comboFactor());
       detector.addEvent();
       UI.showUpdateValue("#update-data", amount);
       gainXp(XP.click);
-      var now = new Date().getTime();
       recentClicks.push(now);
       while (now - recentClicks[0] > 2000) {
         recentClicks.shift();
@@ -406,6 +429,11 @@
         secrets.speedOfLight = 1;
       }
       return false;
+    };
+    /** The combo, shown on the detector once it reaches ×1.1. */
+    this.combo = comboFactor;
+    this.comboShown = function() {
+      return comboFactor() >= 1 + 5 * COMBO_STEP - 1e-9;
     };
   });
 
@@ -419,11 +447,15 @@
     this.dataRate = function() {
       return (game.getDataRate() + game.getAutoRate()) * dataMultiplier();
     };
+    /** All data boosts together, e.g. 6 for a beam boost and Night Shift. */
     this.boostFactor = function() {
-      return lab.state.boostFactor;
+      return Math.round(dataMultiplier() * 10) / 10;
     };
+    /** Seconds until the first of the running data boosts ends. */
     this.boostLeft = function() {
-      return Math.max(0, Math.ceil((boostUntil - new Date().getTime()) / 1000));
+      var now = new Date().getTime();
+      var left = [boostUntil - now, game.dataBoostLeft(now)].filter(function(t) { return t > 0; });
+      return left.length ? Math.ceil(Math.min.apply(Math, left) / 1000) : 0;
     };
     this.showDetectorInfo = function() {
       if (!this._detectorInfo) {
@@ -447,6 +479,9 @@
       }
       runLabManager();
       finishExperiment();
+      if (dataMultiplier() >= 10) {
+        secrets.stacked = 1;  // Secret: boosts stacked to ten times the data
+      }
       updateEffects();
       checkSecrets();
       checkSkins();
@@ -720,6 +755,12 @@
     };
   }]);
 
+  /** Lets the Anomaly Hunt action reach the anomalies on the detector. */
+  var anomalyControl = {
+    showing: function() { return false; },
+    spawnNow: function() { return false; }
+  };
+
   app.controller('AnomalyController',
       ['$scope', '$timeout', function($scope, $timeout) {
     // Seconds until the first anomaly, and between anomalies before upgrades.
@@ -755,11 +796,23 @@
       }
     ];
 
-    var spawnedAt = 0;
+    var spawnedAt = 0, nextTimer = null;
     var schedule = function(range) {
       var seconds = (range[0] + Math.random() * (range[1] - range[0])) /
           (lab.state.anomalyRate * game.bonus.anomalyRate);
-      $timeout(spawn, seconds * 1000);
+      nextTimer = $timeout(spawn, seconds * 1000);
+    };
+    // The Anomaly Hunt action makes the next anomaly appear right away.
+    anomalyControl.showing = function() {
+      return !!$scope.anomaly;
+    };
+    anomalyControl.spawnNow = function() {
+      if ($scope.anomaly) {
+        return false;
+      }
+      $timeout.cancel(nextTimer);
+      spawn();
+      return true;
     };
     var spawn = function() {
       if (!detector.visible) {  // don't waste anomalies on a hidden tab
@@ -1006,8 +1059,8 @@
     };
   }]);
 
-  /** Fills an element with the HTML of an equation term (from our own
-   * json/equation.json). */
+  /** Fills an element with HTML the game made itself: an equation term from
+   * json/equation.json, or a Particle ID detector slice. */
   app.directive('termHtml', function() {
     return {
       link: function(scope, element, attrs) {
@@ -1141,6 +1194,136 @@
       }
       return 'Unlocks with a new research discovery.';
     };
+  }]);
+
+  /** Lets the Particle ID action start a round in its window. */
+  var particleId = {start: function() {}};
+
+  /** Lab actions: buttons under the detector for boosts and rewards, each
+   * with a cooldown. They unlock with the player's level. */
+  app.controller('ActionsController', ['$scope', function($scope) {
+    var now = function() { return new Date().getTime(); };
+    $scope.actions = game.actions;
+    $scope.unlocked = function(a) {
+      return game.actionUnlocked(a);
+    };
+    /** The bar shows the unlocked actions and the next one to come. */
+    $scope.shown = function(a) {
+      return game.actionUnlocked(a) ||
+          a === game.actions.filter(function(x) { return !game.actionUnlocked(x); })[0];
+    };
+    $scope.ready = function(a) {
+      return game.canUseAction(a, now()) && !(a.effect.type === 'anomaly' && anomalyControl.showing());
+    };
+    $scope.active = function(a) {
+      return game.actionLeft(a, now()) > 0;
+    };
+    /** How much of the cooldown is still to go, in percent. */
+    $scope.cooling = function(a) {
+      return Math.round(100 * game.actionWait(a, now()) / (game.actionCooldown(a) * 1000));
+    };
+    /** The time on the button: how long its boost lasts, or until it is ready. */
+    $scope.time = function(a) {
+      var left = game.actionLeft(a, now()), wait = game.actionWait(a, now());
+      return left > 0 ? shortTime(left) : wait > 0 ? shortTime(wait) : '';
+    };
+    $scope.tooltip = function(a) {
+      return game.actionUnlocked(a) ? a.name + ': ' + a.description : a.name + ' unlocks at level ' + a.level + '.';
+    };
+    $scope.cooldownText = function(a) {
+      return Helpers.formatTime(game.actionCooldown(a) * 1000);
+    };
+    $scope.use = function(a) {
+      if (!game.actionUnlocked(a)) {
+        UI.showPopup('alert-info', 'fa-lock', '<strong>' + a.name + '</strong> unlocks at level ' + a.level + '.', 3000);
+        return;
+      }
+      if (!$scope.ready(a)) {
+        return;
+      }
+      var result = game.useAction(a.key, now());
+      if (!result) {
+        return;
+      }
+      gainXp(XP.action);
+      if (result.type === 'funding') {
+        UI.showUpdateValue('#update-funding', result.amount);
+      } else if (result.type === 'dataNow') {
+        UI.showUpdateValue('#update-data', result.amount);
+      } else if (result.type === 'anomaly') {
+        anomalyControl.spawnNow();
+      } else if (result.type === 'game') {
+        particleId.start();
+      }
+      if (result.type !== 'game') {
+        UI.showPopup('alert-info', a.icon, '<strong>' + a.name + '</strong>: ' + a.description, 3000);
+      }
+      saveGame();
+    };
+  }]);
+
+  /** Particle ID: five detector slices; name the particle in each. Every
+   * right answer makes the data boost at the end bigger. Closing the window
+   * early ends the round with the answers so far. */
+  app.controller('ParticleIdController', ['$scope', '$element', function($scope, $element) {
+    var ROUND = 5;
+    $scope.types = ParticleId.TYPES;
+    $scope.round = null;
+    $scope.view = {legend: false};
+    particleId.start = function() {
+      $scope.round = {n: 1, total: ROUND, right: 0, question: ParticleId.question(null), answer: null, result: null};
+      $element.modal('show');
+    };
+    $scope.answer = function(t) {
+      var r = $scope.round;
+      if (!r || r.answer || r.result) {
+        return;
+      }
+      r.answer = t;
+      if (t === r.question.type) {
+        r.right += 1;
+      }
+    };
+    $scope.correct = function() {
+      return $scope.round && $scope.round.answer === $scope.round.question.type;
+    };
+    /** Once answered, the right answer turns green, and a wrong pick red. */
+    $scope.answerClass = function(t) {
+      var r = $scope.round;
+      if (r && r.answer) {
+        if (t === r.question.type) {
+          return 'btn-success';
+        }
+        if (t === r.answer) {
+          return 'btn-danger';
+        }
+      }
+      return 'btn-default';
+    };
+    var finish = function() {
+      var r = $scope.round;
+      if (!r || r.result) {
+        return;
+      }
+      r.result = game.finishParticleId(r.right, ROUND, new Date().getTime());
+      if (r.result.xp > 0) {
+        gainXp(r.result.xp, true);
+      }
+      saveGame();
+    };
+    $scope.next = function() {
+      var r = $scope.round;
+      if (r.n >= ROUND) {
+        finish();
+        return;
+      }
+      r.n += 1;
+      r.question = ParticleId.question(r.question.type.key);
+      r.answer = null;
+    };
+    $element.on('hide.bs.modal', function() {
+      $scope.$evalAsync(finish);
+    });
   }]);
 
   /** The news ticker: a headline every few seconds. Headlines about something

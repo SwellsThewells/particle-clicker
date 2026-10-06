@@ -1,0 +1,74 @@
+[
+  {
+    "key": "act-squeeze",
+    "name": "Squeeze the Beam",
+    "description": "Focus the beams for more collisions: all data is doubled for 30 seconds.",
+    "icon": "fa-compress",
+    "level": 2,
+    "cooldown": 180,
+    "effect": { "type": "data", "factor": 2, "seconds": 30 }
+  },
+  {
+    "key": "act-particleid",
+    "name": "Particle ID",
+    "description": "Name the particles in five detector slices. Every right answer makes a one-minute data boost bigger, up to three times as much data.",
+    "icon": "fa-eye",
+    "level": 3,
+    "cooldown": 300,
+    "effect": { "type": "game" }
+  },
+  {
+    "key": "act-frenzy",
+    "name": "Trigger Frenzy",
+    "description": "For 15 seconds, every click on the detector gives 10 times as much data. Click fast!",
+    "icon": "fa-hand-o-up",
+    "level": 5,
+    "cooldown": 240,
+    "effect": { "type": "click", "factor": 10, "seconds": 15 }
+  },
+  {
+    "key": "act-press",
+    "name": "Press Conference",
+    "description": "Announce your latest results and get a minute of funding right away.",
+    "icon": "fa-microphone",
+    "level": 7,
+    "cooldown": 360,
+    "effect": { "type": "funding", "seconds": 60 }
+  },
+  {
+    "key": "act-calibration",
+    "name": "Calibration Run",
+    "description": "Recalibrate the detector and recover a minute of data right away.",
+    "icon": "fa-sliders",
+    "level": 10,
+    "cooldown": 360,
+    "effect": { "type": "dataNow", "seconds": 60 }
+  },
+  {
+    "key": "act-anomaly",
+    "name": "Anomaly Hunt",
+    "description": "Comb through the data: an anomaly appears on the detector right away.",
+    "icon": "fa-certificate",
+    "level": 13,
+    "cooldown": 600,
+    "effect": { "type": "anomaly" }
+  },
+  {
+    "key": "act-nightshift",
+    "name": "Night Shift",
+    "description": "Everyone stays late: all data is tripled for 45 seconds.",
+    "icon": "fa-moon-o",
+    "level": 17,
+    "cooldown": 900,
+    "effect": { "type": "data", "factor": 3, "seconds": 45 }
+  },
+  {
+    "key": "act-luckybreak",
+    "name": "Lucky Break",
+    "description": "All your other lab actions are ready to use again.",
+    "icon": "fa-refresh",
+    "level": 25,
+    "cooldown": 1800,
+    "effect": { "type": "reset" }
+  }
+]
